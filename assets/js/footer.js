@@ -123,7 +123,19 @@
 
         resize();
         createParticles();
-        animate();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!animationId) animate();
+                } else {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            });
+        }, { threshold: 0.05 });
+
+        observer.observe(canvas);
 
         window.addEventListener('resize', () => {
             resize();

@@ -205,7 +205,7 @@ require_once 'includes/db.php';
                     ring-2 ring-mishkat-green-600/30 group-hover:ring-mishkat-green-500
                     transition-all duration-300 shadow-lg group-hover:shadow-xl
                     group-hover:scale-105">
-            <img src="assets/images/6046279299901361992.jpg"
+            <img loading="lazy" src="assets/images/6046279299901361992.jpg"
                  alt="شعار مشكاة"
                  class="w-full h-full object-cover"
                  loading="eager"

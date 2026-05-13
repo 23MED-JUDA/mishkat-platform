@@ -1,7 +1,7 @@
 <?php
 // Admin Review Teachers - Enhanced for Approval Flow
-$teachersQuery = "SELECT u.id, u.name, u.email, u.phone, u.status, u.created_at, u.gender,
-    ti.specialty, ti.experience_years, ti.location, ti.cv_url, ti.bio, ti.rating
+$teachersQuery = "SELECT u.id, u.name, u.email, u.phone, u.status, u.created_at, u.gender, u.location,
+    ti.specialty, ti.experience_years, ti.cv_url, ti.bio, ti.rating
     FROM users u 
     LEFT JOIN teachers_info ti ON u.id = ti.user_id 
     WHERE u.role = 'teacher' 

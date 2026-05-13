@@ -319,8 +319,17 @@
             if (!this.bg || !this.heroSection) return;
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    this.isVisible = entry.isIntersecting;
+                    if (this.isVisible) {
+                        this.animate();
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(this.heroSection);
             window.addEventListener('scroll', this.onScroll.bind(this), { passive: true });
-            this.animate();
         },
 
         onScroll() {
@@ -330,6 +339,7 @@
         },
 
         animate() {
+            if (!this.isVisible) return;
             this.currentTranslateY += (this.targetTranslateY - this.currentTranslateY) * 0.08;
             if (Math.abs(this.targetTranslateY - this.currentTranslateY) > 0.1) {
                 this.bg.style.transform = `translate3d(0, ${this.currentTranslateY}px, 0)`;
@@ -358,8 +368,17 @@
             this.ctx = this.canvas.getContext('2d');
             this.resize();
             this.createParticles();
-            this.animate();
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    this.isActive = entry.isIntersecting;
+                    if (this.isActive) {
+                        this.animate();
+                    }
+                });
+            }, { threshold: 0.1 });
 
+            observer.observe(this.canvas);
             window.addEventListener('resize', debounce(this.resize.bind(this), 250));
         },
 
@@ -411,6 +430,7 @@
         },
 
         animate() {
+            if (!this.isActive) return;
             this.ctx.clearRect(0, 0, this.width, this.height);
 
             for (let i = 0; i < this.particles.length; i++) {

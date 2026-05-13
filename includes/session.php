@@ -21,24 +21,25 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
         return true;
     }
 
+    private function ensureTable() {
+        $this->db->query("CREATE TABLE IF NOT EXISTS php_sessions (
+            id varchar(128) NOT NULL,
+            access int(10) unsigned DEFAULT NULL,
+            data text,
+            PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    }
+
     #[\ReturnTypeWillChange]
     public function read($id): string|false {
-        $stmt = $this->db->prepare("SELECT data FROM php_sessions WHERE id = ?");
-        
-        // If the prepare fails, the table might not exist
-        if (!$stmt) {
-            // Try to create the table
-            $this->db->query("CREATE TABLE IF NOT EXISTS php_sessions (
-                id varchar(128) NOT NULL,
-                access int(10) unsigned DEFAULT NULL,
-                data text,
-                PRIMARY KEY (id)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-            
-            // Try preparing again
+        try {
             $stmt = $this->db->prepare("SELECT data FROM php_sessions WHERE id = ?");
-            if (!$stmt) return '';
+        } catch (mysqli_sql_exception $e) {
+            $this->ensureTable();
+            $stmt = $this->db->prepare("SELECT data FROM php_sessions WHERE id = ?");
         }
+
+        if (!$stmt) return '';
 
         $stmt->bind_param("s", $id);
         if ($stmt->execute()) {
@@ -52,23 +53,41 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
 
     public function write($id, $data): bool {
         $access = time();
-        $stmt = $this->db->prepare("REPLACE INTO php_sessions (id, access, data) VALUES (?, ?, ?)");
+        try {
+            $stmt = $this->db->prepare("REPLACE INTO php_sessions (id, access, data) VALUES (?, ?, ?)");
+        } catch (mysqli_sql_exception $e) {
+            $this->ensureTable();
+            $stmt = $this->db->prepare("REPLACE INTO php_sessions (id, access, data) VALUES (?, ?, ?)");
+        }
+
+        if (!$stmt) return false;
+        
         $stmt->bind_param("sis", $id, $access, $data);
         return $stmt->execute();
     }
 
     public function destroy($id): bool {
-        $stmt = $this->db->prepare("DELETE FROM php_sessions WHERE id = ?");
-        $stmt->bind_param("s", $id);
-        return $stmt->execute();
+        try {
+            $stmt = $this->db->prepare("DELETE FROM php_sessions WHERE id = ?");
+            if (!$stmt) return false;
+            $stmt->bind_param("s", $id);
+            return $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            return true;
+        }
     }
 
     public function gc($max_lifetime): int|false {
         $old = time() - $max_lifetime;
-        $stmt = $this->db->prepare("DELETE FROM php_sessions WHERE access < ?");
-        $stmt->bind_param("i", $old);
-        if ($stmt->execute()) {
-            return $stmt->affected_rows;
+        try {
+            $stmt = $this->db->prepare("DELETE FROM php_sessions WHERE access < ?");
+            if (!$stmt) return false;
+            $stmt->bind_param("i", $old);
+            if ($stmt->execute()) {
+                return $stmt->affected_rows;
+            }
+        } catch (mysqli_sql_exception $e) {
+            return false;
         }
         return false;
     }

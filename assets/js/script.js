@@ -67,7 +67,7 @@
             this.dom.mobileMenu        = section.querySelector('#mobileMenu');
             this.dom.mobileCloseAreas  = section.querySelectorAll('[data-mobile-close]');
             this.dom.navLinks          = section.querySelectorAll('.nav-link');
-            this.dom.mobileLinks       = section.querySelectorAll('.navbar__mobile-link');
+            this.dom.mobileLinks       = section.querySelectorAll('.mobile-nav-link');
 
             if (!this.dom.navbar) {
                 console.warn('Mishkat Navbar: لم يتم العثور على عنصر #navbar');
@@ -165,21 +165,43 @@
         openMobileMenu() {
             this.state.isMobileMenuOpen = true;
             this.dom.mobileMenu.classList.add('navbar__mobile-menu--active');
+            this.dom.mobileMenu.classList.remove('max-h-0');
+            this.dom.mobileMenu.classList.add('max-h-screen', 'pb-6');
             this.dom.mobileMenu.setAttribute('aria-hidden', 'false');
             this.dom.mobileMenuBtn.classList.add('navbar__hamburger--active');
             this.dom.mobileMenuBtn.setAttribute('aria-expanded', 'true');
             this.dom.mobileMenuBtn.setAttribute('aria-label', 'إغلاق القائمة');
             document.body.style.overflow = 'hidden';
+            
+            const lines = this.dom.mobileMenuBtn.querySelectorAll('.hamburger-line');
+            if (lines.length === 3) {
+                lines[0].style.transform = 'translateY(9px) rotate(45deg)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'translateY(-9px) rotate(-45deg)';
+                lines[2].classList.remove('w-3/4');
+                lines[2].classList.add('w-full');
+            }
         },
 
         closeMobileMenu() {
             this.state.isMobileMenuOpen = false;
             this.dom.mobileMenu.classList.remove('navbar__mobile-menu--active');
+            this.dom.mobileMenu.classList.remove('max-h-screen', 'pb-6');
+            this.dom.mobileMenu.classList.add('max-h-0');
             this.dom.mobileMenu.setAttribute('aria-hidden', 'true');
             this.dom.mobileMenuBtn.classList.remove('navbar__hamburger--active');
             this.dom.mobileMenuBtn.setAttribute('aria-expanded', 'false');
             this.dom.mobileMenuBtn.setAttribute('aria-label', 'فتح القائمة');
             document.body.style.overflow = '';
+            
+            const lines = this.dom.mobileMenuBtn.querySelectorAll('.hamburger-line');
+            if (lines.length === 3) {
+                lines[0].style.transform = '';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = '';
+                lines[2].classList.remove('w-full');
+                lines[2].classList.add('w-3/4');
+            }
         },
 
         toggleMobileMenu() {

@@ -1,0 +1,164 @@
+/* ---- Reset & Base ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* ---- Selection Color ---- */
+::selection {
+    background: rgba(212, 175, 55, 0.25);
+    color: #fff;
+}
+
+/* ---- Top Gold Line ---- */
+#footer-section .top-gold-line {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(212, 175, 55, 0.05) 10%,
+        rgba(212, 175, 55, 0.3) 25%,
+        rgba(212, 175, 55, 0.8) 45%,
+        #d4af37 50%,
+        rgba(212, 175, 55, 0.8) 55%,
+        rgba(212, 175, 55, 0.3) 75%,
+        rgba(212, 175, 55, 0.05) 90%,
+        transparent 100%
+    );
+}
+
+/* ---- Geometric Pattern ---- */
+#footer-section .geometric-pattern {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z' fill='none' stroke='%23d4af37' stroke-width='0.5'/%3E%3Ccircle cx='40' cy='40' r='12' fill='none' stroke='%23d4af37' stroke-width='0.3'/%3E%3C/svg%3E");
+    background-size: 80px 80px;
+}
+
+/* ---- Newsletter Form Glow ---- */
+#footer-section .newsletter-form-glow:focus-within {
+    box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.08);
+}
+
+/* ---- Footer Column Appear Animation ---- */
+#footer-section .footer-col {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#footer-section .footer-col.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---- Fade Up Generic ---- */
+#footer-section [data-animate="fade-up"] {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#footer-section [data-animate="fade-up"].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---- Footer Link Underline Hover ---- */
+#footer-section .footer-link {
+    position: relative;
+    overflow: hidden;
+}
+
+#footer-section .footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to left, rgba(212, 175, 55, 0.5), transparent);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#footer-section .footer-link:hover::after {
+    width: 100%;
+}
+
+/* ---- Social Icon Ripple ---- */
+#footer-section .social-icon-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+}
+
+#footer-section .social-icon-btn:hover::before {
+    opacity: 1;
+}
+
+/* ---- Stat Number Glow & Pulse ---- */
+#footer-section .stat-number {
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+    transition: text-shadow 0.4s ease;
+    display: inline-block;
+}
+
+#footer-section .stat-box:hover .stat-number {
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    transform: scale(1.05);
+}
+
+#footer-section .stat-box {
+    transition: transform 0.4s ease;
+}
+
+#footer-section .stat-number.counting {
+    animation: footer-numberPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes footer-numberPulse {
+    0%   { text-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+    100% { text-shadow: 0 0 30px rgba(212, 175, 55, 0.5); }
+}
+
+/* ---- Scroll Top Button Active ---- */
+#footer-section #scrollTopBtn.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ---- Responsive Touch ---- */
+@media (max-width: 768px) {
+    #footer-section .social-icon-btn {
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+}
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+    #footer-section .footer-col,
+    #footer-section [data-animate="fade-up"] {
+        opacity: 1;
+        transform: none;
+    }
+
+    #footer-section #footerParticles {
+        display: none;
+    }
+}

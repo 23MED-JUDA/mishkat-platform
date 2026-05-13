@@ -1,0 +1,223 @@
+/* ===== Keyframes - Packages Section ===== */
+@keyframes packages-pulse-slow {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.95); }
+}
+
+@keyframes packages-float-up {
+    0% { opacity: 0; transform: translateY(60px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes packages-light-sweep {
+    0% { transform: translateX(100%) rotate(25deg); }
+    100% { transform: translateX(-100%) rotate(25deg); }
+}
+
+@keyframes packages-gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes packages-gentle-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes packages-soft-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(196, 146, 37, 0.08); }
+    50% { box-shadow: 0 0 40px rgba(196, 146, 37, 0.15); }
+}
+
+/* ===== Animate Pulse Slow ===== */
+#packages-section .animate-pulse-slow {
+    animation: packages-pulse-slow 3s ease-in-out infinite;
+}
+
+/* ===== Card Base ===== */
+#packages-section .pricing-card {
+    opacity: 0;
+    transform: translateY(60px);
+}
+
+#packages-section .pricing-card.is-visible {
+    animation: packages-float-up 0.8s ease-out forwards;
+}
+
+/* ===== Card Glow (Mouse Tracking) ===== */
+#packages-section .card-glow {
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(163, 193, 153, 0.1),
+        transparent 40%
+    );
+}
+
+#packages-section .pricing-card:hover .card-glow {
+    opacity: 1;
+}
+
+#packages-section .featured-glow {
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(196, 146, 37, 0.07),
+        transparent 40%
+    );
+}
+
+/* ===== Card Hover ===== */
+#packages-section .pricing-card .card-inner {
+    transform: translateY(0) scale(1);
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#packages-section .pricing-card:hover .card-inner {
+    transform: translateY(-10px) scale(1.015);
+}
+
+/* ===== Featured Card Animated Border ===== */
+#packages-section .pricing-card.featured .card-inner::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1.5rem;
+    padding: 1.5px;
+    background: linear-gradient(
+        135deg,
+        transparent 15%,
+        rgba(196, 146, 37, 0.25) 35%,
+        rgba(196, 146, 37, 0.5) 50%,
+        rgba(196, 146, 37, 0.25) 65%,
+        transparent 85%
+    );
+    background-size: 250% 250%;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: packages-gradient-shift 5s ease infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Featured hover glow pulse */
+#packages-section .pricing-card.featured:hover .card-inner {
+    animation: packages-soft-glow 2s ease-in-out infinite;
+}
+
+/* ===== Feature List Hover ===== */
+#packages-section .feature-item {
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#packages-section .pricing-card:hover .feature-item {
+    transform: translateX(-5px);
+}
+
+#packages-section .pricing-card .feature-item:nth-child(1) { transition-delay: 0.02s; }
+#packages-section .pricing-card .feature-item:nth-child(2) { transition-delay: 0.04s; }
+#packages-section .pricing-card .feature-item:nth-child(3) { transition-delay: 0.06s; }
+#packages-section .pricing-card .feature-item:nth-child(4) { transition-delay: 0.08s; }
+#packages-section .pricing-card .feature-item:nth-child(5) { transition-delay: 0.10s; }
+#packages-section .pricing-card .feature-item:nth-child(6) { transition-delay: 0.12s; }
+#packages-section .pricing-card .feature-item:nth-child(7) { transition-delay: 0.14s; }
+#packages-section .pricing-card .feature-item:nth-child(8) { transition-delay: 0.16s; }
+
+/* ===== Button Shine ===== */
+#packages-section .btn-shine::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 45%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0.3) 55%,
+        transparent 70%
+    );
+    transform: translateX(100%) rotate(25deg);
+    transition: none;
+}
+
+#packages-section .btn-featured:hover .btn-shine::after {
+    animation: packages-light-sweep 0.8s ease-out;
+}
+
+#packages-section .btn-featured {
+    box-shadow: 0 4px 20px -4px rgba(196, 146, 37, 0.25);
+    border-radius: 1rem;
+}
+
+#packages-section .btn-featured:hover {
+    box-shadow: 0 10px 40px -4px rgba(196, 146, 37, 0.35);
+    transform: translateY(-2px);
+}
+
+#packages-section .btn-featured:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ===== Ambient Light ===== */
+#packages-section #lightBeam {
+    background:
+        radial-gradient(
+            ellipse 50% 60% at 50% 0%,
+            rgba(163, 193, 153, 0.06) 0%,
+            transparent 60%
+        ),
+        radial-gradient(
+            ellipse 30% 40% at 70% 20%,
+            rgba(196, 146, 37, 0.03) 0%,
+            transparent 50%
+        );
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    #packages-section .pricing-card.featured {
+        margin-top: 0;
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    #packages-section .pricing-card .card-inner {
+        padding: 1.5rem;
+        padding-top: 2rem;
+    }
+    #packages-section .pricing-card.featured .card-inner {
+        padding-top: 2.5rem;
+    }
+}
+
+/* ===== Selection ===== */
+#packages-section ::selection {
+    background: rgba(163, 193, 153, 0.25);
+    color: #514a43;
+}
+
+/* ===== Focus (Accessibility) ===== */
+#packages-section button:focus-visible {
+    outline: 2px solid rgba(196, 146, 37, 0.5);
+    outline-offset: 2px;
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    #packages-section *,
+    #packages-section *::before,
+    #packages-section *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    #packages-section .pricing-card {
+        opacity: 1;
+        transform: none;
+    }
+}

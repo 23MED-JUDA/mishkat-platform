@@ -1,0 +1,10 @@
+# Git ignore file for Mishkat Platform
+.env
+.env.local
+*.log
+node_modules/
+.DS_Store
+Thumbs.db
+/api/uploads/
+*.sql
+database/*.bak

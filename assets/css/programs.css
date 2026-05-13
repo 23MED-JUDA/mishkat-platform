@@ -1,0 +1,855 @@
+/* ========== SECTION WRAPPER ============= */
+#programs-section {
+    position: relative;
+    padding: 5rem 0 6rem;
+    overflow: hidden;
+    background: linear-gradient(170deg, #fdfaf4 0%, #fbf5e9 35%, #f0fdf4 100%);
+}
+
+/* ─── Background Decorations ─── */
+#programs-section .programs-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#programs-section .programs-bg__circle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+#programs-section .programs-bg__circle--1 {
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(26, 122, 74, 0.06), transparent 70%);
+    top: -200px;
+    right: -120px;
+    animation: programsFloatSlow 20s ease-in-out infinite;
+}
+
+#programs-section .programs-bg__circle--2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(224, 191, 114, 0.08), transparent 70%);
+    bottom: -150px;
+    left: -100px;
+    animation: programsFloatSlow 25s ease-in-out infinite reverse;
+}
+
+#programs-section .programs-bg__circle--3 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(26, 122, 74, 0.04), transparent 70%);
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: programsPulse 8s ease-in-out infinite;
+}
+
+#programs-section .programs-bg__pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23155e3a' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes programsFloatSlow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    33% { transform: translateY(-20px) translateX(10px); }
+    66% { transform: translateY(15px) translateX(-8px); }
+}
+
+@keyframes programsPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.04; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.07; }
+}
+
+/* ========= SECTION HEADER ========= */
+#programs-section .section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+#programs-section .section-header__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #155e3a, #1a7a4a);
+    color: #fff;
+    padding: 0.45rem 1.3rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 3px 12px rgba(21, 94, 58, 0.25);
+}
+
+#programs-section .section-header__title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: #0f3b26;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+#programs-section .section-header__title-accent {
+    display: block;
+    background: linear-gradient(135deg, #1a7a4a, #3cc87c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#programs-section .section-header__desc {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.95;
+    color: #3d6b52;
+}
+
+#programs-section .section-header__line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+#programs-section .section-header__line span {
+    width: 45px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e0bf72, transparent);
+    border-radius: 2px;
+}
+
+/* ======== FILTER BAR ============ */
+#programs-section .filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+}
+
+#programs-section .filter-bar__btn {
+    padding: 0.5rem 1.3rem;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    background: rgba(255, 255, 255, 0.7);
+    color: #3d6b52;
+    backdrop-filter: blur(6px);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.04),
+                -2px -2px 6px rgba(255, 255, 255, 0.8);
+}
+
+#programs-section .filter-bar__btn:hover {
+    background: rgba(26, 122, 74, 0.08);
+    border-color: rgba(26, 122, 74, 0.2);
+    color: #155e3a;
+    transform: translateY(-2px);
+}
+
+#programs-section .filter-bar__btn--active {
+    background: linear-gradient(135deg, #155e3a, #1a7a4a) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 14px rgba(21, 94, 58, 0.3);
+}
+
+/* ======= PROGRAMS GRID =========== */
+#programs-section .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    #programs-section .programs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    #programs-section .programs-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
+
+/* ======== PROGRAM CARD — Soft UI ========== */
+#programs-section .program-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 22px;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow:
+        6px 6px 18px rgba(0, 0, 0, 0.04),
+        -4px -4px 12px rgba(255, 255, 255, 0.9);
+
+    /* Animation initial */
+    opacity: 0;
+    transform: translateY(50px) scale(0.97);
+}
+
+#programs-section .program-card.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Hover */
+#programs-section .program-card:hover {
+    transform: translateY(-10px) scale(1.02) !important;
+    box-shadow:
+        10px 16px 40px rgba(26, 122, 74, 0.12),
+        -4px -4px 12px rgba(255, 255, 255, 1),
+        0 0 0 1px rgba(26, 122, 74, 0.08);
+    border-color: rgba(26, 122, 74, 0.12);
+}
+
+/* Top glow on hover */
+#programs-section .program-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1a7a4a, #3cc87c, #e0bf72);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s ease;
+    z-index: 5;
+}
+
+#programs-section .program-card:hover::after {
+    transform: scaleX(1);
+}
+
+/* ─── Card Image ─── */
+#programs-section .program-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+#programs-section .program-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+#programs-section .program-card:hover .program-card__image {
+    transform: scale(1.08);
+    filter: brightness(1.05);
+}
+
+/* Image overlay */
+#programs-section .program-card__image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(15, 59, 38, 0.6) 100%);
+    z-index: 2;
+    transition: opacity 0.4s ease;
+}
+
+#programs-section .program-card:hover .program-card__image-overlay {
+    opacity: 0.8;
+}
+
+/* Category Badge on Image */
+#programs-section .program-card__category {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    padding: 0.3rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s ease;
+}
+
+#programs-section .program-card:hover .program-card__category {
+    transform: scale(1.05);
+}
+
+#programs-section .program-card__category--quran {
+    background: rgba(26, 122, 74, 0.85);
+    color: #fff;
+}
+
+#programs-section .program-card__category--tajweed {
+    background: rgba(224, 191, 114, 0.9);
+    color: #5a4520;
+}
+
+#programs-section .program-card__category--kids {
+    background: rgba(59, 130, 246, 0.85);
+    color: #fff;
+}
+
+#programs-section .program-card__category--islamic {
+    background: rgba(139, 92, 246, 0.85);
+    color: #fff;
+}
+
+/* Lessons count on image */
+#programs-section .program-card__lessons-badge {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.75rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #155e3a;
+}
+
+/* ─── Card Body ─── */
+#programs-section .program-card__body {
+    padding: 1.4rem 1.3rem 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#programs-section .program-card__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f3b26;
+    margin-bottom: 0.55rem;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+#programs-section .program-card:hover .program-card__title {
+    color: #1a7a4a;
+}
+
+#programs-section .program-card__desc {
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: #5a7d6a;
+    margin-bottom: 1rem;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ─── Card Meta ─── */
+#programs-section .program-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(26, 122, 74, 0.08);
+    margin-bottom: 1rem;
+}
+
+#programs-section .program-card__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    color: #6b8f7a;
+    font-weight: 500;
+}
+
+#programs-section .program-card__meta-item svg {
+    width: 14px;
+    height: 14px;
+    color: #1a7a4a;
+    opacity: 0.6;
+}
+
+/* ─── Card Footer ─── */
+#programs-section .program-card__footer {
+    padding: 0 1.3rem 1.3rem;
+}
+
+#programs-section .program-card__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 2px solid rgba(26, 122, 74, 0.15);
+    border-radius: 14px;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #155e3a;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.35s ease;
+}
+
+#programs-section .program-card__btn:hover {
+    background: linear-gradient(135deg, #155e3a, #1a7a4a);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 16px rgba(21, 94, 58, 0.25);
+}
+
+#programs-section .program-card__btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+#programs-section .program-card__btn:hover svg {
+    transform: translateX(-4px);
+}
+
+/* ========= SECTION FOOTER =========== */
+#programs-section .section-footer {
+    text-align: center;
+    margin-top: 3.5rem;
+}
+
+#programs-section .section-footer__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 2.4rem;
+    background: linear-gradient(135deg, #155e3a, #1a7a4a);
+    color: #fff;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 6px 20px rgba(21, 94, 58, 0.28);
+}
+
+#programs-section .section-footer__btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(21, 94, 58, 0.38);
+}
+
+#programs-section .section-footer__btn svg {
+    transition: transform 0.3s ease;
+}
+
+#programs-section .section-footer__btn:hover svg {
+    transform: rotate(180deg) translateX(5px);
+}
+
+/* ======= BACK BUTTON  (course.html) ============= */
+#course-detail-section .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #155e3a;
+    background: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+#course-detail-section .back-btn:hover {
+    background: #155e3a;
+    color: #fff;
+    transform: translateX(4px);
+}
+
+/* ======= COURSE DETAIL PAGE =========== */
+#course-detail-section .course-detail__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 0;
+    gap: 1rem;
+    color: #5a7d6a;
+    font-size: 0.9rem;
+}
+
+#course-detail-section .course-detail__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(26, 122, 74, 0.15);
+    border-top-color: #1a7a4a;
+    border-radius: 50%;
+    animation: courseDetailSpin 0.8s linear infinite;
+}
+
+@keyframes courseDetailSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ─── Course Hero ─── */
+#course-detail-section .course-hero {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    animation: courseDetailFadeInUp 0.7s ease forwards;
+}
+
+#course-detail-section .course-hero__image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+@media (max-width: 640px) {
+    #course-detail-section .course-hero__image { height: 220px; }
+}
+
+#course-detail-section .course-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(10, 41, 25, 0.85) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem 2.5rem;
+}
+
+#course-detail-section .course-hero__category {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.8rem;
+}
+
+#course-detail-section .course-hero__category--quran { background: rgba(26, 122, 74, 0.9); }
+#course-detail-section .course-hero__category--tajweed { background: rgba(224, 191, 114, 0.9); color: #5a4520; }
+#course-detail-section .course-hero__category--kids { background: rgba(59, 130, 246, 0.9); }
+#course-detail-section .course-hero__category--islamic { background: rgba(139, 92, 246, 0.9); }
+
+#course-detail-section .course-hero__title {
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+#course-detail-section .course-hero__subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    max-width: 550px;
+}
+
+/* ─── Course Content Grid ─── */
+#course-detail-section .course-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    animation: courseDetailFadeInUp 0.7s ease 0.2s forwards;
+    opacity: 0;
+}
+
+@media (min-width: 768px) {
+    #course-detail-section .course-content { grid-template-columns: 2fr 1fr; }
+}
+
+/* ─── Course Info Card ─── */
+#course-detail-section .course-info-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.04),
+                -4px -4px 12px rgba(255, 255, 255, 0.9);
+}
+
+#course-detail-section .course-info-card__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f3b26;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#course-detail-section .course-info-card__title svg {
+    width: 22px;
+    height: 22px;
+    color: #1a7a4a;
+}
+
+#course-detail-section .course-info-card__text {
+    font-size: 0.88rem;
+    line-height: 2;
+    color: #4a6d5a;
+    margin-bottom: 1.5rem;
+}
+
+/* ─── Course Features List ─── */
+#course-detail-section .course-features {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+#course-detail-section .course-features__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #3d6b52;
+}
+
+#course-detail-section .course-features__icon {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    background: linear-gradient(135deg, #dcfce7, #b6f2cd);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+#course-detail-section .course-features__icon svg {
+    width: 12px;
+    height: 12px;
+    color: #155e3a;
+}
+
+/* ─── Course Sidebar ─── */
+#course-detail-section .course-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#course-detail-section .course-sidebar__card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 6px 6px 18px rgba(0, 0, 0, 0.04),
+                -4px -4px 12px rgba(255, 255, 255, 0.9);
+}
+
+#course-detail-section .course-sidebar__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f3b26;
+    margin-bottom: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(26, 122, 74, 0.08);
+}
+
+/* ─── Sidebar Details List ─── */
+#course-detail-section .course-details-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+#course-detail-section .course-details-list__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+}
+
+#course-detail-section .course-details-list__label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #6b8f7a;
+    font-weight: 500;
+}
+
+#course-detail-section .course-details-list__label svg {
+    width: 16px;
+    height: 16px;
+    color: #1a7a4a;
+    opacity: 0.6;
+}
+
+#course-detail-section .course-details-list__value {
+    font-weight: 700;
+    color: #0f3b26;
+}
+
+/* ─── Enroll Button ─── */
+#course-detail-section .course-enroll-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.9rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #155e3a, #1a7a4a);
+    color: #fff;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    box-shadow: 0 4px 16px rgba(21, 94, 58, 0.3);
+}
+
+#course-detail-section .course-enroll-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(21, 94, 58, 0.4);
+}
+
+/* ─── Teacher Card ─── */
+#course-detail-section .teacher-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#course-detail-section .teacher-card__avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 2px solid rgba(26, 122, 74, 0.15);
+}
+
+#course-detail-section .teacher-card__name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f3b26;
+    margin-bottom: 0.2rem;
+}
+
+#course-detail-section .teacher-card__role {
+    font-size: 0.75rem;
+    color: #6b8f7a;
+}
+
+/* ─── Curriculum List ─── */
+#course-detail-section .curriculum-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+#course-detail-section .curriculum-list__item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    background: rgba(240, 253, 244, 0.5);
+    border-radius: 12px;
+    font-size: 0.82rem;
+    color: #3d6b52;
+    transition: all 0.3s ease;
+}
+
+#course-detail-section .curriculum-list__item:hover {
+    background: rgba(26, 122, 74, 0.08);
+    transform: translateX(-4px);
+}
+
+#course-detail-section .curriculum-list__num {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    background: linear-gradient(135deg, #1a7a4a, #3cc87c);
+    color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+/* ====== ANIMATIONS ============ */
+@keyframes courseDetailFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Animate on Scroll (programs section) ─── */
+#programs-section [data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#programs-section [data-animate].is-animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Card Hidden for filter (programs section) ─── */
+#programs-section .program-card--hidden {
+    opacity: 0 !important;
+    transform: scale(0.85) translateY(20px) !important;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 640px) {
+    #programs-section { padding: 3rem 0 4rem; }
+    #programs-section .section-header { margin-bottom: 1.8rem; }
+    #programs-section .filter-bar { gap: 0.4rem; margin-bottom: 2rem; }
+    #programs-section .filter-bar__btn { padding: 0.4rem 0.9rem; font-size: 0.75rem; }
+    #programs-section .program-card__image-wrapper { height: 170px; }
+    #course-detail-section .course-hero__overlay { padding: 1.5rem; }
+    #course-detail-section .course-info-card { padding: 1.5rem; }
+}

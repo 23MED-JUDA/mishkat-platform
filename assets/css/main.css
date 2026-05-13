@@ -1,0 +1,25 @@
+/**
+ * التنسيقات الأساسية للمنصة
+ * تحتوي على الألوان الرئيسية والخطوط والحركات العامة
+ */
+
+body { 
+    font-family: 'Tajawal', sans-serif; 
+    scroll-behavior: smooth; 
+    background-color: white; 
+    overflow-x: hidden; 
+}
+
+/* الألوان الخاصة بالهوية البصرية */
+.bg-vision { background-color: #064e3b; }
+.bg-stats { background-color: #059669; }
+.bg-section-light { background-color: #f0fdf4; } /* اللون الزمردي الفاتح للخلفيات */
+.text-vision { color: #064e3b; }
+.text-primary-emerald { color: #059669; }
+
+/* حركات الظهور */
+@keyframes revealUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+.reveal-text { animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }

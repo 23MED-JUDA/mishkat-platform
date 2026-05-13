@@ -401,7 +401,7 @@ require_once 'includes/db.php';
                     </div>
 
                     <!-- زر تسجيل الدخول -->
-                    <a href="login.php"
+                    <a href="/login"
                        class="navbar__login-btn px-5 py-2.5 text-sm font-bold
                               text-mishkat-green-700 bg-mishkat-green-50
                               hover:bg-mishkat-green-100 hover:text-mishkat-green-800

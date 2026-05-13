@@ -1,6 +1,10 @@
-<?php
 session_start();
 require_once 'includes/db.php';
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: /dashboard");
+    exit();
+}
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_role'] = $user['role'];
-                header("Location: dashboard.php");
+                header("Location: /dashboard");
                 exit();
             }
         } else {
@@ -41,16 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>تسجيل الدخول | مِشكاة</title>
     <?php include 'includes/header_meta.php'; ?>
 </head>
-<body class="bg-[#f0f4f3] flex items-center justify-center min-h-screen p-4 overflow-hidden relative">
+<body class="bg-[#f0f4f3] flex items-center justify-center min-h-screen p-3 md:p-4 overflow-x-hidden relative">
 
     <!-- Background Elements -->
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-mishkat-green-100/50 rounded-full blur-[120px]"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-mishkat-beige-100/50 rounded-full blur-[120px]"></div>
 
-    <div class="w-full max-w-6xl luxury-card overflow-hidden flex flex-col md:flex-row relative z-10 shadow-2xl min-h-[600px]">
+    <div class="w-full max-w-6xl luxury-card overflow-hidden flex flex-col md:flex-row relative z-10 shadow-2xl md:min-h-[600px]">
         
         <!-- Branding Side -->
-        <div class="w-full md:w-1/2 bg-mishkat-green-900 p-12 text-white flex flex-col justify-between relative overflow-hidden">
+        <div class="w-full md:w-1/2 bg-mishkat-green-900 p-6 md:p-12 text-white flex flex-col justify-between relative overflow-hidden">
             <div class="absolute top-0 right-0 w-full h-full opacity-10">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <path d="M0 0 L100 0 L100 100 L0 100 Z" fill="url(#grad)" />
@@ -64,17 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="relative z-10">
-                <a href="index.php" class="flex items-center gap-3 mb-12">
-                    <div class="w-12 h-12 bg-mishkat-gold-500 rounded-2xl flex items-center justify-center shadow-lg shadow-mishkat-gold-900/20">
-                        <i class="fas fa-book-open text-white text-xl"></i>
+                <a href="index.php" class="flex items-center gap-3 mb-6 md:mb-12">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-mishkat-gold-500 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg shadow-mishkat-gold-900/20">
+                        <i class="fas fa-book-open text-white text-lg md:text-xl"></i>
                     </div>
-                    <span class="text-3xl font-black font-tajawal">مِشكاة</span>
+                    <span class="text-2xl md:text-3xl font-black font-tajawal">مِشكاة</span>
                 </a>
-                <h1 class="text-4xl font-black mb-6 leading-tight font-tajawal">نورٌ في طريق<br><span class="text-mishkat-gold-400">العلم والهدى</span></h1>
-                <p class="text-mishkat-green-100 text-lg leading-relaxed max-w-sm">انضم إلينا في رحلة معرفية فريدة تهدف إلى تزكية النفس ونشر قيم العلم الشرعي والوسطية.</p>
+                <h1 class="text-2xl md:text-4xl font-black mb-3 md:mb-6 leading-tight font-tajawal">نورٌ في طريق<br><span class="text-mishkat-gold-400">العلم والهدى</span></h1>
+                <p class="text-mishkat-green-100 text-sm md:text-lg leading-relaxed max-w-sm">انضم إلينا في رحلة معرفية فريدة تهدف إلى تزكية النفس ونشر قيم العلم الشرعي والوسطية.</p>
             </div>
 
-            <div class="relative z-10 pt-12">
+            <div class="relative z-10 pt-8 md:pt-12 hidden sm:block">
                 <div class="flex gap-4">
                     <div class="p-3 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 text-center flex-1">
                         <p class="text-2xl font-black text-mishkat-gold-300">10k+</p>
@@ -89,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Form Side -->
-        <div class="w-full md:w-1/2 bg-white p-12 flex flex-col justify-center">
+        <div class="w-full md:w-1/2 bg-white p-6 md:p-12 flex flex-col justify-center">
             <div class="mb-10 text-center md:text-right">
                 <h2 class="text-3xl font-black text-mishkat-green-900 font-tajawal mb-2">تسجيل الدخول</h2>
                 <p class="text-gray-400 font-medium">مرحباً بك مجدداً في عائلة مِشكاة</p>
@@ -128,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-                <button type="submit" class="w-full py-4 btn-luxury text-lg shadow-xl shadow-mishkat-green-900/10 hover:shadow-mishkat-green-900/20">
+                <button type="submit" class="w-full py-3.5 md:py-4 btn-luxury text-base md:text-lg shadow-xl shadow-mishkat-green-900/10 hover:shadow-mishkat-green-900/20">
                     دخول للمنصة
                 </button>
 

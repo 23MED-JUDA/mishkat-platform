@@ -255,6 +255,39 @@
     @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
     .animate-fadeIn  { animation: fadeIn  0.5s ease forwards; }
     .animate-slideIn { animation: slideIn 0.4s ease forwards; }
+
+    /* --- Mobile & Responsive Optimizations --- */
+    @media (max-width: 768px) {
+        body { font-size: 14px; }
+        .luxury-card { border-radius: 1.5rem !important; padding: 1.25rem !important; }
+        .btn-luxury { width: 100%; text-align: center; }
+        
+        /* Grid adjustments */
+        .grid { gap: 1rem !important; }
+        
+        /* Table responsiveness */
+        .table-container { 
+            width: 100%; 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
+            border-radius: 1rem;
+        }
+        
+        /* Typography */
+        h1 { font-size: 1.75rem !important; }
+        h2 { font-size: 1.35rem !important; }
+        h3 { font-size: 1.15rem !important; }
+
+        /* Navigation mobile height */
+        .glass-nav { padding: 0.75rem 1rem !important; }
+    }
+
+    /* Prevent accidental horizontal scrolling */
+    html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
+        position: relative;
+    }
 </style>
 
 <script src="assets/js/mishkat-ui.js"></script>

@@ -127,9 +127,21 @@ function sidebarItem($link, $isActive) {
         /* Sidebar transitions */
         #sidebar {
             transform: translateX(100%);
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
         }
-        #sidebar.open { transform: translateX(0); }
+        #sidebar.open { transform: translateX(0) !important; }
+        
+        #sidebarOverlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        #sidebarOverlay.active {
+            display: block !important;
+            opacity: 1 !important;
+            pointer-events: auto;
+        }
 
         /* Desktop: always visible */
         @media (min-width: 1024px) {
@@ -159,26 +171,26 @@ function sidebarItem($link, $isActive) {
 
     <!-- ─── MOBILE OVERLAY ─── -->
     <div id="sidebarOverlay" 
-         class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden lg:hidden"
+         class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden lg:hidden transition-all duration-300"
          onclick="closeSidebar()"></div>
 
     <!-- ─── SIDEBAR ─── -->
-    <aside id="sidebar" class="fixed top-0 right-0 h-screen w-72 luxury-sidebar text-white z-50 overflow-y-auto">
+    <aside id="sidebar" class="fixed top-0 right-0 h-screen w-72 luxury-sidebar text-white z-50 overflow-y-auto shadow-2xl">
         
         <!-- Logo -->
-        <div class="px-6 pt-6 pb-5 border-b border-white/5 dark:border-mishkat-gold-500/10 flex items-center justify-between">
+        <div class="px-6 pt-8 pb-6 border-b border-white/5 dark:border-mishkat-gold-500/10 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-mishkat-gold-500 rounded-2xl flex items-center justify-center shadow-md flex-shrink-0">
-                    <span class="material-icons-outlined text-black text-xl">mosque</span>
+                <div class="w-11 h-11 bg-mishkat-gold-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                    <span class="material-icons-outlined text-black text-2xl">mosque</span>
                 </div>
                 <div>
-                    <h1 class="text-lg font-black font-tajawal leading-none">مِشـكاة</h1>
-                    <p class="text-[9px] uppercase tracking-widest text-white/30 dark:text-mishkat-gold-500/50 mt-0.5">منصة تعليمية</p>
+                    <h1 class="text-xl font-black font-tajawal leading-none">مِشـكاة</h1>
+                    <p class="text-[10px] uppercase tracking-widest text-white/30 dark:text-mishkat-gold-500/50 mt-1">منصة تعليمية</p>
                 </div>
             </div>
             <!-- Close button (mobile only) -->
-            <button onclick="closeSidebar()" class="lg:hidden w-8 h-8 flex items-center justify-center rounded-xl bg-white/10 text-white/60 hover:text-white">
-                <span class="material-icons-outlined text-[18px]">close</span>
+            <button onclick="closeSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-2xl bg-white/10 text-white/80 hover:text-white transition-all active:scale-90">
+                <span class="material-icons-outlined text-xl">close</span>
             </button>
         </div>
 
@@ -313,14 +325,28 @@ function sidebarItem($link, $isActive) {
     <script>
         /* ── Sidebar ── */
         function openSidebar() {
-            document.getElementById('sidebar').classList.add('open');
-            document.getElementById('sidebarOverlay').classList.remove('hidden');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.add('open');
+            overlay.classList.remove('hidden');
+            // Force reflow
+            void overlay.offsetWidth;
+            overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('sidebarOverlay').classList.add('hidden');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                if (!sidebar.classList.contains('open')) {
+                    overlay.classList.add('hidden');
+                }
+            }, 300);
             document.body.style.overflow = '';
         }
 

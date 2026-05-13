@@ -23,15 +23,15 @@ $dailyVerse = $verses[array_rand($verses)];
 <div class="space-y-10 animate-fadeIn" dir="rtl">
     
     <!-- Hero Section with Daily Verse -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 relative bg-mishkat-green-900 rounded-[3rem] p-10 md:p-14 text-white overflow-hidden shadow-2xl">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 relative bg-mishkat-green-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-14 text-white overflow-hidden shadow-2xl">
             <div class="relative z-10">
-                <h1 class="text-3xl md:text-5xl font-black mb-4 font-tajawal leading-tight">مرحباً بك، <span class="text-mishkat-gold-400"><?php echo explode(' ', $userName)[0]; ?></span> 👋</h1>
-                <p class="text-mishkat-green-200 text-lg font-medium max-w-xl leading-relaxed mb-8">نحن فخورون بتقدمك المستمر. استمر في السعي نحو العلم والتميز.</p>
+                <h1 class="text-2xl md:text-5xl font-black mb-3 font-tajawal leading-tight">مرحباً بك، <span class="text-mishkat-gold-400"><?php echo explode(' ', $userName)[0]; ?></span> 👋</h1>
+                <p class="text-mishkat-green-200 text-sm md:text-lg font-medium max-w-xl leading-relaxed mb-6 md:mb-8">نحن فخورون بتقدمك المستمر. استمر في السعي نحو العلم والتميز.</p>
                 
-                <div class="flex gap-4">
-                    <a href="?page=tasks" class="px-8 py-3 bg-white text-mishkat-green-900 rounded-2xl font-black text-sm shadow-xl hover:scale-105 transition-all">المهام اليومية</a>
-                    <a href="?page=courses" class="px-8 py-3 bg-mishkat-green-700 text-white rounded-2xl font-black text-sm hover:bg-mishkat-green-600 transition-all">دوراتي</a>
+                <div class="flex flex-wrap gap-3 md:gap-4">
+                    <a href="?page=tasks" class="flex-1 md:flex-none text-center px-6 md:px-8 py-3 bg-white text-mishkat-green-900 rounded-xl md:rounded-2xl font-black text-xs md:text-sm shadow-xl hover:scale-105 transition-all">المهام اليومية</a>
+                    <a href="?page=courses" class="flex-1 md:flex-none text-center px-6 md:px-8 py-3 bg-mishkat-green-700 text-white rounded-xl md:rounded-2xl font-black text-xs md:text-sm hover:bg-mishkat-green-600 transition-all">دوراتي</a>
                 </div>
             </div>
             <div class="absolute top-0 right-0 w-80 h-80 bg-mishkat-green-600 rounded-full -translate-x-10 -translate-y-20 blur-[100px] opacity-30"></div>
@@ -39,56 +39,56 @@ $dailyVerse = $verses[array_rand($verses)];
         </div>
 
         <!-- Daily Inspiration Card -->
-        <div class="luxury-card p-10 flex flex-col justify-center items-center text-center border-none shadow-xl bg-gradient-to-br from-mishkat-beige-50 to-white dark:from-mishkat-green-900/40 dark:to-mishkat-green-950">
-            <span class="material-icons-outlined text-mishkat-gold-500 text-4xl mb-4">format_quote</span>
-            <h3 class="text-2xl font-amiri font-bold text-mishkat-green-900 dark:text-mishkat-gold-200 mb-2 leading-relaxed italic">"<?php echo $dailyVerse['text']; ?>"</h3>
-            <p class="text-[10px] font-black text-mishkat-gold-600 uppercase tracking-widest"><?php echo $dailyVerse['ref']; ?></p>
+        <div class="luxury-card p-6 md:p-10 flex flex-col justify-center items-center text-center border-none shadow-xl bg-gradient-to-br from-mishkat-beige-50 to-white dark:from-mishkat-green-900/40 dark:to-mishkat-green-950">
+            <span class="material-icons-outlined text-mishkat-gold-500 text-3xl md:text-4xl mb-4">format_quote</span>
+            <h3 class="text-lg md:text-2xl font-amiri font-bold text-mishkat-green-900 dark:text-mishkat-gold-200 mb-2 leading-relaxed italic">"<?php echo $dailyVerse['text']; ?>"</h3>
+            <p class="text-[9px] md:text-[10px] font-black text-mishkat-gold-600 uppercase tracking-widest"><?php echo $dailyVerse['ref']; ?></p>
         </div>
     </div>
 
     <!-- Quick Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="luxury-card p-8 group hover:-translate-y-2 transition-all">
-            <div class="flex items-center gap-5">
-                <div class="w-14 h-14 rounded-2xl bg-mishkat-green-50 dark:bg-mishkat-green-900/30 text-mishkat-green-600 dark:text-mishkat-green-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                    <span class="material-icons-outlined text-3xl">auto_stories</span>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div class="luxury-card p-4 md:p-8 group hover:-translate-y-2 transition-all">
+            <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-right gap-3 md:gap-5">
+                <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-mishkat-green-50 dark:bg-mishkat-green-900/30 text-mishkat-green-600 dark:text-mishkat-green-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
+                    <span class="material-icons-outlined text-xl md:text-3xl">auto_stories</span>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">المسارات</p>
-                    <h4 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $enrollCount; ?></h4>
+                    <p class="text-[8px] md:text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">المسارات</p>
+                    <h4 class="text-lg md:text-2xl font-black text-gray-900 dark:text-white"><?php echo $enrollCount; ?></h4>
                 </div>
             </div>
         </div>
-        <div class="luxury-card p-8 group hover:-translate-y-2 transition-all">
-            <div class="flex items-center gap-5">
-                <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                    <span class="material-icons-outlined text-3xl">task_alt</span>
+        <div class="luxury-card p-4 md:p-8 group hover:-translate-y-2 transition-all">
+            <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-right gap-3 md:gap-5">
+                <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
+                    <span class="material-icons-outlined text-xl md:text-3xl">task_alt</span>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">المهام المنجزة</p>
-                    <h4 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $taskCount; ?></h4>
+                    <p class="text-[8px] md:text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">المهام</p>
+                    <h4 class="text-lg md:text-2xl font-black text-gray-900 dark:text-white"><?php echo $taskCount; ?></h4>
                 </div>
             </div>
         </div>
-        <div class="luxury-card p-8 group hover:-translate-y-2 transition-all">
-            <div class="flex items-center gap-5">
-                <div class="w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-900/30 text-amber-500 dark:text-amber-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                    <span class="material-icons-outlined text-3xl">military_tech</span>
+        <div class="luxury-card p-4 md:p-8 group hover:-translate-y-2 transition-all">
+            <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-right gap-3 md:gap-5">
+                <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-amber-50 dark:bg-amber-900/30 text-amber-500 dark:text-amber-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
+                    <span class="material-icons-outlined text-xl md:text-3xl">military_tech</span>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">نقاط الخبرة</p>
-                    <h4 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $totalPoints; ?></h4>
+                    <p class="text-[8px] md:text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">النقاط</p>
+                    <h4 class="text-lg md:text-2xl font-black text-gray-900 dark:text-white"><?php echo $totalPoints; ?></h4>
                 </div>
             </div>
         </div>
-        <div class="luxury-card p-8 group hover:-translate-y-2 transition-all">
-            <div class="flex items-center gap-5">
-                <div class="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                    <span class="material-icons-outlined text-3xl">notifications</span>
+        <div class="luxury-card p-4 md:p-8 group hover:-translate-y-2 transition-all">
+            <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-right gap-3 md:gap-5">
+                <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:rotate-12 transition-transform">
+                    <span class="material-icons-outlined text-xl md:text-3xl">notifications</span>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">إشعارات</p>
-                    <h4 class="text-2xl font-black text-gray-900 dark:text-white">3</h4>
+                    <p class="text-[8px] md:text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">تنبيهات</p>
+                    <h4 class="text-lg md:text-2xl font-black text-gray-900 dark:text-white">3</h4>
                 </div>
             </div>
         </div>

@@ -339,7 +339,7 @@ require_once 'includes/db.php';
 
                             <!-- خيارات التسجيل -->
                             <div class="p-2">
-                                <a href="register.php"
+                                <a href="/register"
                                    class="navbar__dropdown-item flex items-center gap-3 px-4 py-3
                                           rounded-xl text-sm font-medium text-mishkat-green-800
                                           hover:bg-mishkat-green-50 hover:text-mishkat-green-600
@@ -366,7 +366,7 @@ require_once 'includes/db.php';
                                     </div>
                                 </a>
 
-                                <a href="register.php"
+                                <a href="/register"
                                    class="navbar__dropdown-item flex items-center gap-3 px-4 py-3
                                           rounded-xl text-sm font-medium text-mishkat-green-800
                                           hover:bg-mishkat-green-50 hover:text-mishkat-green-600
@@ -474,7 +474,7 @@ require_once 'includes/db.php';
 
                 <!-- زر اشترك في الموبايل -->
                 <div class="pt-4 border-t border-mishkat-green-100/50">
-                    <a href="register.php"
+                    <a href="/register"
                        class="block w-full text-center px-5 py-3
                               bg-gradient-to-l from-mishkat-green-700 to-mishkat-green-600
                               text-white text-sm font-bold rounded-xl
@@ -555,7 +555,7 @@ require_once 'includes/db.php';
 
                 <!-- CTA Buttons -->
 <div class="hero-buttons" id="heroButtons">
-    <a href="register.php"
+    <a href="/register"
        id="heroStartBtn"
        class="btn-primary" role="button">
         <span class="btn-text">ابدأ رحلتك</span>
@@ -988,8 +988,8 @@ require_once 'includes/db.php';
 
                                         <!-- CTA Button -->
                     <div class="relative z-10">
-    <button id="packageBtn2"
-            class="btn-featured w-full py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-500 relative overflow-hidden group/btn">
+    <a href="/register" id="packageBtn2"
+            class="btn-featured block text-center w-full py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-500 relative overflow-hidden group/btn">
         <div class="absolute inset-0 bg-gradient-to-r from-packages-gold-500 via-packages-gold-400 to-packages-gold-500 transition-all duration-500"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-packages-gold-400 via-packages-gold-300 to-packages-gold-400 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
         <div class="btn-shine absolute inset-0"></div>
@@ -999,7 +999,7 @@ require_once 'includes/db.php';
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
             </svg>
         </span>
-    </button>
+    </a>
 </div>
                 </div>
             </div>
@@ -1436,7 +1436,7 @@ require_once 'includes/db.php';
     </svg>
 </div>
 
-                <a href="register.php" class="cta-button group relative inline-flex items-center gap-3 bg-gradient-to-l from-study-primary-600 to-study-primary-700 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-study-primary-600/20 hover:shadow-2xl hover:shadow-study-primary-600/30 transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+                <a href="/register" class="cta-button group relative inline-flex items-center gap-3 bg-gradient-to-l from-study-primary-600 to-study-primary-700 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-study-primary-600/20 hover:shadow-2xl hover:shadow-study-primary-600/30 transition-all duration-500 hover:-translate-y-1 overflow-hidden">
                     <span class="absolute inset-0 bg-gradient-to-l from-study-primary-500 to-study-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
                     <span class="relative z-10">سجّل في مشكاة</span>
                     <svg class="relative z-10 w-5 h-5 rotate-180 group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

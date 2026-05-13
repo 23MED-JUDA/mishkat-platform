@@ -38,19 +38,19 @@ if (isset($routes[$path])) {
     }
 }
 
-// Fallback: try to serve the path as a PHP file
-$candidate = ltrim($path, '/') . '.php';
-if (file_exists($candidate)) {
+// Fallback 1: try to serve the path directly if it already ends in .php
+$candidate = ltrim($path, '/');
+if (str_ends_with($candidate, '.php') && file_exists($candidate)) {
     session_write_close();
     require $candidate;
     exit;
 }
 
-// Also try without .php extension
-$candidate2 = ltrim($path, '/');
-if (file_exists($candidate2 . '.php')) {
+// Fallback 2: try adding .php
+$candidate2 = $candidate . '.php';
+if (file_exists($candidate2)) {
     session_write_close();
-    require $candidate2 . '.php';
+    require $candidate2;
     exit;
 }
 

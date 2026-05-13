@@ -100,10 +100,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="text-gray-400 font-medium">مرحباً بك مجدداً في عائلة مِشكاة</p>
             </div>
 
-            <?php if ($error): ?>
+            <?php if (!empty($error)): ?>
                 <div class="bg-red-50 border-r-4 border-red-500 p-4 rounded-xl mb-6 flex items-center gap-3 animate-fadeIn">
                     <i class="fas fa-exclamation-circle text-red-500"></i>
-                    <p class="text-red-700 text-sm font-bold"><?php echo $error; ?></p>
+                    <p class="text-red-700 text-sm font-bold"><?php echo htmlspecialchars($error); ?></p>
                 </div>
             <?php endif; ?>
 

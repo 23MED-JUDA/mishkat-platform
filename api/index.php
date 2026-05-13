@@ -1,6 +1,6 @@
 <?php
 /**
- * Mishkat Platform — Vercel Entry Point (Front Controller)
+ * Mishkat Platform — Vercel Entry Point (Front Controller) v1.2
  * All requests are routed through this file.
  */
 

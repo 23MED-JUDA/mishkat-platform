@@ -4,8 +4,7 @@
  * Handles all AJAX requests for dashboard functionality
  */
 header('Content-Type: application/json');
-session_start();
-require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/session.php';
 
 // Enable error reporting for debugging
 error_reporting(E_ALL);

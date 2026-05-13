@@ -8,7 +8,7 @@
 chdir(dirname(__DIR__));
 
 // Start session
-session_start();
+require_once __DIR__ . '/../includes/session.php';
 
 // Parse the requested path
 $requestUri = $_SERVER['REQUEST_URI'] ?? '/';

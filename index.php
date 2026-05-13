@@ -2073,7 +2073,7 @@ require_once 'includes/db.php';
                         </div>
                         <div>
                             <span class="text-gray-500 text-[11px] block leading-none mb-1">الهاتف</span>
-                            <span class="text-gray-300 text-sm group-hover:text-footer-gold-300 transition-colors duration-300" dir="ltr">+2010383783928</span>
+                            <span class="text-gray-300 text-sm group-hover:text-footer-gold-300 transition-colors duration-300" dir="ltr">+201095125229</span>
                         </div>
                     </a>
 
@@ -2083,7 +2083,7 @@ require_once 'includes/db.php';
                         </div>
                         <div>
                             <span class="text-gray-500 text-[11px] block leading-none mb-1">الموقع</span>
-                            <span class="text-gray-300 text-sm">الدقهلية _ المنصورة</span>
+                            <span class="text-gray-300 text-sm">الغربية _ المحلة الكبري</span>
                         </div>
                     </div>
 
@@ -2161,7 +2161,7 @@ require_once 'includes/db.php';
 
                     <!-- فيسبوك -->
                     <a 
-                        href="https://www.facebook.com/share/17dVRr4zdF/" 
+                        href="https://web.facebook.com/judax2/" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#1877F2]/20 hover:border-[#1877F2]/30 hover:text-[#1877F2] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#1877F2]/10" 

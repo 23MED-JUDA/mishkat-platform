@@ -44,6 +44,8 @@
             subscribeDropdown: null,
             mobileMenuBtn:     null,
             mobileMenu:        null,
+            mobileOverlay:     null,
+            closeMobileBtn:    null,
             mobileCloseAreas:  null,
             navLinks:          null,
             mobileLinks:       null,
@@ -65,6 +67,8 @@
             this.dom.subscribeDropdown = section.querySelector('#subscribeDropdown');
             this.dom.mobileMenuBtn     = section.querySelector('#mobileMenuBtn');
             this.dom.mobileMenu        = section.querySelector('#mobileMenu');
+            this.dom.mobileOverlay     = section.querySelector('#mobileMenuOverlay');
+            this.dom.closeMobileBtn    = section.querySelector('#closeMobileBtn');
             this.dom.mobileCloseAreas  = section.querySelectorAll('[data-mobile-close]');
             this.dom.navLinks          = section.querySelectorAll('.nav-link');
             this.dom.mobileLinks       = section.querySelectorAll('.mobile-nav-link');
@@ -97,6 +101,14 @@
                 this.dom.mobileMenuBtn.addEventListener('click', this.toggleMobileMenu.bind(this));
             }
 
+            if (this.dom.closeMobileBtn) {
+                this.dom.closeMobileBtn.addEventListener('click', this.closeMobileMenu.bind(this));
+            }
+
+            if (this.dom.mobileOverlay) {
+                this.dom.mobileOverlay.addEventListener('click', this.closeMobileMenu.bind(this));
+            }
+
             // إغلاق الموبايل بالنقر على الخلفية
             this.dom.mobileCloseAreas.forEach((area) => {
                 area.addEventListener('click', this.closeMobileMenu.bind(this));
@@ -105,7 +117,7 @@
             // إغلاق الموبايل بالنقر على رابط
             this.dom.mobileLinks.forEach((link) => {
                 link.addEventListener('click', () => {
-                    setTimeout(() => this.closeMobileMenu(), 200);
+                    setTimeout(() => this.closeMobileMenu(), 300);
                 });
             });
 
@@ -164,43 +176,49 @@
         // --- قائمة الموبايل ---
         openMobileMenu() {
             this.state.isMobileMenuOpen = true;
-            this.dom.mobileMenu.classList.add('navbar__mobile-menu--active');
-            this.dom.mobileMenu.classList.remove('max-h-0');
-            this.dom.mobileMenu.classList.add('max-h-screen', 'pb-6');
-            this.dom.mobileMenu.setAttribute('aria-hidden', 'false');
-            this.dom.mobileMenuBtn.classList.add('navbar__hamburger--active');
-            this.dom.mobileMenuBtn.setAttribute('aria-expanded', 'true');
-            this.dom.mobileMenuBtn.setAttribute('aria-label', 'إغلاق القائمة');
+            if (this.dom.mobileMenu) this.dom.mobileMenu.classList.add('navbar__mobile-menu--active');
+            if (this.dom.mobileOverlay) this.dom.mobileOverlay.classList.add('mobile-overlay--active');
+            if (this.dom.mobileMenu) this.dom.mobileMenu.setAttribute('aria-hidden', 'false');
+            if (this.dom.mobileMenuBtn) {
+                this.dom.mobileMenuBtn.classList.add('navbar__hamburger--active');
+                this.dom.mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                this.dom.mobileMenuBtn.setAttribute('aria-label', 'إغلاق القائمة');
+            }
             document.body.style.overflow = 'hidden';
             
-            const lines = this.dom.mobileMenuBtn.querySelectorAll('.hamburger-line');
-            if (lines.length === 3) {
-                lines[0].style.transform = 'translateY(9px) rotate(45deg)';
-                lines[1].style.opacity = '0';
-                lines[2].style.transform = 'translateY(-9px) rotate(-45deg)';
-                lines[2].classList.remove('w-3/4');
-                lines[2].classList.add('w-full');
+            if (this.dom.mobileMenuBtn) {
+                const lines = this.dom.mobileMenuBtn.querySelectorAll('.hamburger-line');
+                if (lines.length === 3) {
+                    lines[0].style.transform = 'translateY(9px) rotate(45deg)';
+                    lines[1].style.opacity = '0';
+                    lines[2].style.transform = 'translateY(-9px) rotate(-45deg)';
+                    lines[2].classList.remove('w-3/4');
+                    lines[2].classList.add('w-full');
+                }
             }
         },
 
         closeMobileMenu() {
             this.state.isMobileMenuOpen = false;
-            this.dom.mobileMenu.classList.remove('navbar__mobile-menu--active');
-            this.dom.mobileMenu.classList.remove('max-h-screen', 'pb-6');
-            this.dom.mobileMenu.classList.add('max-h-0');
-            this.dom.mobileMenu.setAttribute('aria-hidden', 'true');
-            this.dom.mobileMenuBtn.classList.remove('navbar__hamburger--active');
-            this.dom.mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            this.dom.mobileMenuBtn.setAttribute('aria-label', 'فتح القائمة');
+            if (this.dom.mobileMenu) this.dom.mobileMenu.classList.remove('navbar__mobile-menu--active');
+            if (this.dom.mobileOverlay) this.dom.mobileOverlay.classList.remove('mobile-overlay--active');
+            if (this.dom.mobileMenu) this.dom.mobileMenu.setAttribute('aria-hidden', 'true');
+            if (this.dom.mobileMenuBtn) {
+                this.dom.mobileMenuBtn.classList.remove('navbar__hamburger--active');
+                this.dom.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                this.dom.mobileMenuBtn.setAttribute('aria-label', 'فتح القائمة');
+            }
             document.body.style.overflow = '';
             
-            const lines = this.dom.mobileMenuBtn.querySelectorAll('.hamburger-line');
-            if (lines.length === 3) {
-                lines[0].style.transform = '';
-                lines[1].style.opacity = '1';
-                lines[2].style.transform = '';
-                lines[2].classList.remove('w-full');
-                lines[2].classList.add('w-3/4');
+            if (this.dom.mobileMenuBtn) {
+                const lines = this.dom.mobileMenuBtn.querySelectorAll('.hamburger-line');
+                if (lines.length === 3) {
+                    lines[0].style.transform = '';
+                    lines[1].style.opacity = '1';
+                    lines[2].style.transform = '';
+                    lines[2].classList.remove('w-full');
+                    lines[2].classList.add('w-3/4');
+                }
             }
         },
 

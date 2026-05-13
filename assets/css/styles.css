@@ -259,20 +259,45 @@
 }
 
 
-/* ════════ NAVBAR — Mobile Menu ═════════ */
+/* ════════ NAVBAR — Mobile Sidebar (Side Drawer) ═════════ */
 
 #navbar-section .navbar__mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background: #FFFFFF;
     z-index: var(--z-navbar-mobile);
+    transform: translateX(101%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 #navbar-section .navbar__mobile-menu--active {
-    opacity: 1 !important;
-    visibility: visible !important;
+    transform: translateX(0);
 }
 
-#navbar-section .navbar__mobile-menu--active .navbar__mobile-content {
-    transform: translateY(0) !important;
+/* Backdrop Overlay */
+#navbar-section .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: calc(var(--z-navbar-mobile) - 1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
 }
+
+#navbar-section .mobile-overlay--active {
+    opacity: 1;
+    visibility: visible;
+}
+
 
 /* Staggered link animation */
 #navbar-section .mobile-link-animate {

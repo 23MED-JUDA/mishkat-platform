@@ -436,48 +436,67 @@ require_once 'includes/db.php';
             </div>
         </div>
 
-        <!-- ===== Mobile Menu ===== -->
+        <!-- ===== Mobile Sidebar (Drawer) ===== -->
+        <div id="mobileMenuOverlay" class="mobile-overlay lg:hidden" aria-hidden="true"></div>
+        
         <div id="mobileMenu"
-             class="navbar__mobile-menu lg:hidden
-                    max-h-0 overflow-hidden
-                    transition-all duration-500 ease-in-out
-                    bg-white/95 backdrop-blur-lg
-                    border-t border-mishkat-green-100/50"
+             class="navbar__mobile-menu lg:hidden"
              role="menu"
              aria-hidden="true">
-            <div class="navbar__mobile-inner px-4 py-6 space-y-2">
-                <a href="#hero" class="mobile-nav-link block px-4 py-3 text-base font-medium text-mishkat-green-800
-                                      hover:text-mishkat-green-600 hover:bg-mishkat-green-50/50
-                                      rounded-xl transition-all duration-300" role="menuitem">
+             
+            <!-- Sidebar Header -->
+            <div class="px-6 py-6 border-b border-mishkat-green-100/50 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-mishkat-green-700 rounded-xl flex items-center justify-center text-white">
+                        <span class="material-icons-outlined text-xl">mosque</span>
+                    </div>
+                    <span class="text-xl font-bold text-mishkat-green-800">مِشكاة</span>
+                </div>
+                <button id="closeMobileBtn" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50 text-mishkat-green-700 hover:bg-mishkat-green-50 transition-all">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="navbar__mobile-inner px-6 py-8 space-y-3">
+                <a href="#hero" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 text-base font-bold text-mishkat-green-800
+                                       hover:text-mishkat-green-600 hover:bg-mishkat-green-50/50
+                                       rounded-2xl transition-all duration-300" role="menuitem">
+                    <span class="material-icons-outlined text-xl opacity-40">home</span>
                     الصفحة الرئيسية
                 </a>
-                <a href="#packages-section" class="mobile-nav-link block px-4 py-3 text-base font-medium text-mishkat-green-800
+                <a href="#packages-section" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 text-base font-bold text-mishkat-green-800
                                        hover:text-mishkat-green-600 hover:bg-mishkat-green-50/50
-                                       rounded-xl transition-all duration-300" role="menuitem">
+                                       rounded-2xl transition-all duration-300" role="menuitem">
+                    <span class="material-icons-outlined text-xl opacity-40">loyalty</span>
                     الباقات
                 </a>
-                <a href="#teachers" class="mobile-nav-link block px-4 py-3 text-base font-medium text-mishkat-green-800
+                <a href="#teachers" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 text-base font-bold text-mishkat-green-800
                                           hover:text-mishkat-green-600 hover:bg-mishkat-green-50/50
-                                          rounded-xl transition-all duration-300" role="menuitem">
+                                          rounded-2xl transition-all duration-300" role="menuitem">
+                    <span class="material-icons-outlined text-xl opacity-40">groups</span>
                     المعلمين
                 </a>
-                <a href="#programs" class="mobile-nav-link block px-4 py-3 text-base font-medium text-mishkat-green-800
+                <a href="#programs" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 text-base font-bold text-mishkat-green-800
                                           hover:text-mishkat-green-600 hover:bg-mishkat-green-50/50
-                                          rounded-xl transition-all duration-300" role="menuitem">
+                                          rounded-2xl transition-all duration-300" role="menuitem">
+                    <span class="material-icons-outlined text-xl opacity-40">school</span>
                     البرامج الدراسية
                 </a>
-                <a href="#faq-section" class="mobile-nav-link block px-4 py-3 text-base font-medium text-mishkat-green-800
+                <a href="#faq-section" class="mobile-nav-link flex items-center gap-4 px-4 py-3.5 text-base font-bold text-mishkat-green-800
                                        hover:text-mishkat-green-600 hover:bg-mishkat-green-50/50
-                                       rounded-xl transition-all duration-300" role="menuitem">
+                                       rounded-2xl transition-all duration-300" role="menuitem">
+                    <span class="material-icons-outlined text-xl opacity-40">info</span>
                     عن المنصة
                 </a>
 
-                <!-- زر اشترك في الموبايل -->
-                <div class="pt-4 border-t border-mishkat-green-100/50">
+                <div class="pt-6 mt-6 border-t border-mishkat-green-100/50 space-y-4">
+                    <a href="/login" class="flex items-center justify-center w-full py-4 text-mishkat-green-700 font-bold border border-mishkat-green-200 rounded-2xl hover:bg-mishkat-green-50 transition-all">
+                        تسجيل الدخول
+                    </a>
                     <a href="/register"
-                       class="block w-full text-center px-5 py-3
+                       class="flex items-center justify-center w-full py-4
                               bg-gradient-to-l from-mishkat-green-700 to-mishkat-green-600
-                              text-white text-sm font-bold rounded-xl
+                              text-white font-bold rounded-2xl
                               shadow-lg shadow-mishkat-green-600/25
                               transition-all duration-300">
                         اشترك الآن
@@ -485,6 +504,7 @@ require_once 'includes/db.php';
                 </div>
             </div>
         </div>
+
 
     </nav>
 
@@ -566,7 +586,7 @@ require_once 'includes/db.php';
         </span>
         <span class="btn-glow" aria-hidden="true"></span>
     </a>
-<a href="https://www.facebook.com/share/1E4XP9h9Pd/" 
+<a href="https://web.facebook.com/judax2/" 
    target="_blank"
    rel="noopener noreferrer"
    class="btn-secondary" 
@@ -2153,7 +2173,7 @@ require_once 'includes/db.php';
 
                     <!-- تويتر / X -->
                     <a 
-                        href="https://twitter.com/mishkah" 
+                        href="https://twitter.com/juda_x2" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#1DA1F2]/20 hover:border-[#1DA1F2]/30 hover:text-[#1DA1F2] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#1DA1F2]/10" 
@@ -2165,7 +2185,7 @@ require_once 'includes/db.php';
 
                     <!-- يوتيوب -->
                     <a 
-                        href="https://youtube.com/@asmaaelaraby-b8y?si=n_XkKzqHCtuUUa1B" 
+                        href="https://youtube.com/@juda_x2" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#FF0000]/20 hover:border-[#FF0000]/30 hover:text-[#FF0000] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#FF0000]/10" 
@@ -2177,7 +2197,7 @@ require_once 'includes/db.php';
 
                     <!-- إنستغرام -->
                     <a 
-                        href="https://www.instagram.com/asmaeelaraby?igsh=MTN5dmc3MXVxbnhteA==" 
+                        href="https://www.instagram.com/juda_x2/" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#E4405F]/20 hover:border-[#E4405F]/30 hover:text-[#E4405F] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#E4405F]/10" 
@@ -2189,7 +2209,7 @@ require_once 'includes/db.php';
 
                     <!-- تيليغرام -->
                     <a 
-                        href="http://t.me/asmaeelaraby" 
+                        href="http://t.me/juda_x2" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#0088cc]/20 hover:border-[#0088cc]/30 hover:text-[#0088cc] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0088cc]/10" 
@@ -2201,7 +2221,7 @@ require_once 'includes/db.php';
 
                     <!-- واتساب -->
                     <a 
-                        href="https://wa.me/966500000000" 
+                        href="https://wa.me/+201095125229" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#25D366]/20 hover:border-[#25D366]/30 hover:text-[#25D366] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#25D366]/10" 
@@ -2213,7 +2233,7 @@ require_once 'includes/db.php';
 
                     <!-- تيك توك -->
                     <a 
-                        href="https://www.tiktok.com/@asmaaelaraby00?_r=1&_t=ZS-96ALzk9MllM" 
+                        href="https://www.tiktok.com/@juda_x2" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         class="social-icon-btn group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 text-sm transition-all duration-400 hover:bg-[#ff0050]/20 hover:border-[#ff0050]/30 hover:text-[#ff0050] hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#ff0050]/10" 

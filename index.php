@@ -1,7 +1,4 @@
-<?php
-session_start();
-require_once 'includes/db.php';
-?>
+<?php require_once __DIR__ . '/includes/session.php'; ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -182,6 +179,7 @@ require_once 'includes/db.php';
         <link rel="stylesheet" href="assets/css/faq.css">
           <link rel="stylesheet" href="assets/css/footer.css">
     
+    <script src="assets/js/mishkat-ui.js"></script>
 </head>
 <body class="font-arabic bg-mishkat-beige-50 text-mishkat-green-900 overflow-x-hidden">
 
@@ -401,15 +399,26 @@ require_once 'includes/db.php';
                     </div>
 
                     <!-- زر تسجيل الدخول -->
-                    <a href="/login"
-                       class="navbar__login-btn px-5 py-2.5 text-sm font-bold
-                              text-mishkat-green-700 bg-mishkat-green-50
-                              hover:bg-mishkat-green-100 hover:text-mishkat-green-800
-                              border border-mishkat-green-200 hover:border-mishkat-green-300
-                              rounded-xl transition-all duration-300
-                              hover:-translate-y-0.5 hover:shadow-md">
-                        تسجيل الدخول
-                    </a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="/dashboard"
+                           class="navbar__login-btn px-5 py-2.5 text-sm font-bold
+                                  text-white bg-mishkat-green-700
+                                  hover:bg-mishkat-green-600
+                                  rounded-xl transition-all duration-300
+                                  hover:-translate-y-0.5 hover:shadow-md">
+                            لوحة التحكم
+                        </a>
+                    <?php else: ?>
+                        <a href="/login"
+                           class="navbar__login-btn px-5 py-2.5 text-sm font-bold
+                                  text-mishkat-green-700 bg-mishkat-green-50
+                                  hover:bg-mishkat-green-100 hover:text-mishkat-green-800
+                                  border border-mishkat-green-200 hover:border-mishkat-green-300
+                                  rounded-xl transition-all duration-300
+                                  hover:-translate-y-0.5 hover:shadow-md">
+                            تسجيل الدخول
+                        </a>
+                    <?php endif; ?>
                 </div>
 
 
@@ -490,17 +499,23 @@ require_once 'includes/db.php';
                 </a>
 
                 <div class="pt-6 mt-6 border-t border-mishkat-green-100/50 space-y-4">
-                    <a href="/login" class="flex items-center justify-center w-full py-4 text-mishkat-green-700 font-bold border border-mishkat-green-200 rounded-2xl hover:bg-mishkat-green-50 transition-all">
-                        تسجيل الدخول
-                    </a>
-                    <a href="/register"
-                       class="flex items-center justify-center w-full py-4
-                              bg-gradient-to-l from-mishkat-green-700 to-mishkat-green-600
-                              text-white font-bold rounded-2xl
-                              shadow-lg shadow-mishkat-green-600/25
-                              transition-all duration-300">
-                        اشترك الآن
-                    </a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <a href="/dashboard" class="flex items-center justify-center w-full py-4 bg-mishkat-green-700 text-white font-bold rounded-2xl shadow-lg transition-all">
+                            لوحة التحكم
+                        </a>
+                    <?php else: ?>
+                        <a href="/login" class="flex items-center justify-center w-full py-4 text-mishkat-green-700 font-bold border border-mishkat-green-200 rounded-2xl hover:bg-mishkat-green-50 transition-all">
+                            تسجيل الدخول
+                        </a>
+                        <a href="/register"
+                           class="flex items-center justify-center w-full py-4
+                                  bg-gradient-to-l from-mishkat-green-700 to-mishkat-green-600
+                                  text-white font-bold rounded-2xl
+                                  shadow-lg shadow-mishkat-green-600/25
+                                  transition-all duration-300">
+                            اشترك الآن
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -2112,7 +2127,7 @@ require_once 'includes/db.php';
                             احصل على آخر الدورات والفوائد القرآنية مباشرة في بريدك
                         </p>
                     </div>
-                    <form class="flex w-full md:w-auto gap-0 rounded-xl overflow-hidden border border-footer-gold-300/15 focus-within:border-footer-gold-300/40 transition-colors duration-300 newsletter-form-glow" onsubmit="handleSubscribe(event)">
+                    <form class="flex w-full md:w-auto gap-0 rounded-xl overflow-hidden border border-footer-gold-300/15 focus-within:border-footer-gold-300/40 transition-colors duration-300 newsletter-form-glow" onsubmit="footerHandleSubscribe(event)">
                         <input
                             type="email"
                             placeholder="أدخل بريدك الإلكتروني..."

@@ -24,6 +24,22 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
     #[\ReturnTypeWillChange]
     public function read($id): string|false {
         $stmt = $this->db->prepare("SELECT data FROM php_sessions WHERE id = ?");
+        
+        // If the prepare fails, the table might not exist
+        if (!$stmt) {
+            // Try to create the table
+            $this->db->query("CREATE TABLE IF NOT EXISTS php_sessions (
+                id varchar(128) NOT NULL,
+                access int(10) unsigned DEFAULT NULL,
+                data text,
+                PRIMARY KEY (id)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+            
+            // Try preparing again
+            $stmt = $this->db->prepare("SELECT data FROM php_sessions WHERE id = ?");
+            if (!$stmt) return '';
+        }
+
         $stmt->bind_param("s", $id);
         if ($stmt->execute()) {
             $result = $stmt->get_result();

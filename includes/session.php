@@ -97,5 +97,8 @@ $handler = new DatabaseSessionHandler($conn);
 session_set_save_handler($handler, true);
 
 // Start the session securely
-session_start();
+// Start the session securely if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>

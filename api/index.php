@@ -32,7 +32,7 @@ if (isset($routes[$path])) {
     $file = $routes[$path];
     if (file_exists($file)) {
         // Close the session started above so the included file can restart it
-        session_write_close();
+
         require $file;
         exit;
     }
@@ -41,7 +41,6 @@ if (isset($routes[$path])) {
 // Fallback 1: try to serve the path directly if it already ends in .php
 $candidate = ltrim($path, '/');
 if (str_ends_with($candidate, '.php') && file_exists($candidate)) {
-    session_write_close();
     require $candidate;
     exit;
 }
@@ -49,12 +48,9 @@ if (str_ends_with($candidate, '.php') && file_exists($candidate)) {
 // Fallback 2: try adding .php
 $candidate2 = $candidate . '.php';
 if (file_exists($candidate2)) {
-    session_write_close();
     require $candidate2;
     exit;
 }
 
-// 404
 http_response_code(404);
-session_write_close();
 require 'index.php'; // Show home page on 404

@@ -13,17 +13,10 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
-    },
-    {
-      "source": "/mishkah-app/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
     }
   ],
   "routes": [
     { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/mishkah-app/(.*)", "dest": "/mishkah-app/$1" },
     { "src": "/api/api\\.php(.*)", "dest": "/api/api.php$1" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ]

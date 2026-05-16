@@ -66,6 +66,11 @@ $pageMap = [
         'tasks' => 'student/Tasks.php',
         'tracking' => 'student/Tracking.php',
         'episodes' => 'student/Episodes.php',
+        'quran' => 'student/Quran.php',
+        'hadith' => 'student/Hadith.php',
+        'seerah' => 'student/Seerah.php',
+        'tasbih' => 'student/Tasbih.php',
+        'quiz' => 'student/Quiz.php',
     ],
     'teacher' => [
         'profile' => 'teacher/Profile.php',
@@ -220,35 +225,35 @@ function sidebarItem($link, $isActive) {
             <div class="mx-4 mt-3 pt-3 border-t border-white/5 dark:border-mishkat-gold-500/10">
                 <p class="sidebar-label text-[9px] font-black uppercase tracking-[0.2em] text-white/25 px-2 pb-2">تطبيقات مشكاة</p>
                 
-                <a href="mishkah-app/index.html#quran" target="_blank" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5">
+                <a href="?page=quran" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'quran' ? 'active' : ''); ?>">
                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
                         <span class="material-icons-outlined text-[16px]">menu_book</span>
                     </div>
                     <span class="font-bold text-xs flex-1">القرآن الكريم</span>
                 </a>
 
-                <a href="mishkah-app/index.html#hadith" target="_blank" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5">
+                <a href="?page=hadith" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'hadith' ? 'active' : ''); ?>">
                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
                         <span class="material-icons-outlined text-[16px]">library_books</span>
                     </div>
                     <span class="font-bold text-xs flex-1">الأحاديث النبوية</span>
                 </a>
 
-                <a href="mishkah-app/index.html#seerah" target="_blank" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5">
+                <a href="?page=seerah" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'seerah' ? 'active' : ''); ?>">
                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
                         <span class="material-icons-outlined text-[16px]">history_edu</span>
                     </div>
                     <span class="font-bold text-xs flex-1">السيرة النبوية</span>
                 </a>
 
-                <a href="mishkah-app/index.html#tasbih" target="_blank" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5">
+                <a href="?page=tasbih" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'tasbih' ? 'active' : ''); ?>">
                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
                         <span class="material-icons-outlined text-[16px]">track_changes</span>
                     </div>
                     <span class="font-bold text-xs flex-1">السبحة الرقمية</span>
                 </a>
 
-                <a href="mishkah-app/index.html#quiz" target="_blank" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5">
+                <a href="?page=quiz" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'quiz' ? 'active' : ''); ?>">
                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
                         <span class="material-icons-outlined text-[16px]">quiz</span>
                     </div>

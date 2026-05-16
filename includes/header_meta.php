@@ -40,7 +40,8 @@
 </script>
 
 <!-- Favicon -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23193d2e%22/><path d=%22M50 20 L80 40 L80 80 L20 80 L20 40 Z%22 fill=%22%23d48d28%22/></svg>">
+<link rel="icon" type="image/png" href="assets/images/logo-app.png">
+<link rel="apple-touch-icon" href="assets/images/logo-app.png">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -290,6 +291,47 @@
 
         /* Navigation mobile height */
         .glass-nav { padding: 0.75rem 1rem !important; }
+    }
+
+    /* --- Buttons & Images Global Animations --- */
+    button, .btn-luxury, a.btn-luxury {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    button:hover:not(:disabled), .btn-luxury:hover {
+        transform: translateY(-3px) scale(1.02);
+        filter: brightness(1.1);
+        box-shadow: 0 15px 30px -10px rgba(25, 61, 46, 0.3);
+    }
+    button:active:not(:disabled), .btn-luxury:active {
+        transform: translateY(-1px) scale(0.97);
+    }
+
+    /* Image Hover Effects */
+    img {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .luxury-card img:hover {
+        transform: scale(1.05) rotate(1deg);
+        filter: saturate(1.1);
+    }
+
+    /* Special Glow for Primary Buttons */
+    .btn-luxury::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+        transform: scale(0);
+        transition: transform 0.6s ease-out;
+        pointer-events: none;
+    }
+    .btn-luxury:hover::after {
+        transform: scale(1);
     }
 
     /* Prevent accidental horizontal scrolling */

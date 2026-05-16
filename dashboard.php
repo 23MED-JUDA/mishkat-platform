@@ -8,8 +8,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $uid = $_SESSION['user_id'];
-$role = strtolower($_SESSION['user_role'] ?? 'student');
-$userName = $_SESSION['user_name'];
+$userQuery = $conn->query("SELECT * FROM users WHERE id = $uid");
+$userData = $userQuery->fetch_assoc();
+
+$role = strtolower($userData['role'] ?? 'student');
+$userName = $userData['name'];
+$userImage = $userData['profile_image'] ?? '';
+$userRoleName = ($role === 'student' ? 'طالب' : ($role === 'teacher' ? 'معلم' : ($role === 'parent' ? 'ولي أمر' : 'مسؤول')));
 
 $links = [];
 if ($role === 'student') {
@@ -176,6 +181,93 @@ function sidebarItem($link, $isActive) {
             .luxury-sidebar-item { padding: 0.75rem 1rem !important; }
             button, a { min-height: 40px; }
         }
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            pointer-events: none;
+        }
+        .luxury-toast {
+            pointer-events: auto;
+            min-width: 300px;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            items-center: center;
+            gap: 1rem;
+            transform: translateX(-120%);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .dark .luxury-toast {
+            background: rgba(20, 20, 20, 0.95);
+            border-color: rgba(201, 168, 76, 0.1);
+            color: white;
+        }
+        .luxury-toast.active { transform: translateX(0); }
+        .luxury-toast.success { border-right: 4px solid #10b981; }
+        .luxury-toast.error { border-right: 4px solid #ef4444; }
+        .luxury-toast.info { border-right: 4px solid #c9a84c; }
+        /* Smooth Transitions */
+        * { transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* Keyframes */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .animate-slide-up { animation: slideUpFade 0.6s ease-out forwards; }
+        .animate-slide-in { animation: slideInRight 0.5s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        
+        /* Staggered Delay Helpers */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Luxury Sidebar Item Animation */
+        .active-item {
+            background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%);
+            border-right: 3px solid #c9a84c;
+            transform: scale(1.02);
+        }
+        .hover-item:hover {
+            background: rgba(255,255,255,0.03);
+            transform: translateX(-5px);
+        }
+
+        /* Glass Nav blur effect */
+        .glass-nav {
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .dark .glass-nav {
+            background-color: rgba(8, 8, 8, 0.75);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
     </style>
 </head>
 <body class="bg-[#f0f4f2] dark:bg-[#080808] transition-colors duration-500 overflow-x-hidden">
@@ -221,13 +313,17 @@ function sidebarItem($link, $isActive) {
             <div class="relative p-5 rounded-[2.5rem] bg-white/[0.03] border border-white/5 overflow-hidden group">
                 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mishkat-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div class="relative flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-mishkat-gold-500 flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20">
-                        <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+                    <div class="w-12 h-12 rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20">
+                        <?php if(!empty($userImage)): ?>
+                            <img src="<?php echo htmlspecialchars($userImage); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+                        <?php endif; ?>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-black text-white truncate leading-tight"><?php echo htmlspecialchars($userName); ?></p>
                         <div class="flex items-center gap-1.5 mt-1">
-                            <span class="text-[8px] font-black uppercase tracking-widest text-mishkat-gold-500/60"><?php echo $role; ?></span>
+                            <span class="text-[8px] font-black uppercase tracking-widest text-mishkat-gold-500/60"><?php echo $userRoleName; ?></span>
                             <span class="w-1 h-1 rounded-full bg-white/20"></span>
                             <span class="text-[8px] font-black uppercase tracking-widest text-white/20">متصل الآن</span>
                         </div>
@@ -319,13 +415,17 @@ function sidebarItem($link, $isActive) {
                 </button>
 
                 <!-- User avatar -->
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 md:gap-3 pl-2">
                     <div class="hidden sm:flex flex-col items-end">
                         <span class="text-xs font-black text-mishkat-green-900 dark:text-white leading-tight"><?php echo htmlspecialchars(explode(' ', $userName)[0]); ?></span>
-                        <span class="text-[9px] text-mishkat-gold-600 font-bold uppercase"><?php echo $role; ?></span>
+                        <span class="text-[9px] text-mishkat-gold-600 font-bold uppercase tracking-tighter"><?php echo $userRoleName; ?></span>
                     </div>
-                    <div class="w-9 h-9 md:w-10 md:h-10 rounded-xl md:rounded-2xl bg-mishkat-gold-500 flex items-center justify-center text-black font-black text-sm flex-shrink-0">
-                        <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+                    <div class="w-10 h-10 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center text-black font-black text-sm flex-shrink-0 shadow-lg shadow-mishkat-gold-500/10">
+                        <?php if(!empty($userImage)): ?>
+                            <img src="<?php echo htmlspecialchars($userImage); ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -337,19 +437,19 @@ function sidebarItem($link, $isActive) {
         </div>
 
         <!-- Page content -->
-        <div class="p-4 md:p-6 lg:p-10 max-w-7xl mx-auto">
+        <div class="p-4 md:p-6 lg:p-10 max-w-7xl mx-auto animate-slide-up">
             <?php 
                 if ($pagePath && file_exists($pagePath)) {
                     include $pagePath;
                 } else {
                     echo "
-                    <div class='flex flex-col items-center justify-center py-20 text-center animate-fadeIn'>
-                        <div class='w-20 h-20 bg-mishkat-green-50 dark:bg-black text-mishkat-green-600 dark:text-mishkat-gold-500 rounded-full flex items-center justify-center mb-5'>
-                            <span class='material-icons-outlined text-4xl'>construction</span>
+                    <div class='flex flex-col items-center justify-center py-20 text-center animate-scale-in'>
+                        <div class='w-24 h-24 bg-mishkat-green-50 dark:bg-white/5 text-mishkat-green-600 dark:text-mishkat-gold-500 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-xl animate-pulse'>
+                            <span class='material-icons-outlined text-5xl'>construction</span>
                         </div>
-                        <h3 class='text-xl font-black text-mishkat-green-900 dark:text-white mb-2 font-tajawal'>هذه الصفحة قيد التطوير</h3>
-                        <p class='text-gray-500 dark:text-white/40 max-w-sm text-sm'>نحن نعمل حالياً على تجهيز هذا القسم.</p>
-                        <a href='dashboard.php' class='mt-6 px-6 py-3 btn-luxury text-sm'>العودة للرئيسية</a>
+                        <h3 class='text-2xl font-black text-mishkat-green-900 dark:text-white mb-3 font-tajawal'>هذه الصفحة قيد التطوير</h3>
+                        <p class='text-gray-500 dark:text-white/40 max-w-sm text-sm leading-relaxed'>نحن نعمل حالياً على تجهيز هذا القسم لتوفير أفضل تجربة تعليمية لك.</p>
+                        <a href='dashboard.php' class='mt-8 px-8 py-4 bg-mishkat-green-700 text-white rounded-2xl font-black hover:bg-mishkat-green-600 transition-all shadow-xl shadow-mishkat-green-900/10'>العودة للرئيسية</a>
                     </div>";
                 }
             ?>
@@ -429,6 +529,44 @@ function sidebarItem($link, $isActive) {
             if (dayEl) dayEl.innerText = days[now.getDay()];
             if (timeEl) timeEl.innerText = now.toLocaleTimeString('ar-EG', { hour12: true, hour: '2-digit', minute: '2-digit' });
         }
+        /* ── Toast System ── */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `luxury-toast ${type} animate-fadeIn`;
+            
+            const icons = {
+                success: 'check_circle',
+                error: 'error',
+                info: 'info'
+            };
+
+            toast.innerHTML = `
+                <div class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons-outlined text-[20px] ${type === 'success' ? 'text-emerald-500' : type === 'error' ? 'text-red-500' : 'text-mishkat-gold-500'}">${icons[type]}</span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-black">${message}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('active'), 10);
+
+            // Auto remove
+            setTimeout(() => {
+                toast.classList.remove('active');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        // Global alert replacement
+        window.alert = function(message) {
+            showToast(message, 'info');
+        };
+
         setInterval(updateClock, 1000);
         updateClock();
     </script>

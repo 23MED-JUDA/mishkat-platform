@@ -219,6 +219,33 @@ switch ($action) {
         jsonOut(['success'=>true,'data'=>$d]);
         break;
 
+    case 'update_profile_image':
+        $target = handleUpload('profile_image');
+        if($target) {
+            $stmt = $conn->prepare("UPDATE users SET profile_image=? WHERE id=?");
+            $stmt->bind_param("si", $target, $uid);
+            $stmt->execute();
+            jsonOut(['success'=>true, 'image_url'=>$target]);
+        }
+        jsonOut(['success'=>false, 'message'=>'فشل رفع الصورة']);
+        break;
+
+    case 'update_student_profile':
+        $name = $_POST['name'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $gender = $_POST['gender'] ?? '';
+        $age = intval($_POST['age'] ?? 0);
+        $location = $_POST['location'] ?? '';
+        
+        $stmt = $conn->prepare("UPDATE users SET name=?, phone=?, gender=?, age=?, location=? WHERE id=?");
+        $stmt->bind_param("sssisi", $name, $phone, $gender, $age, $location, $uid);
+        if($stmt->execute()) {
+            $_SESSION['user_name'] = $name; // Update session name
+            jsonOut(['success'=>true]);
+        }
+        jsonOut(['success'=>false, 'message'=>'فشل تحديث البيانات']);
+        break;
+
     case 'get_profile':
         $r=$conn->query("SELECT id,name,email,phone,gender,location,role,status,created_at FROM users WHERE id=$uid")->fetch_assoc();
         jsonOut(['success'=>true,'data'=>$r]);

@@ -207,12 +207,11 @@
     }
 
     function resetTasbih() {
-        if(confirm('تصفير كافة العدادات؟')) {
-            count = 0;
-            rounds = 0;
-            updateUI();
-            saveData();
-        }
+        count = 0;
+        rounds = 0;
+        updateUI();
+        saveData();
+        showToast('تم تصفير جميع العدادات بنجاح', 'success');
     }
 
     function updateTargetButtons() {
@@ -256,6 +255,7 @@
         // Simple scale effect on count
         countEl.classList.add('scale-110', 'text-mishkat-gold-500');
         setTimeout(() => countEl.classList.remove('scale-110', 'text-mishkat-gold-500'), 500);
+        showToast(`ما شاء الله! أتممت الدورة رقم ${rounds}`, 'success');
     }
 
     init();

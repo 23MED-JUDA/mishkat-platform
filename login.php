@@ -26,7 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_role'] = $user['role'];
-                header("Location: /dashboard");
+                
+                // تذكرني - حفظ الكوكيز لمدة 30 يوم
+                if (isset($_POST['remember'])) {
+                    setcookie('mishkat_user', $user['id'], time() + (30 * 24 * 60 * 60), "/");
+                }
+                
+                header("Location: dashboard.php");
                 exit();
             }
         } else {
@@ -127,7 +133,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="password" name="password" required placeholder="••••••••" 
                                class="w-full pr-12 pl-4 py-4 bg-gray-50 border-2 border-transparent focus:border-mishkat-green-100 focus:bg-white rounded-2xl outline-none transition-all font-bold text-mishkat-green-900">
                     </div>
-                    <div class="text-left mt-2">
+                    <div class="flex items-center justify-between mt-2">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input type="checkbox" name="remember" class="w-4 h-4 rounded border-gray-300 text-mishkat-green-600 focus:ring-mishkat-green-500">
+                            <span class="text-[10px] font-bold text-gray-400 group-hover:text-gray-600 transition-colors">تذكرني</span>
+                        </label>
                         <a href="#" class="text-[10px] font-bold text-mishkat-gold-600 hover:text-mishkat-gold-700">نسيت كلمة المرور؟</a>
                     </div>
                 </div>

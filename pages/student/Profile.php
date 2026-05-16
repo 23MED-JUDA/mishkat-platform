@@ -10,8 +10,20 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM tasks")->fetch_assoc()['c'
     <div class="bg-gradient-to-l from-mishkat-green-800 to-mishkat-green-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-mishkat-green-900/20">
         <div class="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-            <div class="w-32 h-32 bg-white/10 border-4 border-white/20 rounded-[2.5rem] flex items-center justify-center text-5xl font-black shadow-inner">
-                <?php echo mb_substr($profile['name'],0,1,'UTF-8'); ?>
+            <div class="relative group cursor-pointer" onclick="document.getElementById('profileImageInput').click()">
+                <div class="w-32 h-32 bg-white/10 border-4 border-white/20 rounded-[2.5rem] flex items-center justify-center text-5xl font-black shadow-inner overflow-hidden relative">
+                    <?php if(!empty($profile['profile_image'])): ?>
+                        <img src="<?php echo htmlspecialchars($profile['profile_image']); ?>" class="w-full h-full object-cover">
+                    <?php else: ?>
+                        <?php echo mb_substr($profile['name'],0,1,'UTF-8'); ?>
+                    <?php endif; ?>
+                    
+                    <!-- Overlay on Hover -->
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-icons-outlined text-white">camera_alt</span>
+                    </div>
+                </div>
+                <input type="file" id="profileImageInput" class="hidden" accept="image/*" onchange="uploadProfileImage(this)">
             </div>
             <div class="text-center md:text-right">
                 <h1 class="text-3xl font-black mb-2"><?php echo htmlspecialchars($profile['name']); ?></h1>
@@ -143,4 +155,24 @@ document.getElementById('passwordForm').addEventListener('submit', function(e) {
         }
     });
 });
+function uploadProfileImage(input) {
+    if (input.files && input.files[0]) {
+        const fd = new FormData();
+        fd.append('action', 'update_profile_image');
+        fd.append('profile_image', input.files[0]);
+
+        showToast('جاري رفع الصورة...', 'info');
+
+        fetch('api.php', { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(res => {
+            if(res.success) {
+                showToast('تم تحديث الصورة الشخصية بنجاح', 'success');
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showToast(res.message || 'فشل رفع الصورة', 'error');
+            }
+        });
+    }
+}
 </script>

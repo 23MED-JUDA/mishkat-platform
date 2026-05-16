@@ -696,7 +696,7 @@ if (heroStartBtn && subscribeBtn) {
         // --- Hero Section ---
         ImageLoader.init();
         Parallax.init();
-        Particles.init();
+        // Particles.init(); 
         ScrollFade.init();
         HeadingGlow.init();
         ButtonRipple.init();

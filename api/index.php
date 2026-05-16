@@ -28,6 +28,24 @@ $routes = [
     '/contact'   => 'contact.php',
 ];
 
+// Serve mishkah-app static files if they exist
+$candidate_static = ltrim($path, '/');
+if (str_starts_with($candidate_static, 'mishkah-app/') && file_exists($candidate_static) && !is_dir($candidate_static)) {
+    $mime_types = [
+        'html' => 'text/html',
+        'js'   => 'application/javascript',
+        'css'  => 'text/css',
+        'json' => 'application/json',
+        'svg'  => 'image/svg+xml',
+        'png'  => 'image/png',
+        'jpg'  => 'image/jpeg',
+    ];
+    $ext = pathinfo($candidate_static, PATHINFO_EXTENSION);
+    header('Content-Type: ' . ($mime_types[$ext] ?? 'text/plain'));
+    readfile($candidate_static);
+    exit;
+}
+
 if (isset($routes[$path])) {
     $file = $routes[$path];
     if (file_exists($file)) {

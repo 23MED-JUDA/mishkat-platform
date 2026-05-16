@@ -13,6 +13,7 @@
     { "src": "/css/(.*)", "dest": "/css/$1" },
     { "src": "/js/(.*)", "dest": "/js/$1" },
     { "src": "/api/api\\.php(.*)", "dest": "/api/api.php$1" },
+    { "src": "/mishkah-app/(.*)", "dest": "/mishkah-app/$1" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ]
 }

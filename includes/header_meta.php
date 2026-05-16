@@ -1,3 +1,10 @@
+<!-- Preconnect to external resources -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -293,4 +300,4 @@
     }
 </style>
 
-<script src="assets/js/mishkat-ui.js"></script>
+<script src="assets/js/mishkat-ui.js" defer></script>

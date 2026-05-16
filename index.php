@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشكاة | Mishkat - منصة تعليمية إسلامية</title>
 
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
     <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -170,16 +177,10 @@
 <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/programs.css">
-    <link rel="stylesheet" href="assets/css/teachers.css">
-     <link rel="stylesheet" href="assets/css/packages.css">
-      <link rel="stylesheet" href="assets/css/study-system.css">
-        <link rel="stylesheet" href="assets/css/faq.css">
-          <link rel="stylesheet" href="assets/css/footer.css">
+    <!-- Bundled Styles -->
+    <link rel="stylesheet" href="assets/css/bundle.css">
     
-    <script src="assets/js/mishkat-ui.js"></script>
+    <script src="assets/js/mishkat-ui.js" defer></script>
 </head>
 <body class="font-arabic bg-mishkat-beige-50 text-mishkat-green-900 overflow-x-hidden">
 
@@ -2292,14 +2293,8 @@
 
 
 
-    <!-- ===== JavaScript  ===== -->
-    <script src="assets/js/script.js"></script>
-     <script src="assets/js/programs.js"></script>
-     <script src="assets/js/teachers.js"></script>
-     <script src="assets/js/packages.js"></script>
-      <script src="assets/js/study-system.js"></script>
-        <script src="assets/js/faq.js"></script>
-         <script src="assets/js/footer.js"></script>
+    <!-- Bundled JavaScript -->
+    <script src="assets/js/bundle.js" defer></script>
 
 
 </body>

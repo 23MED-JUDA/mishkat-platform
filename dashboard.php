@@ -212,7 +212,7 @@ function sidebarItem($link, $isActive) {
             <p class="sidebar-label text-[9px] font-black uppercase tracking-[0.2em] text-white/25 px-8 py-2">القائمة الرئيسية</p>
             
             <?php foreach ($links as $link):
-                $isActive = ($currentPage === $link['page']);
+                $isActive = ($currentPage === ($link['page'] ?? null));
                 echo sidebarItem($link, $isActive);
             endforeach; ?>
 

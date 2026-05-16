@@ -11,15 +11,19 @@ $pass = getenv('DB_PASS') ?: "";
 $dbname = getenv('DB_NAME') ?: "mishkat_db";
 $port = getenv('DB_PORT') ?: 3306;
 
-// إنشاء الاتصال باستخدام MySQLi
-$conn = new mysqli($host, $user, $pass, $dbname, $port);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-// التحقق من نجاح الاتصال
-if ($conn->connect_error) {
-    // محاولة الاتصال بدون منفذ كخيار بديل
-    $conn = new mysqli($host, $user, $pass, $dbname);
-    if ($conn->connect_error) {
-        die("فشل الاتصال بقاعدة البيانات: " . $conn->connect_error);
+try {
+    // إنشاء الاتصال باستخدام MySQLi
+    $conn = new mysqli($host, $user, $pass, $dbname, $port);
+} catch (mysqli_sql_exception $e) {
+    try {
+        // محاولة الاتصال بدون منفذ كخيار بديل
+        $conn = new mysqli($host, $user, $pass, $dbname);
+    } catch (mysqli_sql_exception $e2) {
+        // تسجيل الخطأ الفعلي في سجلات الخادم لمنع عرضه للمستخدم
+        error_log("Database connection failed: " . $e2->getMessage());
+        die("فشل الاتصال بقاعدة البيانات. يرجى المحاولة لاحقاً أو التحقق من إعدادات الاتصال.");
     }
 }
 

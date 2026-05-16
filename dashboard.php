@@ -18,7 +18,7 @@ if ($role === 'student') {
         ['name' => 'الملف الشخصي', 'icon' => 'account_circle', 'page' => 'profile'],
         ['name' => 'الدورات التدريبية', 'icon' => 'auto_stories', 'page' => 'courses'],
         ['name' => 'المهام اليومية', 'icon' => 'task_alt', 'page' => 'tasks'],
-        ['name' => 'المكتبة الرقمية', 'icon' => 'local_library', 'page' => 'library'],
+        ['name' => 'العودة للرئيسية', 'icon' => 'home', 'url' => 'index.php'],
         ['name' => 'نتائج الاختبارات', 'icon' => 'military_tech', 'page' => 'tracking'],
     ];
 } elseif ($role === 'teacher') {
@@ -98,8 +98,9 @@ function sidebarItem($link, $isActive) {
     $activeClass = $isActive ? 'active' : '';
     $iconBg = $isActive ? 'bg-black/20 dark:bg-black/30' : 'bg-white/5';
     $dot = $isActive ? '<div class="w-1.5 h-6 bg-black/30 dark:bg-black/40 rounded-full"></div>' : '';
+    $href = isset($link['url']) ? $link['url'] : "?page={$link['page']}";
     return <<<HTML
-        <a href="?page={$link['page']}" 
+        <a href="{$href}" 
            class="luxury-sidebar-item flex items-center gap-4 px-5 py-3.5 {$activeClass}">
             <div class="w-8 h-8 rounded-xl flex items-center justify-center {$iconBg} flex-shrink-0">
                 <span class="material-icons-outlined text-[18px]">{$link['icon']}</span>
@@ -217,21 +218,13 @@ function sidebarItem($link, $isActive) {
 
             <!-- External platforms -->
             <div class="mx-4 mt-3 pt-3 border-t border-white/5 dark:border-mishkat-gold-500/10">
-                <p class="sidebar-label text-[9px] font-black uppercase tracking-[0.2em] text-white/25 px-2 pb-2">منصاتنا الأخرى</p>
-                <a href="https://mishkah-al8f4yypg-23med-judas-projects.vercel.app/" target="_blank" 
+                <p class="sidebar-label text-[9px] font-black uppercase tracking-[0.2em] text-white/25 px-2 pb-2">صفحات المنصة</p>
+                <a href="index.php" 
                    class="luxury-sidebar-item flex items-center gap-3 px-3 py-3">
                     <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">menu_book</span>
+                        <span class="material-icons-outlined text-[16px]">home</span>
                     </div>
-                    <span class="font-bold text-xs flex-1">القرآن والأحاديث</span>
-                    <span class="material-icons-outlined text-[13px] opacity-30">open_in_new</span>
-                </a>
-                <a href="https://mishkah-al8f4yypg-23med-judas-projects.vercel.app/" target="_blank" 
-                   class="luxury-sidebar-item flex items-center gap-3 px-3 py-3">
-                    <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">track_changes</span>
-                    </div>
-                    <span class="font-bold text-xs flex-1">السبحة الرقمية</span>
+                    <span class="font-bold text-xs flex-1">الصفحة الرئيسية للمنصة</span>
                     <span class="material-icons-outlined text-[13px] opacity-30">open_in_new</span>
                 </a>
             </div>

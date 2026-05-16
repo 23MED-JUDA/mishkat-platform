@@ -36,7 +36,7 @@
             ];
             foreach($externalLinks as $link):
             ?>
-            <a href="https://mishkah-al8f4yypg-23med-judas-projects.vercel.app/" target="_blank" 
+            <a href="index.php" 
                class="luxury-card p-6 rounded-[2.5rem] text-center group hover:shadow-xl hover:-translate-y-2 transition-all border border-gray-50 flex flex-col items-center">
                 <div class="w-16 h-16 bg-<?php echo $link['color']; ?>-50 text-<?php echo $link['color']; ?>-600 rounded-[2rem] flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-sm">
                     <span class="material-icons-outlined text-3xl"><?php echo $link['icon']; ?></span>

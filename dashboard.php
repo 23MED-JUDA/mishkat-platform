@@ -47,11 +47,11 @@ if ($role === 'student') {
     ];
 }
 
-$currentPage = $_GET['page'] ?? ($links[0]['page'] ?? 'profile');
+$currentPage = $_GET['page'] ?? ($links[0]['page'] ?? 'home');
 
 $pageTitle = 'لوحة التحكم';
 foreach ($links as $link) {
-    if ($link['page'] === $currentPage) {
+    if (isset($link['page']) && $link['page'] === $currentPage) {
         $pageTitle = $link['name'];
         break;
     }
@@ -100,19 +100,25 @@ $pagePath = $pageFile ? "pages/$pageFile" : null;
 
 // Sidebar HTML helper
 function sidebarItem($link, $isActive) {
-    $activeClass = $isActive ? 'active' : '';
-    $iconBg = $isActive ? 'bg-black/20 dark:bg-black/30' : 'bg-white/5';
-    $dot = $isActive ? '<div class="w-1.5 h-6 bg-black/30 dark:bg-black/40 rounded-full"></div>' : '';
+    $activeClass = $isActive ? 'active-item' : 'hover-item';
+    $iconColor = $isActive ? 'text-black' : 'text-white/60 group-hover:text-mishkat-gold-400';
+    $iconBg = $isActive ? 'bg-mishkat-gold-500 shadow-[0_0_15px_rgba(201,168,76,0.4)]' : 'bg-white/5 group-hover:bg-mishkat-gold-500/10';
+    $textColor = $isActive ? 'text-white font-black' : 'text-white/50 group-hover:text-white';
     $href = isset($link['url']) ? $link['url'] : "?page={$link['page']}";
+    
     return <<<HTML
-        <a href="{$href}" 
-           class="luxury-sidebar-item flex items-center gap-4 px-5 py-3.5 {$activeClass}">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center {$iconBg} flex-shrink-0">
-                <span class="material-icons-outlined text-[18px]">{$link['icon']}</span>
-            </div>
-            <span class="font-bold text-sm flex-1 truncate">{$link['name']}</span>
-            {$dot}
-        </a>
+        <div class="px-3 mb-1">
+            <a href="{$href}" 
+               class="group flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 ease-out {$activeClass}">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 {$iconBg}">
+                    <span class="material-icons-outlined text-[20px] {$iconColor}">{$link['icon']}</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm transition-colors duration-300 {$textColor}">{$link['name']}</span>
+                    <span class="text-[10px] text-white/20 group-hover:text-mishkat-gold-500/40 transition-colors uppercase tracking-widest font-bold">Mishkat</span>
+                </div>
+            </a>
+        </div>
     HTML;
 }
 ?>
@@ -180,94 +186,100 @@ function sidebarItem($link, $isActive) {
          onclick="closeSidebar()"></div>
 
     <!-- ─── SIDEBAR ─── -->
-    <aside id="sidebar" class="fixed top-0 right-0 h-screen w-72 luxury-sidebar text-white z-50 overflow-y-auto shadow-2xl">
+    <aside id="sidebar" class="fixed top-0 right-0 h-screen w-72 luxury-sidebar text-white z-50 overflow-y-auto shadow-[0_0_40px_rgba(0,0,0,0.4)] border-l border-white/5">
         
-        <!-- Logo -->
-        <div class="px-6 pt-8 pb-6 border-b border-white/5 dark:border-mishkat-gold-500/10 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 bg-mishkat-gold-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                    <span class="material-icons-outlined text-black text-2xl">mosque</span>
-                </div>
-                <div>
-                    <h1 class="text-xl font-black font-tajawal leading-none">مِشـكاة</h1>
-                    <p class="text-[10px] uppercase tracking-widest text-white/30 dark:text-mishkat-gold-500/50 mt-1">منصة تعليمية</p>
-                </div>
-            </div>
-            <!-- Close button (mobile only) -->
-            <button onclick="closeSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-2xl bg-white/10 text-white/80 hover:text-white transition-all active:scale-90">
-                <span class="material-icons-outlined text-xl">close</span>
-            </button>
-        </div>
+        <!-- Luxury Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0c1210] via-[#080808] to-[#0c1210] -z-10"></div>
+        <div class="absolute top-0 right-0 w-full h-96 bg-mishkat-gold-500/5 blur-[100px] -z-10"></div>
 
-        <!-- User Card -->
-        <div class="px-4 mt-4">
-            <div class="px-4 py-3 rounded-2xl bg-white/5 dark:bg-mishkat-gold-500/5 border border-white/5 dark:border-mishkat-gold-500/10 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-mishkat-gold-500 flex items-center justify-center font-black text-black text-sm flex-shrink-0">
-                    <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+        <!-- Logo Header -->
+        <div class="sticky top-0 z-20 px-8 pt-10 pb-8 bg-gradient-to-b from-[#0c1210] to-transparent">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-mishkat-gold-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                        <div class="relative w-12 h-12 bg-gradient-to-br from-mishkat-gold-600 to-mishkat-gold-400 rounded-2xl flex items-center justify-center shadow-lg shadow-mishkat-gold-500/20">
+                            <span class="material-icons-outlined text-black text-2xl">mosque</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-black font-tajawal leading-none tracking-tighter">مِشـكاة</h1>
+                        <div class="flex items-center gap-2 mt-1.5">
+                            <span class="w-2 h-2 rounded-full bg-mishkat-gold-500 animate-pulse"></span>
+                            <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 dark:text-mishkat-gold-500/50">النظام الذكي</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-xs font-black text-white truncate"><?php echo htmlspecialchars($userName); ?></p>
-                    <p class="text-[9px] uppercase tracking-widest text-white/30 dark:text-mishkat-gold-500/50"><?php echo $role; ?></p>
-                </div>
+                <button onclick="closeSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-white/40 hover:text-mishkat-gold-500 transition-all">
+                    <span class="material-icons-outlined text-xl">close</span>
+                </button>
             </div>
         </div>
 
-        <!-- Nav -->
-        <nav class="mt-4 pb-6">
-            <p class="sidebar-label text-[9px] font-black uppercase tracking-[0.2em] text-white/25 px-8 py-2">القائمة الرئيسية</p>
+        <!-- User Identity -->
+        <div class="px-6 mb-8">
+            <div class="relative p-5 rounded-[2.5rem] bg-white/[0.03] border border-white/5 overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mishkat-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="relative flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-mishkat-gold-500 flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20">
+                        <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-black text-white truncate leading-tight"><?php echo htmlspecialchars($userName); ?></p>
+                        <div class="flex items-center gap-1.5 mt-1">
+                            <span class="text-[8px] font-black uppercase tracking-widest text-mishkat-gold-500/60"><?php echo $role; ?></span>
+                            <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                            <span class="text-[8px] font-black uppercase tracking-widest text-white/20">متصل الآن</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="pb-10">
+            <div class="px-8 mb-4">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">القائمة الأساسية</span>
+            </div>
             
-            <?php foreach ($links as $link):
-                $isActive = ($currentPage === ($link['page'] ?? null));
-                echo sidebarItem($link, $isActive);
-            endforeach; ?>
-
-            <!-- External platforms -->
-            <div class="mx-4 mt-3 pt-3 border-t border-white/5 dark:border-mishkat-gold-500/10">
-                <p class="sidebar-label text-[9px] font-black uppercase tracking-[0.2em] text-white/25 px-2 pb-2">تطبيقات مشكاة</p>
-                
-                <a href="?page=quran" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'quran' ? 'active' : ''); ?>">
-                    <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">menu_book</span>
-                    </div>
-                    <span class="font-bold text-xs flex-1">القرآن الكريم</span>
-                </a>
-
-                <a href="?page=hadith" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'hadith' ? 'active' : ''); ?>">
-                    <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">library_books</span>
-                    </div>
-                    <span class="font-bold text-xs flex-1">الأحاديث النبوية</span>
-                </a>
-
-                <a href="?page=seerah" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'seerah' ? 'active' : ''); ?>">
-                    <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">history_edu</span>
-                    </div>
-                    <span class="font-bold text-xs flex-1">السيرة النبوية</span>
-                </a>
-
-                <a href="?page=tasbih" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'tasbih' ? 'active' : ''); ?>">
-                    <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">track_changes</span>
-                    </div>
-                    <span class="font-bold text-xs flex-1">السبحة الرقمية</span>
-                </a>
-
-                <a href="?page=quiz" class="luxury-sidebar-item flex items-center gap-3 px-3 py-2.5 <?php echo ($currentPage === 'quiz' ? 'active' : ''); ?>">
-                    <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[16px]">quiz</span>
-                    </div>
-                    <span class="font-bold text-xs flex-1">اختبارات مشكاة</span>
-                </a>
+            <div class="space-y-1">
+                <?php foreach ($links as $link):
+                    $isActive = ($currentPage === ($link['page'] ?? null));
+                    echo sidebarItem($link, $isActive);
+                endforeach; ?>
             </div>
 
-            <!-- Logout -->
-            <div class="mx-4 mt-3 pt-3 border-t border-white/5 dark:border-mishkat-gold-500/10">
-                <a href="logout.php" class="luxury-sidebar-item flex items-center gap-3 px-3 py-3 text-red-400/60 hover:text-red-400 hover:bg-red-500/10">
-                    <div class="w-8 h-8 rounded-xl bg-red-500/10 flex items-center justify-center flex-shrink-0">
-                        <span class="material-icons-outlined text-[18px] text-red-400">logout</span>
+            <!-- Apps Section -->
+            <div class="mt-8">
+                <div class="px-8 mb-4 flex items-center justify-between">
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">تطبيقات مشكاة</span>
+                    <span class="w-10 h-[1px] bg-white/5"></span>
+                </div>
+                
+                <div class="space-y-1">
+                    <?php 
+                    $apps = [
+                        ['n' => 'القرآن الكريم', 'i' => 'menu_book', 'p' => 'quran'],
+                        ['n' => 'الأحاديث النبوية', 'i' => 'library_books', 'p' => 'hadith'],
+                        ['n' => 'السيرة النبوية', 'i' => 'history_edu', 'p' => 'seerah'],
+                        ['n' => 'السبحة الرقمية', 'i' => 'track_changes', 'p' => 'tasbih'],
+                        ['n' => 'اختبارات مشكاة', 'i' => 'quiz', 'p' => 'quiz']
+                    ];
+                    foreach($apps as $app): 
+                        $isActive = ($currentPage === $app['p']);
+                        echo sidebarItem(['name' => $app['n'], 'icon' => $app['i'], 'page' => $app['p']], $isActive);
+                    endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Logout Bottom -->
+            <div class="mt-10 px-6">
+                <a href="logout.php" 
+                   class="flex items-center gap-4 px-6 py-4 rounded-[2rem] bg-red-500/5 border border-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 group shadow-lg shadow-red-500/5">
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 group-hover:bg-white/20 flex items-center justify-center transition-colors">
+                        <span class="material-icons-outlined text-[20px]">logout</span>
                     </div>
-                    <span class="font-bold text-sm">تسجيل الخروج</span>
+                    <span class="font-black text-sm">تسجيل الخروج</span>
                 </a>
             </div>
         </nav>

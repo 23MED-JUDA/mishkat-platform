@@ -37,7 +37,6 @@
 
     const Navbar = {
 
-        // --- عناصر DOM ---
         dom: {
             navbar:            null,
             subscribeBtn:      null,
@@ -52,7 +51,6 @@
             dropdownArrow:     null,
         },
 
-        // --- الحالة ---
         state: {
             isScrolled:       false,
             isDropdownOpen:   false,
@@ -60,7 +58,6 @@
             scrollThreshold:  50,
         },
 
-        // --- التهيئة ---
         init() {
             this.dom.navbar            = section.querySelector('#navbar');
             this.dom.subscribeBtn      = section.querySelector('#subscribeBtn');
@@ -86,17 +83,13 @@
             this.handleScroll();
         },
 
-        // --- ربط الأحداث ---
         bindEvents() {
-            // التمرير
             window.addEventListener('scroll', throttle(this.handleScroll.bind(this), 16), { passive: true });
 
-            // Dropdown
             if (this.dom.subscribeBtn) {
                 this.dom.subscribeBtn.addEventListener('click', this.toggleDropdown.bind(this));
             }
 
-            // قائمة الموبايل
             if (this.dom.mobileMenuBtn) {
                 this.dom.mobileMenuBtn.addEventListener('click', this.toggleMobileMenu.bind(this));
             }
@@ -109,34 +102,27 @@
                 this.dom.mobileOverlay.addEventListener('click', this.closeMobileMenu.bind(this));
             }
 
-            // إغلاق الموبايل بالنقر على الخلفية
             this.dom.mobileCloseAreas.forEach((area) => {
                 area.addEventListener('click', this.closeMobileMenu.bind(this));
             });
 
-            // إغلاق الموبايل بالنقر على رابط
             this.dom.mobileLinks.forEach((link) => {
                 link.addEventListener('click', () => {
                     setTimeout(() => this.closeMobileMenu(), 300);
                 });
             });
 
-            // الروابط النشطة
             this.dom.navLinks.forEach((link) => {
                 link.addEventListener('click', () => this.setActiveLink(link));
             });
 
-            // إغلاق عند النقر خارج العنصر
             document.addEventListener('click', this.handleOutsideClick.bind(this));
 
-            // لوحة المفاتيح (Escape)
             document.addEventListener('keydown', this.handleKeydown.bind(this));
 
-            // تغيير حجم الشاشة
             window.addEventListener('resize', throttle(this.handleResize.bind(this), 200));
         },
 
-        // --- التمرير ---
         handleScroll() {
             const scrollY = window.scrollY || window.pageYOffset;
             const shouldBeScrolled = scrollY > this.state.scrollThreshold;
@@ -147,7 +133,6 @@
             }
         },
 
-        // --- Dropdown ---
         openDropdown() {
             if (this.state.isDropdownOpen) return;
             this.state.isDropdownOpen = true;
@@ -173,7 +158,6 @@
             this.state.isDropdownOpen ? this.closeDropdown() : this.openDropdown();
         },
 
-        // --- قائمة الموبايل ---
         openMobileMenu() {
             this.state.isMobileMenuOpen = true;
             if (this.dom.mobileMenu) this.dom.mobileMenu.classList.add('navbar__mobile-menu--active');
@@ -226,13 +210,11 @@
             this.state.isMobileMenuOpen ? this.closeMobileMenu() : this.openMobileMenu();
         },
 
-        // --- الروابط النشطة ---
         setActiveLink(activeLink) {
             this.dom.navLinks.forEach((link) => link.removeAttribute('data-active'));
             if (activeLink) activeLink.setAttribute('data-active', 'true');
         },
 
-        // --- إغلاق عند النقر خارج ---
         handleOutsideClick(event) {
             if (this.state.isDropdownOpen) {
                 const container = this.dom.subscribeBtn
@@ -244,7 +226,6 @@
             }
         },
 
-        // --- لوحة المفاتيح ---
         handleKeydown(event) {
             if (event.key === 'Escape') {
                 if (this.state.isDropdownOpen) {
@@ -258,7 +239,6 @@
             }
         },
 
-        // --- تغيير حجم الشاشة ---
         handleResize() {
             if (window.innerWidth >= 1024 && this.state.isMobileMenuOpen) {
                 this.closeMobileMenu();
@@ -437,7 +417,6 @@
                 const p = this.particles[i];
                 p.life += 1;
 
-                // Fade in/out
                 if (p.fadingIn) {
                     p.opacity += p.fadeSpeed;
                     if (p.opacity >= p.maxOpacity) p.fadingIn = false;
@@ -452,23 +431,19 @@
                     }
                 }
 
-                // حركة موجية
                 const waveX = Math.sin(p.life * p.waveSpeed + p.waveOffset) * p.waveAmplitude;
                 p.x += p.speedX + waveX * 0.1;
                 p.y += p.speedY;
 
-                // إعادة التموضع
                 if (p.y < -10) { p.y = this.height + 10; p.x = Math.random() * this.width; }
                 if (p.x < -10) p.x = this.width + 10;
                 if (p.x > this.width + 10) p.x = -10;
 
-                // رسم الجسيم
                 this.ctx.beginPath();
                 this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                 this.ctx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.opacity})`;
                 this.ctx.fill();
 
-                // تأثير التوهج
                 if (p.radius > 1.5) {
                     this.ctx.beginPath();
                     this.ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
@@ -494,9 +469,7 @@ const subscribeBtn = document.getElementById('subscribeBtn');
 if (heroStartBtn && subscribeBtn) {
     heroStartBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        // سكرول لفوق
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        // بعد ما يوصل للأعلى افتح الـ dropdown
         setTimeout(() => {
             subscribeBtn.click();
         }, 600);
@@ -690,18 +663,14 @@ if (heroStartBtn && subscribeBtn) {
     /* ═══════════ INITIALIZATION - تشغيل قسم الهيدر ═════════════ */
 
     function init() {
-        // --- أنماط ديناميكية (أولاً) ---
         DynamicStyles.init();
 
-        // --- Hero Section ---
         ImageLoader.init();
         Parallax.init();
-        // Particles.init(); 
         ScrollFade.init();
         HeadingGlow.init();
         ButtonRipple.init();
 
-        // --- رسالة نجاح ---
         console.log(
             '%c مشكاة | Mishkat %c Header initialized successfully ✓',
             'background: #2a7351; color: white; padding: 4px 8px; border-radius: 4px 0 0 4px; font-weight: bold;',
@@ -709,14 +678,12 @@ if (heroStartBtn && subscribeBtn) {
         );
     }
 
-    // --- تشغيل عند جاهزية الصفحة ---
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
 
-    // --- تنظيف عند مغادرة الصفحة ---
     window.addEventListener('beforeunload', () => {
         Particles.destroy();
     });
@@ -1131,7 +1098,6 @@ if (heroStartBtn && subscribeBtn) {
 
     /* ────── renderPrograms ───────── */
     function renderPrograms(section) {
-        // ✅ استخدام section.querySelector بدل document
         const grid = section.querySelector("#programsGrid");
         if (!grid) return;
 
@@ -1150,7 +1116,6 @@ if (heroStartBtn && subscribeBtn) {
 
     /* ────── (Fade + Stagger) ──────── */
     function initScrollAnimation(section) {
-        // ✅ استخدام section.querySelectorAll بدل document
         const animatedElements = section.querySelectorAll("[data-animate]");
         const cards = section.querySelectorAll(".program-card");
 
@@ -1160,7 +1125,6 @@ if (heroStartBtn && subscribeBtn) {
             threshold: 0.1,
         };
 
-        // Observer للعناصر العامة
         const generalObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -1174,7 +1138,6 @@ if (heroStartBtn && subscribeBtn) {
             generalObserver.observe(el);
         });
 
-        // Observer للكروت مع Stagger
         const cardObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -1201,7 +1164,6 @@ if (heroStartBtn && subscribeBtn) {
 
         /* ──────── فلتر التصنيفات ────────── */
     function initFilter(section) {
-        // ✅ استخدام section.querySelectorAll بدل document
         const filterBtns = section.querySelectorAll(".filter-bar__btn");
         const cards = section.querySelectorAll(".program-card");
 
@@ -1211,13 +1173,11 @@ if (heroStartBtn && subscribeBtn) {
             btn.addEventListener("click", function () {
                 const filter = this.getAttribute("data-filter");
 
-                // تحديث حالة الأزرار
                 filterBtns.forEach(function (b) {
                     b.classList.remove("filter-bar__btn--active");
                 });
                 this.classList.add("filter-bar__btn--active");
 
-                // فلتر الكروت مع أنيميشن
                 let visibleIndex = 0;
 
                 cards.forEach(function (card) {
@@ -1228,13 +1188,11 @@ if (heroStartBtn && subscribeBtn) {
                         const delay = visibleIndex * 80;
                         visibleIndex++;
 
-                        // إخفاء أولاً
                         card.style.transition = "none";
                         card.classList.remove("is-visible");
                         card.classList.remove("program-card--hidden");
                         card.style.display = "";
 
-                        // إظهار بأنيميشن
                         setTimeout(function () {
                             card.style.transition =
                                 "opacity 0.5s ease, transform 0.5s ease";
@@ -1255,7 +1213,6 @@ if (heroStartBtn && subscribeBtn) {
 
     /* ─────── صفحة تفاصيل الدورة (course.html) ──────────── */
     window.renderCourseDetail = function (courseId) {
-        // ✅ course.html صفحة مستقلة - document.getElementById مقبول هنا
         const container = document.getElementById("courseDetail");
         if (!container) return;
 
@@ -1459,7 +1416,6 @@ if (heroStartBtn && subscribeBtn) {
                 break;
             case "copy":
                 navigator.clipboard.writeText(url).then(function () {
-                    // ✅ course.html صفحة مستقلة - document.querySelector مقبول هنا
                     var btn = document.querySelector(".share-btn--copy");
                     var originalHTML = btn.innerHTML;
                     btn.innerHTML =
@@ -1481,7 +1437,6 @@ if (heroStartBtn && subscribeBtn) {
         
         const section = document.getElementById("programs-section");
 
-        // تشغيل renderPrograms فقط لو الـ section موجود والـ grid موجود جوّاه
         if (section && section.querySelector("#programsGrid")) {
             renderPrograms(section);
         }
@@ -1794,12 +1749,10 @@ function fillHeroSection(teacher) {
         if (el) el.src = src;
     };
 
-        //  تحديث صورة الخلفية (لكل معلم خلفيته)
     if (teacher.coverImage) {
         setImage('heroBgImage', teacher.coverImage);
     }
 
-    // باقي البيانات
     setImage('heroImage', teacher.image);
     setText('heroSpecialty', teacher.specialty);
     setText('heroName', teacher.name);
@@ -1811,23 +1764,19 @@ function fillHeroSection(teacher) {
 
 /* ====== ملء محتوى البروفايل ====== */
 function fillProfileContent(teacher) {
-    // النبذة
     const bioEl = document.getElementById('profileBio');
     if (bioEl) bioEl.textContent = teacher.bio;
 
-    // المؤهلات
     const qualEl = document.getElementById('profileQualifications');
     if (qualEl) {
         qualEl.innerHTML = teacher.qualifications.map(q => `<li>${q}</li>`).join('');
     }
 
-    // الإجازات
     const ijazatEl = document.getElementById('profileIjazat');
     if (ijazatEl) {
         ijazatEl.innerHTML = teacher.ijazatList.map(i => `<li>${i}</li>`).join('');
     }
 
-    // المواد
     const coursesEl = document.getElementById('profileCourses');
     if (coursesEl) {
         coursesEl.innerHTML = teacher.courses.map(c => `
@@ -1838,7 +1787,6 @@ function fillProfileContent(teacher) {
         `).join('');
     }
 
-    // المواعيد
     const scheduleEl = document.getElementById('profileSchedule');
     if (scheduleEl) {
         scheduleEl.innerHTML = teacher.schedule.map(s => `
@@ -1939,13 +1887,10 @@ window.addEventListener('scroll', function() {
 
                 const pick = Math.random();
                 if (pick < 0.35) {
-                    // Gold / warm
                     this.r = 196; this.g = 146; this.b = 37;
                 } else if (pick < 0.65) {
-                    // Sage green
                     this.r = 131; this.g = 171; this.b = 119;
                 } else {
-                    // Warm cream
                     this.r = 212; this.g = 190; this.b = 142;
                 }
             }
@@ -1954,13 +1899,11 @@ window.addEventListener('scroll', function() {
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Twinkle
                 this.opacity += this.opacitySpeed;
                 if (this.opacity >= this.maxOpacity || this.opacity <= this.minOpacity) {
                     this.opacitySpeed *= -1;
                 }
 
-                // Wrap edges
                 if (this.x < -10) this.x = canvas.width + 10;
                 if (this.x > canvas.width + 10) this.x = -10;
                 if (this.y < -10) this.y = canvas.height + 10;
@@ -2012,7 +1955,6 @@ window.addEventListener('scroll', function() {
 
         animate();
 
-        // Recreate particles on resize
         window.addEventListener('resize', debounce(() => {
             cancelAnimationFrame(animationId);
             createParticles();
@@ -2082,7 +2024,6 @@ window.addEventListener('scroll', function() {
             }, { passive: true });
         });
 
-        // Ambient light tracking - محصور جوه الـ section
         let lastX = 0;
         let lastY = 0;
         let ticking = false;
@@ -2135,7 +2076,6 @@ window.addEventListener('scroll', function() {
     /* =========== Ripple Effect on Buttons =============== */
     function initRippleEffect() {
 
-        // Inject ripple keyframes مرة وحدة بس
         if (!document.getElementById('packages-ripple-style')) {
             const style = document.createElement('style');
             style.id = 'packages-ripple-style';
@@ -2152,7 +2092,6 @@ window.addEventListener('scroll', function() {
             const button = e.target.closest('button');
             if (!button) return;
 
-            // تأكد إن الـ button جوه الـ section
             if (!section.contains(button)) return;
 
             const ripple = document.createElement('span');
@@ -2193,7 +2132,6 @@ window.addEventListener('scroll', function() {
     /* ======== Accessibility Enhancements ============= */
     function initAccessibility() {
 
-        // Inject focus styles مرة وحدة بس
         if (!document.getElementById('packages-focus-style')) {
             const focusStyle = document.createElement('style');
             focusStyle.id = 'packages-focus-style';
@@ -2251,7 +2189,6 @@ packageBtns.forEach((btnId) => {
     function animateCounter(element, start, end, duration) {
         if (!element) return;
 
-        // تأكد إن الـ element جوه الـ section
         if (!section.contains(element)) return;
 
         const startTime = performance.now();
@@ -2354,7 +2291,6 @@ packageBtns.forEach((btnId) => {
 
     /* ========== INTERSECTION OBSERVER - REVEAL ========== */
     function initRevealObserver() {
-        // Header elements
         const headerObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -2372,7 +2308,6 @@ packageBtns.forEach((btnId) => {
 
         animatedEls.forEach((el) => headerObserver.observe(el));
 
-        // Step items with stagger
         let revealedCount = 0;
         const stepObserver = new IntersectionObserver(
             (entries) => {
@@ -2427,7 +2362,6 @@ packageBtns.forEach((btnId) => {
 
             timelineOrb.style.opacity = currentProgress > 0.01 ? '1' : '0';
 
-            // Determine active step
             stepItems.forEach((item) => {
                 const itemRect   = item.getBoundingClientRect();
                 const itemCenter = itemRect.top + itemRect.height / 2;
@@ -2457,7 +2391,6 @@ packageBtns.forEach((btnId) => {
             }
         }
 
-        // scroll/resize يبقوا على window — صح
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll, { passive: true });
 
@@ -2611,7 +2544,6 @@ if (studyStartBtn && subscribeBtn) {
         initStepCounters();
     }
 
-    // Start when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
@@ -3252,7 +3184,6 @@ if (studyStartBtn && subscribeBtn) {
                 p.draw();
             });
 
-            // Faint connections
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -3400,7 +3331,6 @@ if (studyStartBtn && subscribeBtn) {
         }, 1500);
     }
 
-    // تعريض handleSubscribe للـ HTML
     window.footerHandleSubscribe = handleSubscribe;
 
 
@@ -3425,7 +3355,6 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-    // تعريض scrollToTop للـ HTML
     window.footerScrollToTop = scrollToTop;
 
 

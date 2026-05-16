@@ -338,7 +338,7 @@
 
                             <!-- خيارات التسجيل -->
                             <div class="p-2">
-                                <a href="/register"
+                                <a href="register.php"
                                    class="navbar__dropdown-item flex items-center gap-3 px-4 py-3
                                           rounded-xl text-sm font-medium text-mishkat-green-800
                                           hover:bg-mishkat-green-50 hover:text-mishkat-green-600
@@ -365,7 +365,7 @@
                                     </div>
                                 </a>
 
-                                <a href="/register"
+                                <a href="register.php"
                                    class="navbar__dropdown-item flex items-center gap-3 px-4 py-3
                                           rounded-xl text-sm font-medium text-mishkat-green-800
                                           hover:bg-mishkat-green-50 hover:text-mishkat-green-600
@@ -401,7 +401,7 @@
 
                     <!-- زر تسجيل الدخول -->
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="/dashboard"
+                        <a href="dashboard.php"
                            class="navbar__login-btn px-5 py-2.5 text-sm font-bold
                                   text-white bg-mishkat-green-700
                                   hover:bg-mishkat-green-600
@@ -410,7 +410,7 @@
                             لوحة التحكم
                         </a>
                     <?php else: ?>
-                        <a href="/login"
+                        <a href="login.php"
                            class="navbar__login-btn px-5 py-2.5 text-sm font-bold
                                   text-mishkat-green-700 bg-mishkat-green-50
                                   hover:bg-mishkat-green-100 hover:text-mishkat-green-800
@@ -501,14 +501,14 @@
 
                 <div class="pt-6 mt-6 border-t border-mishkat-green-100/50 space-y-4">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="/dashboard" class="flex items-center justify-center w-full py-4 bg-mishkat-green-700 text-white font-bold rounded-2xl shadow-lg transition-all">
+                        <a href="dashboard.php" class="flex items-center justify-center w-full py-4 bg-mishkat-green-700 text-white font-bold rounded-2xl shadow-lg transition-all">
                             لوحة التحكم
                         </a>
                     <?php else: ?>
-                        <a href="/login" class="flex items-center justify-center w-full py-4 text-mishkat-green-700 font-bold border border-mishkat-green-200 rounded-2xl hover:bg-mishkat-green-50 transition-all">
+                        <a href="login.php" class="flex items-center justify-center w-full py-4 text-mishkat-green-700 font-bold border border-mishkat-green-200 rounded-2xl hover:bg-mishkat-green-50 transition-all">
                             تسجيل الدخول
                         </a>
-                        <a href="/register"
+                        <a href="register.php"
                            class="flex items-center justify-center w-full py-4
                                   bg-gradient-to-l from-mishkat-green-700 to-mishkat-green-600
                                   text-white font-bold rounded-2xl

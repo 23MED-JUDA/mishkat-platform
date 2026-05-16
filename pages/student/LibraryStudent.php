@@ -28,15 +28,15 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
             <?php
             $externalLinks = [
-                ['name' => 'القرآن الكريم', 'icon' => 'menu_book', 'color' => 'emerald', 'desc' => 'قراءة واستماع'],
-                ['name' => 'الأحاديث', 'icon' => 'history_edu', 'color' => 'blue', 'desc' => 'الصحاح والسنن'],
-                ['name' => 'السيرة النبوية', 'icon' => 'mosque', 'color' => 'amber', 'desc' => 'حياة المصطفى'],
-                ['name' => 'أسئلة دينية', 'icon' => 'quiz', 'color' => 'purple', 'desc' => 'فتاوى ومعلومات'],
-                ['name' => 'السبحة', 'icon' => 'track_changes', 'color' => 'rose', 'desc' => 'أذكار وتسبيح'],
+                ['name' => 'القرآن الكريم', 'icon' => 'menu_book', 'color' => 'emerald', 'desc' => 'قراءة واستماع', 'hash' => 'quran'],
+                ['name' => 'الأحاديث', 'icon' => 'history_edu', 'color' => 'blue', 'desc' => 'الصحاح والسنن', 'hash' => 'hadith'],
+                ['name' => 'السيرة النبوية', 'icon' => 'mosque', 'color' => 'amber', 'desc' => 'حياة المصطفى', 'hash' => 'seerah'],
+                ['name' => 'السبحة', 'icon' => 'track_changes', 'color' => 'rose', 'desc' => 'أذكار وتسبيح', 'hash' => 'tasbih'],
+                ['name' => 'الاختبارات', 'icon' => 'quiz', 'color' => 'purple', 'desc' => 'اختبر معلوماتك', 'hash' => 'quiz'],
             ];
             foreach($externalLinks as $link):
             ?>
-            <a href="index.php" 
+            <a href="mishkah-app/index.html#<?php echo $link['hash']; ?>" target="_blank" 
                class="luxury-card p-6 rounded-[2.5rem] text-center group hover:shadow-xl hover:-translate-y-2 transition-all border border-gray-50 flex flex-col items-center">
                 <div class="w-16 h-16 bg-<?php echo $link['color']; ?>-50 text-<?php echo $link['color']; ?>-600 rounded-[2rem] flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-sm">
                     <span class="material-icons-outlined text-3xl"><?php echo $link['icon']; ?></span>
@@ -45,6 +45,7 @@
                 <p class="text-[10px] text-gray-400 font-bold"><?php echo $link['desc']; ?></p>
             </a>
             <?php endforeach; ?>
+        </div>
         </div>
     </div>
 

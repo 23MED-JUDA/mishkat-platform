@@ -313,7 +313,7 @@
     function createProgramCard(program, index) {
         const card = document.createElement("a");
         card.className = "program-card";
-        card.href = "course.html?id=" + program.id;
+        card.href = "course_details.php?id=" + program.id;
         card.setAttribute("data-index", index);
         card.setAttribute("data-category", program.category);
         card.setAttribute("role", "article");

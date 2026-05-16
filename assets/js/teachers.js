@@ -266,7 +266,7 @@ function createTeacherCard(teacher, index) {
 /* =========  الانتقال لصفحة المعلم========== */
 function goToProfile(teacherId) {
     localStorage.setItem('selectedTeacherId', teacherId);
-    window.location.href = `teacher-profile.html?id=${teacherId}`;
+    window.location.href = `teacher_profile.php?id=${teacherId}`;
 }
 
 /* =========== تحميل بيانات المعلم في صفحة البروفايل =========== */

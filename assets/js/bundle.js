@@ -1074,7 +1074,7 @@ if (heroStartBtn && subscribeBtn) {
     function createProgramCard(program, index) {
         const card = document.createElement("a");
         card.className = "program-card";
-        card.href = "course.html?id=" + program.id;
+        card.href = "course_details.php?id=" + program.id;
         card.setAttribute("data-index", index);
         card.setAttribute("data-category", program.category);
         card.setAttribute("role", "article");
@@ -1762,7 +1762,7 @@ function createTeacherCard(teacher, index) {
 /* =========  الانتقال لصفحة المعلم========== */
 function goToProfile(teacherId) {
     localStorage.setItem('selectedTeacherId', teacherId);
-    window.location.href = `teacher-profile.html?id=${teacherId}`;
+    window.location.href = `teacher_profile.php?id=${teacherId}`;
 }
 
 /* =========== تحميل بيانات المعلم في صفحة البروفايل =========== */

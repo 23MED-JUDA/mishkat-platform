@@ -53,39 +53,45 @@
        THEME VARIABLES (Premium Minimalist Palette)
     ══════════════════════════════════════ */
     :root {
-        /* LIGHT MODE: Clean White & Gray, Vibrant Green, Subtle Gold */
-        --bg-app: #f8fafc;            /* Soft cool gray background */
-        --bg-surface: #ffffff;        /* Pure white cards & sidebar */
-        --color-primary: #059669;     /* Vibrant Emerald Green */
-        --color-primary-light: #10b981; 
-        --color-accent: #f59e0b;      /* Warm Amber/Gold */
-        --color-text-main: #0f172a;   /* Deep slate for high contrast */
-        --color-text-muted: #64748b;  /* Muted slate text */
-        --border-color: #e2e8f0;      /* Light border */
-        
+        /* LIGHT MODE: 3 calm colors — White, Soft Gray, Calm Green. NO GOLD. */
+        --bg-app: #f5f5f5;            /* Warm off-white background */
+        --bg-surface: #ffffff;        /* Pure white cards */
+        --color-primary: #4a8c6e;     /* Calm sage green — the only accent */
+        --color-primary-light: #6aad8e;
+        --color-accent: #4a8c6e;      /* Same green (no gold in light mode) */
+        --color-text-main: #2c2c2c;   /* Soft dark gray, not harsh black */
+        --color-text-muted: #888888;  /* Medium gray for secondary text */
+        --border-color: #e8e8e8;      /* Very soft gray border */
+
+        /* Sidebar — white with green accents */
         --sidebar-bg: #ffffff;
-        --sidebar-text: #475569;
-        --sidebar-text-hover: #059669;
-        --sidebar-active-bg: #ecfdf5; /* Light emerald tint */
-        --sidebar-active-text: #059669;
+        --sidebar-text: #888888;
+        --sidebar-text-hover: #4a8c6e;
+        --sidebar-active-bg: #eef6f1; /* Faint green tint */
+        --sidebar-active-text: #4a8c6e;
+        --sidebar-icon-bg: #f0f0f0;
+        --sidebar-icon-bg-active: #d4ece1;
     }
 
     html.dark {
-        /* DARK MODE: Deep Slate, Luminous Gold, Crisp White */
-        --bg-app: #0f172a;            /* Deep navy/slate background */
-        --bg-surface: #1e293b;        /* Lighter slate for cards/sidebar */
-        --color-primary: #fbbf24;     /* Luminous Gold for main elements */
-        --color-primary-light: #fcd34d;
-        --color-accent: #34d399;      /* Mint Green for subtle accents */
-        --color-text-main: #f8fafc;   /* White text */
-        --color-text-muted: #94a3b8;  /* Slate text */
-        --border-color: #334155;      /* Dark border */
-        
-        --sidebar-bg: #1e293b;
-        --sidebar-text: #94a3b8;
-        --sidebar-text-hover: #f8fafc;
-        --sidebar-active-bg: rgba(251, 191, 36, 0.1);
-        --sidebar-active-text: #fbbf24;
+        /* DARK MODE: Pure Black + White + Gold only */
+        --bg-app: #000000;            /* Pure Black */
+        --bg-surface: #111111;        /* Near-black for cards */
+        --color-primary: #d4a843;     /* Rich Gold */
+        --color-primary-light: #e8c06a;
+        --color-accent: #d4a843;      /* Gold accent */
+        --color-text-main: #ffffff;   /* Pure White text */
+        --color-text-muted: #999999;  /* Gray for secondary text */
+        --border-color: rgba(212, 168, 67, 0.18); /* Subtle gold border */
+
+        /* Sidebar — deep black with gold highlights */
+        --sidebar-bg: #080808;
+        --sidebar-text: #888888;
+        --sidebar-text-hover: #ffffff;
+        --sidebar-active-bg: #d4a843; /* Solid gold for active item bg */
+        --sidebar-active-text: #000000; /* Black text on gold */
+        --sidebar-icon-bg: #1a1a1a;
+        --sidebar-icon-bg-active: #d4a843;
     }
 
     /* ══════════════════════════════════════
@@ -107,13 +113,13 @@
         background-color: var(--bg-app) !important;
     }
     .luxury-card {
-        border-radius: 2rem;
+        border-radius: 1.5rem;
         border: 1px solid var(--border-color);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: all 0.25s ease;
     }
     html.dark .luxury-card {
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212,168,67,0.06);
     }
 
     /* — Typography Colors — */
@@ -139,8 +145,11 @@
     }
 
     /* — Background Accents (Badges, light backgrounds) — */
-    .bg-mishkat-green-50, .bg-amber-50, .bg-blue-50, .bg-purple-50, .bg-red-50 {
+    .bg-mishkat-green-50, .bg-amber-50 {
         background-color: var(--sidebar-active-bg) !important;
+    }
+    html.dark .bg-blue-50, html.dark .bg-purple-50, html.dark .bg-red-50 {
+        background-color: rgba(212, 168, 67, 0.08) !important;
     }
     
     /* Progress Bars & Badges filled */
@@ -155,54 +164,89 @@
 
     /* — Top Nav — */
     .glass-nav {
-        background: rgba(255, 255, 255, 0.85) !important;
+        background: rgba(255, 255, 255, 0.9) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--border-color) !important;
     }
     html.dark .glass-nav {
-        background: rgba(30, 41, 59, 0.85) !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+        border-bottom: 1px solid rgba(212, 168, 67, 0.15) !important;
     }
 
     /* — Sidebar — */
     .luxury-sidebar {
         background: var(--sidebar-bg) !important;
         border-left: 1px solid var(--border-color) !important;
-        box-shadow: none !important;
+        box-shadow: 2px 0 20px rgba(0,0,0,0.06) !important;
+    }
+    html.dark .luxury-sidebar {
+        box-shadow: 0 0 40px rgba(0,0,0,0.8) !important;
     }
 
+    /* Sidebar nav items */
     .luxury-sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.65rem 1rem;
+        border-radius: 1.25rem;
+        margin: 0.2rem 0.75rem;
         color: var(--sidebar-text) !important;
+        text-decoration: none;
+        transition: all 0.25s ease;
     }
     .luxury-sidebar-item:hover:not(.active) {
-        background: var(--bg-app) !important;
+        background: var(--sidebar-active-bg) !important;
         color: var(--sidebar-text-hover) !important;
     }
     .luxury-sidebar-item.active {
         background: var(--sidebar-active-bg) !important;
         color: var(--sidebar-active-text) !important;
-        font-weight: bold;
+        font-weight: 700;
     }
-    .luxury-sidebar-item.active .material-icons-outlined,
-    .luxury-sidebar-item.active span {
+    .luxury-sidebar-item .icon-box {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--sidebar-icon-bg);
+        flex-shrink: 0;
+        transition: all 0.25s ease;
+    }
+    .luxury-sidebar-item.active .icon-box {
+        background: var(--sidebar-icon-bg-active);
+    }
+    .luxury-sidebar-item .material-icons-outlined {
+        font-size: 1.2rem;
+        color: var(--sidebar-text) !important;
+        transition: color 0.25s ease;
+    }
+    .luxury-sidebar-item:hover .material-icons-outlined {
+        color: var(--sidebar-text-hover) !important;
+    }
+    .luxury-sidebar-item.active .material-icons-outlined {
         color: var(--sidebar-active-text) !important;
     }
+    html.dark .luxury-sidebar-item.active .icon-box {
+        box-shadow: 0 4px 12px rgba(212, 168, 67, 0.3);
+    }
 
-    /* Sidebar Logo & User Box overriding transparent */
+    /* Sidebar Logo & User Box */
     .logo-box {
         background: var(--sidebar-bg) !important;
         border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem 1.25rem;
     }
     .user-box {
         background: var(--bg-app) !important;
         border: 1px solid var(--border-color) !important;
+        border-radius: 1.25rem;
     }
-    .user-info p {
-        color: var(--color-text-main) !important;
-    }
-    .user-info span {
-        color: var(--color-text-muted) !important;
-    }
+    .user-info p { color: var(--color-text-main) !important; }
+    .user-info span { color: var(--color-text-muted) !important; }
 
     /* — Buttons — */
     .btn-luxury {
@@ -211,16 +255,16 @@
         border-radius: 1.5rem;
         padding: 0.75rem 2rem;
         font-weight: bold;
-        transition: all 0.2s ease;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         border: none !important;
     }
     html.dark .btn-luxury {
-        color: #0f172a !important;
+        color: #000000 !important;
+        box-shadow: 0 4px 16px rgba(212,168,67,0.25);
     }
     .btn-luxury:hover { 
         transform: translateY(-2px); 
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         filter: brightness(1.1);
     }
 

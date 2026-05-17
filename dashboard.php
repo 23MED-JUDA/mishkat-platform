@@ -341,96 +341,94 @@ function sidebarItem($link, $isActive) {
     <!-- ─── SIDEBAR ─── -->
     <aside id="sidebar" class="fixed top-0 right-0 h-screen luxury-sidebar z-50 overflow-x-hidden overflow-y-auto custom-scrollbar">
 
-        <!-- Logo Header -->
-        <div class="sticky top-0 z-20 px-6 pt-10 pb-8 logo-box flex items-center justify-between transition-all duration-300">
-            <div class="flex items-center gap-4">
-                <div class="relative group flex-shrink-0">
-                        <div class="absolute -inset-1 bg-mishkat-gold-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <div class="relative w-12 h-12 bg-gradient-to-br from-mishkat-gold-600 to-mishkat-gold-400 rounded-2xl flex items-center justify-center shadow-lg shadow-mishkat-gold-500/20">
-                            <span class="material-icons-outlined text-black text-2xl">mosque</span>
-                        </div>
-                    </div>
+        <!-- Brand & Logo -->
+        <div class="logo-box flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                     style="background: var(--sidebar-active-bg);">
+                    <span class="material-icons-outlined" style="color: var(--color-primary); font-size:1.4rem;">mosque</span>
                 </div>
-                <div class="sidebar-logo-text transition-all duration-300">
-                    <h1 class="text-2xl font-black font-tajawal leading-none tracking-tighter whitespace-nowrap">مِشـكاة</h1>
-                    <div class="flex items-center gap-2 mt-1.5 whitespace-nowrap">
-                        <span class="w-2 h-2 rounded-full bg-mishkat-gold-500 animate-pulse"></span>
-                        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 dark:text-mishkat-gold-500/50">النظام الذكي</p>
-                    </div>
+                <div class="sidebar-logo-text">
+                    <h1 class="text-lg font-black font-tajawal leading-none whitespace-nowrap"
+                        style="color: var(--color-text-main);">مِشـكاة</h1>
+                    <p class="text-[9px] uppercase tracking-[0.2em] whitespace-nowrap mt-0.5"
+                       style="color: var(--color-text-muted);">منصة تعليمية</p>
                 </div>
             </div>
-            <button onclick="closeSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-white/40 hover:text-mishkat-gold-500 transition-all flex-shrink-0">
-                    <span class="material-icons-outlined text-xl">close</span>
-                </button>
-            </div>
+            <button onclick="closeSidebar()"
+                    class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
+                    style="background: var(--bg-app); color: var(--color-text-muted);">
+                <span class="material-icons-outlined text-xl">close</span>
+            </button>
         </div>
 
-        <!-- User Identity -->
-        <div class="px-4 mb-8 transition-all duration-300">
-            <div class="user-box relative p-4 rounded-[2rem] overflow-hidden group flex items-center gap-4 transition-all duration-300">
-                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mishkat-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                <div class="user-avatar w-12 h-12 rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20 flex-shrink-0 transition-all duration-300">
+        <!-- User Card -->
+        <div class="px-4 mb-6 mt-4">
+            <div class="user-box flex items-center gap-3 p-3">
+                <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center font-black text-sm flex-shrink-0"
+                     style="background: var(--sidebar-active-bg); color: var(--sidebar-active-text);">
                     <?php if(!empty($userImage)): ?>
                         <img src="<?php echo htmlspecialchars($userImage); ?>" class="w-full h-full object-cover">
                     <?php else: ?>
                         <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
                     <?php endif; ?>
                 </div>
-                <div class="user-info flex-1 min-w-0 transition-all duration-300">
-                    <p class="text-sm font-black text-white truncate leading-tight"><?php echo htmlspecialchars($userName); ?></p>
-                    <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
-                        <span class="text-[8px] font-black uppercase tracking-widest text-mishkat-gold-500/60"><?php echo $userRoleName; ?></span>
-                        <span class="w-1 h-1 rounded-full bg-white/20"></span>
-                        <span class="text-[8px] font-black uppercase tracking-widest text-white/20">متصل الآن</span>
-                    </div>
+                <div class="user-info flex-1 min-w-0">
+                    <p class="text-sm font-bold truncate leading-tight"><?php echo htmlspecialchars($userName); ?></p>
+                    <span class="text-[10px] uppercase tracking-wider"><?php echo $userRoleName; ?></span>
                 </div>
             </div>
         </div>
 
         <!-- Navigation Menu -->
-        <nav class="pb-10">
-            <div class="px-6 mb-4 sidebar-app-label transition-all duration-300">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 whitespace-nowrap">القائمة الأساسية</span>
+        <nav class="pb-6">
+            <!-- Section Label -->
+            <div class="px-5 mb-2 sidebar-app-label">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.25em]"
+                      style="color: var(--color-text-muted);">القائمة</span>
             </div>
             
-            <div class="space-y-1">
+            <div class="space-y-0.5">
                 <?php foreach ($links as $link):
                     $isActive = ($currentPage === ($link['page'] ?? null));
                     echo sidebarItem($link, $isActive);
                 endforeach; ?>
             </div>
 
+            <!-- Divider -->
+            <div class="mx-5 my-5" style="height:1px; background: var(--border-color);"></div>
+
             <!-- Apps Section -->
-            <div class="mt-8">
-                <div class="px-6 mb-4 flex items-center justify-between sidebar-app-label transition-all duration-300">
-                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 whitespace-nowrap">تطبيقات مشكاة</span>
-                    <span class="w-10 h-[1px] bg-white/5"></span>
-                </div>
-                
-                <div class="space-y-1">
-                    <?php 
-                    $apps = [
-                        ['n' => 'القرآن الكريم', 'i' => 'menu_book', 'p' => 'quran'],
-                        ['n' => 'الأحاديث النبوية', 'i' => 'library_books', 'p' => 'hadith'],
-                        ['n' => 'السيرة النبوية', 'i' => 'history_edu', 'p' => 'seerah'],
-                        ['n' => 'السبحة الرقمية', 'i' => 'track_changes', 'p' => 'tasbih'],
-                        ['n' => 'اختبارات مشكاة', 'i' => 'quiz', 'p' => 'quiz']
-                    ];
-                    foreach($apps as $app): 
-                        $isActive = ($currentPage === $app['p']);
-                        echo sidebarItem(['name' => $app['n'], 'icon' => $app['i'], 'page' => $app['p']], $isActive);
-                    endforeach; ?>
-                </div>
+            <div class="px-5 mb-2 sidebar-app-label">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.25em]"
+                      style="color: var(--color-text-muted);">تطبيقات مشكاة</span>
             </div>
 
-            <!-- Logout Bottom -->
-            <div class="mt-10 px-4 pb-6">
+            <div class="space-y-0.5">
+                <?php 
+                $apps = [
+                    ['n' => 'القرآن الكريم',    'i' => 'menu_book',    'p' => 'quran'],
+                    ['n' => 'الأحاديث النبوية', 'i' => 'library_books','p' => 'hadith'],
+                    ['n' => 'السيرة النبوية',   'i' => 'history_edu',  'p' => 'seerah'],
+                    ['n' => 'السبحة الرقمية',   'i' => 'track_changes','p' => 'tasbih'],
+                    ['n' => 'اختبارات مشكاة',  'i' => 'quiz',         'p' => 'quiz'],
+                ];
+                foreach($apps as $app): 
+                    $isActive = ($currentPage === $app['p']);
+                    echo sidebarItem(['name' => $app['n'], 'icon' => $app['i'], 'page' => $app['p']], $isActive);
+                endforeach; ?>
+            </div>
+
+            <!-- Logout -->
+            <div class="px-4 mt-5 pb-4">
+                <div class="mx-1" style="height:1px; background: var(--border-color);"></div>
                 <a href="logout.php" title="تسجيل الخروج"
-                   class="sidebar-item-link flex items-center gap-4 px-4 py-3 rounded-[1.5rem] bg-red-500/5 border border-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 group shadow-lg shadow-red-500/5">
-                    <div class="w-10 h-10 rounded-xl bg-red-500/10 group-hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0">
-                        <span class="material-icons-outlined text-[20px]">logout</span>
+                   class="luxury-sidebar-item mt-4"
+                   style="color: #ef4444 !important;">
+                    <div class="icon-box" style="background: rgba(239,68,68,0.08);">
+                        <span class="material-icons-outlined text-xl" style="color: #ef4444 !important; font-size:1.2rem;">logout</span>
                     </div>
-                    <span class="font-black text-sm logout-text transition-all duration-300 whitespace-nowrap">تسجيل الخروج</span>
+                    <span class="text-sm font-medium logout-text whitespace-nowrap" style="color: #ef4444;">تسجيل الخروج</span>
                 </a>
             </div>
         </nav>

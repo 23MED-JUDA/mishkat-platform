@@ -96,9 +96,29 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
 $handler = new DatabaseSessionHandler($conn);
 session_set_save_handler($handler, true);
 
-// Start the session securely
 // Start the session securely if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+// ── Remember Me: auto-login from cookie ──
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['mishkat_user'])) {
+    $cookieUserId = (int) $_COOKIE['mishkat_user'];
+    if ($cookieUserId > 0) {
+        $stmt = $conn->prepare("SELECT id, name, role, status FROM users WHERE id = ? AND status = 'active'");
+        $stmt->bind_param("i", $cookieUserId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($user = $result->fetch_assoc()) {
+            $_SESSION['user_id']   = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
+            // Refresh cookie for another 30 days
+            setcookie('mishkat_user', $user['id'], time() + (30 * 24 * 60 * 60), "/", "", false, true);
+        } else {
+            // Invalid or suspended user — remove cookie
+            setcookie('mishkat_user', '', time() - 3600, "/");
+        }
+    }
 }
 ?>

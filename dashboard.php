@@ -251,6 +251,76 @@ function sidebarItem($link, $isActive) {
             .luxury-sidebar-item { padding: 0.75rem 1rem !important; }
             button, a { min-height: 40px; }
         }
+
+        /* ── Animated Hamburger Button ── */
+        #menuBtn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            background: var(--bg-surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        html.dark #menuBtn {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,168,67,0.15);
+        }
+        #menuBtn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        html.dark #menuBtn:hover {
+            box-shadow: 0 4px 16px rgba(212,168,67,0.2);
+        }
+        #menuBtn:active { transform: scale(0.96); }
+
+        /* Hamburger bars inside the button */
+        .hamburger-icon {
+            width: 18px;
+            height: 14px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hamburger-icon span {
+            display: block;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--color-primary);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        /* When sidebar is open: X animation */
+        body.sidebar-open #menuBtn .hamburger-icon span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+        body.sidebar-open #menuBtn .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        body.sidebar-open #menuBtn .hamburger-icon span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+        /* Desktop collapsed state: show different bars */
+        body.sidebar-collapsed #menuBtn .hamburger-icon span:nth-child(1) {
+            width: 100%;
+        }
+        body.sidebar-collapsed #menuBtn .hamburger-icon span:nth-child(2) {
+            width: 70%;
+        }
+        body.sidebar-collapsed #menuBtn .hamburger-icon span:nth-child(3) {
+            width: 85%;
+        }
+        #menuBtn .hamburger-icon span:nth-child(1) { width: 100%; }
+        #menuBtn .hamburger-icon span:nth-child(2) { width: 70%; }
+        #menuBtn .hamburger-icon span:nth-child(3) { width: 85%; }
         /* Toast Notifications */
         .toast-container {
             position: fixed;
@@ -440,10 +510,13 @@ function sidebarItem($link, $isActive) {
         <!-- Topbar -->
         <header class="glass-nav sticky top-0 z-30 px-4 md:px-6 py-3 flex justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <!-- Hamburger / Toggle Sidebar -->
-                <button id="menuBtn" onclick="toggleSidebar()" 
-                        class="p-2 bg-white dark:bg-black rounded-xl shadow-sm text-mishkat-green-800 dark:text-mishkat-gold-500 border border-gray-100 dark:border-mishkat-gold-500/20 flex-shrink-0 hover:bg-gray-50 dark:hover:bg-white/5 transition-all">
-                    <span class="material-icons-outlined">menu_open</span>
+                <!-- Hamburger Circle Button -->
+                <button id="menuBtn" onclick="toggleSidebar()" aria-label="القائمة">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </button>
                 <!-- Brand on mobile -->
                 <div class="flex items-center gap-2 lg:hidden">
@@ -544,10 +617,9 @@ function sidebarItem($link, $isActive) {
         function openSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            
             sidebar.classList.add('open');
+            document.body.classList.add('sidebar-open');
             overlay.classList.remove('hidden');
-            // Force reflow
             void overlay.offsetWidth;
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -556,13 +628,11 @@ function sidebarItem($link, $isActive) {
         function closeSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            
             sidebar.classList.remove('open');
+            document.body.classList.remove('sidebar-open');
             overlay.classList.remove('active');
             setTimeout(() => {
-                if (!sidebar.classList.contains('open')) {
-                    overlay.classList.add('hidden');
-                }
+                if (!sidebar.classList.contains('open')) overlay.classList.add('hidden');
             }, 300);
             document.body.style.overflow = '';
         }

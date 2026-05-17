@@ -1,115 +1,338 @@
 <?php
 /**
- * Quran Reader - Native Platform Version
+ * Quran Reader - Mishkat Platform
  */
 ?>
 
-<div class="space-y-8 animate-fadeIn">
-    <!-- Header -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-            <h2 class="text-3xl font-black text-mishkat-green-900 dark:text-white font-tajawal">القرآن الكريم</h2>
-            <p class="text-gray-500 dark:text-gray-400 font-medium">تلاوة وتدبر آيات الله البينات</p>
-        </div>
-        <div class="flex gap-2">
-            <div class="relative flex-1 md:w-64">
-                <span class="material-icons-outlined absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                <input type="text" id="surahSearch" placeholder="بحث عن سورة..." 
-                       class="w-full pr-12 pl-4 py-3 bg-white dark:bg-mishkat-green-900/20 border border-gray-100 dark:border-mishkat-gold-500/10 rounded-2xl focus:ring-2 focus:ring-mishkat-gold-500 outline-none transition-all dark:text-white">
-            </div>
-        </div>
-    </div>
-
-    <!-- Surah List / Surah Content -->
-    <div id="quranContainer" class="min-h-[400px]">
-        <!-- Loading State -->
-        <div id="quranLoading" class="flex flex-col items-center justify-center py-20">
-            <div class="w-12 h-12 border-4 border-mishkat-gold-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="mt-4 text-gray-500 font-bold">جاري تحميل البيانات...</p>
-        </div>
-
-        <!-- Surah Grid -->
-        <div id="surahGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 hidden">
-            <!-- Surahs will be injected here -->
-        </div>
-
-        <!-- Surah Reader (Hidden by default) -->
-        <div id="surahReader" class="hidden space-y-6">
-            <button onclick="showSurahGrid()" class="flex items-center gap-2 text-mishkat-green-700 dark:text-mishkat-gold-400 font-black hover:gap-3 transition-all mb-4">
-                <span class="material-icons-outlined">arrow_forward</span>
-                العودة لقائمة السور
-            </button>
-            
-            <div id="surahHeader" class="luxury-card p-10 text-center relative overflow-hidden">
-                <div class="relative z-10">
-                    <h3 id="readerSurahName" class="text-4xl font-amiri font-black text-mishkat-green-900 dark:text-mishkat-gold-200 mb-2"></h3>
-                    <p id="readerSurahMeta" class="text-mishkat-gold-600 font-black tracking-widest uppercase text-xs"></p>
-                </div>
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none">
-                    <span class="material-icons-outlined text-[150px]">auto_stories</span>
-                </div>
-            </div>
-
-            <div id="ayahsContainer" class="luxury-card p-6 md:p-12 space-y-10 leading-[2.5] text-right font-amiri text-2xl md:text-3xl dark:text-gray-100">
-                <!-- Ayahs will be injected here -->
-            </div>
-        </div>
-    </div>
-</div>
-
 <style>
+    /* ── Quran Page Styles ── */
+    .quran-hero {
+        background: var(--sidebar-active-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    html.dark .quran-hero {
+        background: linear-gradient(135deg, rgba(212,168,67,0.08) 0%, rgba(0,0,0,0) 100%);
+        border-color: rgba(212,168,67,0.15);
+    }
+    .quran-hero::before {
+        content: 'قرآن';
+        position: absolute;
+        font-family: 'Amiri', serif;
+        font-size: 10rem;
+        color: var(--color-primary);
+        opacity: 0.04;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        pointer-events: none;
+        white-space: nowrap;
+    }
+
     .surah-card {
-        @apply luxury-card p-5 flex items-center gap-4 cursor-pointer hover:border-mishkat-gold-500/50 hover:-translate-y-1 transition-all;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 1.25rem;
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
-    .ayah-num {
-        @apply inline-flex items-center justify-center w-8 h-8 rounded-full border border-mishkat-gold-500/30 text-xs font-tajawal text-mishkat-gold-600 mx-2 align-middle;
+    .surah-card:hover {
+        border-color: var(--color-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
-    .bismillah {
-        @apply text-center text-4xl mb-12 text-mishkat-green-800 dark:text-mishkat-gold-400 font-amiri block;
+    html.dark .surah-card:hover {
+        box-shadow: 0 8px 20px rgba(212,168,67,0.1);
+    }
+    .surah-num {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 0.875rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.9rem;
+        background: var(--sidebar-active-bg);
+        color: var(--color-primary);
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+    }
+    .surah-card:hover .surah-num {
+        background: var(--color-primary);
+        color: white;
+    }
+    html.dark .surah-card:hover .surah-num {
+        color: #000;
+    }
+
+    /* Ayah Reader */
+    .ayah-reader-container {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        padding: 2.5rem;
+    }
+    .ayah-text {
+        font-family: 'Amiri', serif;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        line-height: 2.6;
+        color: var(--color-text-main);
+        text-align: justify;
+        direction: rtl;
+    }
+    .ayah-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        border: 1.5px solid var(--color-primary);
+        color: var(--color-primary);
+        font-size: 0.75rem;
+        font-family: 'Tajawal', sans-serif;
+        margin: 0 0.35rem;
+        vertical-align: middle;
+        opacity: 0.7;
+    }
+    .bismillah-text {
+        display: block;
+        text-align: center;
+        font-family: 'Amiri', serif;
+        font-size: 1.75rem;
+        color: var(--color-primary);
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Search */
+    .quran-search-wrapper {
+        position: relative;
+    }
+    .quran-search-wrapper .search-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-text-muted);
+    }
+    .quran-search-wrapper input {
+        padding-right: 3rem !important;
+        padding-left: 1rem !important;
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+        border-radius: 1.25rem !important;
+        font-family: 'Tajawal', sans-serif;
+        width: 100%;
+    }
+
+    /* Back button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.25rem 0.5rem 0.75rem;
+        border-radius: 2rem;
+        background: var(--sidebar-active-bg);
+        color: var(--color-primary);
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+        margin-bottom: 1.5rem;
+    }
+    .back-btn:hover {
+        background: var(--color-primary);
+        color: white;
+        border-color: transparent;
+    }
+    html.dark .back-btn:hover { color: #000; }
+
+    /* Surah Header Banner */
+    .surah-header-banner {
+        background: var(--color-primary);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    html.dark .surah-header-banner { color: #000; }
+    .surah-header-banner::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .surah-header-banner h3 {
+        font-family: 'Amiri', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        position: relative;
+        z-index: 1;
+    }
+    .surah-header-banner p {
+        font-size: 0.85rem;
+        opacity: 0.8;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        position: relative;
+        z-index: 1;
+        margin-top: 0.25rem;
+    }
+
+    /* Loading spinner */
+    .quran-spinner {
+        width: 3rem;
+        height: 3rem;
+        border: 3px solid var(--border-color);
+        border-top-color: var(--color-primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Juz badge */
+    .juz-badge {
+        display: inline-block;
+        padding: 0.15rem 0.6rem;
+        border-radius: 2rem;
+        background: var(--sidebar-active-bg);
+        color: var(--color-primary);
+        font-size: 0.7rem;
+        font-weight: 700;
     }
 </style>
 
+<div class="animate-fadeIn" style="max-width: 1200px; margin: 0 auto;">
+
+    <!-- Hero Header -->
+    <div class="quran-hero">
+        <div class="relative z-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4" style="background: var(--color-primary);">
+                <span class="material-icons-outlined text-3xl" style="color: white;">auto_stories</span>
+            </div>
+            <h2 class="text-3xl font-black font-amiri mb-1" style="color: var(--color-text-main);">القرآن الكريم</h2>
+            <p class="text-sm font-medium" style="color: var(--color-text-muted);">تلاوة وتدبر آيات الله البينات</p>
+        </div>
+    </div>
+
+    <!-- Surah List Section -->
+    <div id="quranContainer">
+
+        <!-- Loading -->
+        <div id="quranLoading" class="flex flex-col items-center justify-center py-24">
+            <div class="quran-spinner"></div>
+            <p class="mt-5 font-bold text-sm" style="color: var(--color-text-muted);">جاري تحميل القرآن الكريم...</p>
+        </div>
+
+        <!-- Grid View -->
+        <div id="surahGridView" class="hidden">
+            <!-- Search bar -->
+            <div class="quran-search-wrapper mb-6" style="max-width: 400px;">
+                <span class="material-icons-outlined search-icon">search</span>
+                <input type="text" id="surahSearch" placeholder="ابحث عن سورة...">
+            </div>
+
+            <!-- Stats row -->
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="luxury-card p-4 text-center">
+                    <p class="text-2xl font-black" style="color: var(--color-primary);">١١٤</p>
+                    <p class="text-xs font-semibold mt-1" style="color: var(--color-text-muted);">سورة</p>
+                </div>
+                <div class="luxury-card p-4 text-center">
+                    <p class="text-2xl font-black" style="color: var(--color-primary);">٦٢٣٦</p>
+                    <p class="text-xs font-semibold mt-1" style="color: var(--color-text-muted);">آية</p>
+                </div>
+                <div class="luxury-card p-4 text-center">
+                    <p class="text-2xl font-black" style="color: var(--color-primary);">٣٠</p>
+                    <p class="text-xs font-semibold mt-1" style="color: var(--color-text-muted);">جزءاً</p>
+                </div>
+            </div>
+
+            <!-- Surahs Grid -->
+            <div id="surahGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <!-- injected by JS -->
+            </div>
+        </div>
+
+        <!-- Surah Reader -->
+        <div id="surahReader" class="hidden">
+            <button class="back-btn" onclick="showSurahGrid()">
+                <span class="material-icons-outlined" style="font-size:1.1rem;">arrow_forward</span>
+                العودة لقائمة السور
+            </button>
+
+            <div class="surah-header-banner">
+                <h3 id="readerSurahName"></h3>
+                <p id="readerSurahMeta"></p>
+            </div>
+
+            <div class="ayah-reader-container">
+                <div id="ayahsContainer" class="ayah-text"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script>
     const QuranApp = {
-        data: null,
         surahs: [],
 
         async init() {
             try {
-                const response = await fetch('assets/data/quran-data/quran.json');
-                const result = await response.json();
-                this.data = result.data;
-                this.surahs = result.data.surahs;
-                
+                const res = await fetch('assets/data/quran-data/quran.json');
+                const json = await res.json();
+                this.surahs = json.data.surahs;
+
                 this.renderGrid();
+
                 document.getElementById('quranLoading').classList.add('hidden');
-                document.getElementById('surahGrid').classList.remove('hidden');
-                
-                document.getElementById('surahSearch').addEventListener('input', (e) => this.filterSurahs(e.target.value));
-            } catch (error) {
-                console.error('Failed to load Quran data:', error);
-                document.getElementById('quranLoading').innerHTML = `<p class="text-red-500">حدث خطأ أثناء تحميل البيانات. يرجى التأكد من مسار الملف.</p>`;
+                document.getElementById('surahGridView').classList.remove('hidden');
+
+                document.getElementById('surahSearch').addEventListener('input', (e) =>
+                    this.filterSurahs(e.target.value)
+                );
+            } catch (err) {
+                document.getElementById('quranLoading').innerHTML =
+                    `<p style="color: #ef4444; font-weight: bold;">⚠️ حدث خطأ أثناء تحميل البيانات</p>`;
             }
         },
 
         renderGrid(list = this.surahs) {
-            const grid = document.getElementById('surahGrid');
-            grid.innerHTML = list.map(s => `
-                <div class="luxury-card p-5 flex items-center gap-4 cursor-pointer hover:border-mishkat-gold-500/50 hover:-translate-y-1 transition-all group" onclick="QuranApp.showSurah(${s.number})">
-                    <div class="w-12 h-12 rounded-xl bg-mishkat-green-50 dark:bg-mishkat-green-900/30 text-mishkat-green-700 dark:text-mishkat-gold-500 flex items-center justify-center font-black group-hover:bg-mishkat-gold-500 group-hover:text-black transition-colors">
-                        ${s.number}
+            document.getElementById('surahGrid').innerHTML = list.map(s => `
+                <div class="surah-card" onclick="QuranApp.showSurah(${s.number})">
+                    <div class="surah-num">${s.number}</div>
+                    <div style="flex:1; min-width:0;">
+                        <h4 class="font-black text-sm" style="color: var(--color-text-main);">${s.name}</h4>
+                        <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">
+                            ${s.revelationType === 'Meccan' ? 'مكية' : 'مدنية'} &bull; ${s.ayahs.length} آيات
+                        </p>
                     </div>
-                    <div class="flex-1">
-                        <h4 class="font-black text-gray-900 dark:text-white">${s.name}</h4>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase">${s.revelationType === 'Meccan' ? 'مكية' : 'مدنية'} • ${s.ayahs.length} آيات</p>
-                    </div>
-                    <span class="material-icons-outlined text-gray-300 group-hover:text-mishkat-gold-500">chevron_left</span>
+                    <span class="material-icons-outlined" style="color: var(--color-text-muted); font-size:1.1rem;">chevron_left</span>
                 </div>
             `).join('');
         },
 
-        filterSurahs(query) {
-            const filtered = this.surahs.filter(s => s.name.includes(query) || s.number.toString() === query);
+        filterSurahs(q) {
+            const filtered = this.surahs.filter(s =>
+                s.name.includes(q) || s.number.toString() === q
+            );
             this.renderGrid(filtered);
         },
 
@@ -118,38 +341,39 @@
             if (!surah) return;
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            document.getElementById('surahGrid').classList.add('hidden');
+
+            document.getElementById('surahGridView').classList.add('hidden');
             document.getElementById('surahReader').classList.remove('hidden');
-            
+
             document.getElementById('readerSurahName').innerText = surah.name;
-            document.getElementById('readerSurahMeta').innerText = `${surah.revelationType === 'Meccan' ? 'سورة مكية' : 'سورة مدنية'} • عدد آياتها ${surah.ayahs.length}`;
-            
+            document.getElementById('readerSurahMeta').innerText =
+                `${surah.revelationType === 'Meccan' ? 'سورة مكية' : 'سورة مدنية'} • ${surah.ayahs.length} آية`;
+
             let html = '';
             if (surah.number !== 1 && surah.number !== 9) {
-                html += `<span class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>`;
+                html += `<span class="bismillah-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>`;
             }
-            
+
             surah.ayahs.forEach(a => {
                 let text = a.text;
                 if (a.numberInSurah === 1 && surah.number !== 1 && surah.number !== 9) {
-                    text = text.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim();
+                    text = text.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim();
                 }
-                html += `<span>${text}</span> <span class="ayah-num">${QuranApp.toArabicDigits(a.numberInSurah)}</span> `;
+                html += `<span>${text}</span><span class="ayah-number">${this.toArabic(a.numberInSurah)}</span> `;
             });
-            
+
             document.getElementById('ayahsContainer').innerHTML = html;
         },
 
-        toArabicDigits(num) {
-            const id = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return num.toString().replace(/[0-9]/g, (w) => id[+w]);
+        toArabic(num) {
+            return num.toString().replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
         }
     };
 
     function showSurahGrid() {
         document.getElementById('surahReader').classList.add('hidden');
-        document.getElementById('surahGrid').classList.remove('hidden');
+        document.getElementById('surahGridView').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     QuranApp.init();

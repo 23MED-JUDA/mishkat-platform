@@ -112,13 +112,13 @@ function sidebarItem($link, $isActive) {
     $href = isset($link['url']) ? $link['url'] : "?page={$link['page']}";
     
     return <<<HTML
-        <div class="px-3 mb-1">
-            <a href="{$href}" 
-               class="group flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 ease-out {$activeClass}">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 {$iconBg}">
+        <div class="px-3 mb-1 sidebar-item-wrap transition-all duration-300">
+            <a href="{$href}" title="{$link['name']}"
+               class="sidebar-item-link group flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 ease-out {$activeClass}">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 {$iconBg}">
                     <span class="material-icons-outlined text-[20px] {$iconColor}">{$link['icon']}</span>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col sidebar-text transition-all duration-300">
                     <span class="text-sm transition-colors duration-300 {$textColor}">{$link['name']}</span>
                     <span class="text-[10px] text-white/20 group-hover:text-mishkat-gold-500/40 transition-colors uppercase tracking-widest font-bold">Mishkat</span>
                 </div>
@@ -142,9 +142,10 @@ function sidebarItem($link, $isActive) {
     <style>
         /* Sidebar transitions */
         #sidebar {
+            width: 280px;
             transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, width;
         }
         #sidebar.open { transform: translateX(0) !important; }
         
@@ -161,17 +162,85 @@ function sidebarItem($link, $isActive) {
 
         /* Desktop: always visible */
         @media (min-width: 1024px) {
-            #sidebar { transform: translateX(0) !important; }
+            #sidebar { 
+                transform: translateX(0) !important; 
+            }
             #sidebarOverlay { display: none !important; }
+            
+            .page-content {
+                margin-right: 280px;
+            }
+
+            /* Collapsed State */
+            #sidebar.collapsed {
+                width: 96px;
+            }
+            
+            #sidebar.collapsed:hover {
+                width: 280px;
+                box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            }
+
+            body.sidebar-collapsed .page-content {
+                margin-right: 96px;
+            }
+
+            /* Hide text elements smoothly */
+            #sidebar .sidebar-text,
+            #sidebar .sidebar-logo-text,
+            #sidebar .user-info,
+            #sidebar .logout-text,
+            #sidebar .sidebar-app-label {
+                transition: opacity 0.3s ease, width 0.3s ease;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            #sidebar.collapsed:not(:hover) .sidebar-text,
+            #sidebar.collapsed:not(:hover) .sidebar-logo-text,
+            #sidebar.collapsed:not(:hover) .user-info,
+            #sidebar.collapsed:not(:hover) .logout-text {
+                opacity: 0;
+                width: 0;
+            }
+
+            #sidebar.collapsed:not(:hover) .sidebar-app-label {
+                opacity: 0;
+                height: 0;
+                margin-bottom: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            
+            #sidebar.collapsed:not(:hover) .user-box {
+                padding: 0.75rem;
+                background: transparent;
+                border-color: transparent;
+                justify-content: center;
+            }
+
+            #sidebar.collapsed:not(:hover) .user-avatar {
+                margin: 0 auto;
+            }
+
+            #sidebar.collapsed:not(:hover) .logo-box {
+                justify-content: center;
+            }
+            
+            #sidebar.collapsed:not(:hover) .sidebar-item-link {
+                justify-content: center;
+                padding-left: 0;
+                padding-right: 0;
+            }
         }
 
-        /* Mobile Bottom Tabs */
+        /* Mobile */
         @media (max-width: 1023px) {
-            #sidebar { width: 280px; }
+            .page-content { margin-right: 0 !important; }
         }
 
         /* Smooth transitions on content */
-        .page-content { transition: margin 0.35s ease; }
+        .page-content { transition: margin-right 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
         /* Responsive tables */
         .responsive-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -278,55 +347,49 @@ function sidebarItem($link, $isActive) {
          onclick="closeSidebar()"></div>
 
     <!-- ─── SIDEBAR ─── -->
-    <aside id="sidebar" class="fixed top-0 right-0 h-screen w-72 luxury-sidebar text-white z-50 overflow-y-auto shadow-[0_0_40px_rgba(0,0,0,0.4)] border-l border-white/5">
-        
-        <!-- Luxury Gradient Background -->
-        <div class="absolute inset-0 bg-gradient-to-b from-[#0c1210] via-[#080808] to-[#0c1210] -z-10"></div>
-        <div class="absolute top-0 right-0 w-full h-96 bg-mishkat-gold-500/5 blur-[100px] -z-10"></div>
+    <aside id="sidebar" class="fixed top-0 right-0 h-screen luxury-sidebar text-white z-50 overflow-x-hidden overflow-y-auto shadow-[0_0_40px_rgba(0,0,0,0.4)] border-l border-white/5 custom-scrollbar">
 
         <!-- Logo Header -->
-        <div class="sticky top-0 z-20 px-8 pt-10 pb-8 bg-gradient-to-b from-[#0c1210] to-transparent">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <div class="relative group">
+        <div class="sticky top-0 z-20 px-6 pt-10 pb-8 bg-gradient-to-b from-[#0c1210] to-transparent logo-box flex items-center justify-between transition-all duration-300">
+            <div class="flex items-center gap-4">
+                <div class="relative group flex-shrink-0">
                         <div class="absolute -inset-1 bg-mishkat-gold-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         <div class="relative w-12 h-12 bg-gradient-to-br from-mishkat-gold-600 to-mishkat-gold-400 rounded-2xl flex items-center justify-center shadow-lg shadow-mishkat-gold-500/20">
                             <span class="material-icons-outlined text-black text-2xl">mosque</span>
                         </div>
                     </div>
-                    <div>
-                        <h1 class="text-2xl font-black font-tajawal leading-none tracking-tighter">مِشـكاة</h1>
-                        <div class="flex items-center gap-2 mt-1.5">
-                            <span class="w-2 h-2 rounded-full bg-mishkat-gold-500 animate-pulse"></span>
-                            <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 dark:text-mishkat-gold-500/50">النظام الذكي</p>
-                        </div>
+                </div>
+                <div class="sidebar-logo-text transition-all duration-300">
+                    <h1 class="text-2xl font-black font-tajawal leading-none tracking-tighter whitespace-nowrap">مِشـكاة</h1>
+                    <div class="flex items-center gap-2 mt-1.5 whitespace-nowrap">
+                        <span class="w-2 h-2 rounded-full bg-mishkat-gold-500 animate-pulse"></span>
+                        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 dark:text-mishkat-gold-500/50">النظام الذكي</p>
                     </div>
                 </div>
-                <button onclick="closeSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-white/40 hover:text-mishkat-gold-500 transition-all">
+            </div>
+            <button onclick="closeSidebar()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-white/40 hover:text-mishkat-gold-500 transition-all flex-shrink-0">
                     <span class="material-icons-outlined text-xl">close</span>
                 </button>
             </div>
         </div>
 
         <!-- User Identity -->
-        <div class="px-6 mb-8">
-            <div class="relative p-5 rounded-[2.5rem] bg-white/[0.03] border border-white/5 overflow-hidden group">
-                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mishkat-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div class="relative flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20">
-                        <?php if(!empty($userImage)): ?>
-                            <img src="<?php echo htmlspecialchars($userImage); ?>" class="w-full h-full object-cover">
-                        <?php else: ?>
-                            <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
-                        <?php endif; ?>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-black text-white truncate leading-tight"><?php echo htmlspecialchars($userName); ?></p>
-                        <div class="flex items-center gap-1.5 mt-1">
-                            <span class="text-[8px] font-black uppercase tracking-widest text-mishkat-gold-500/60"><?php echo $userRoleName; ?></span>
-                            <span class="w-1 h-1 rounded-full bg-white/20"></span>
-                            <span class="text-[8px] font-black uppercase tracking-widest text-white/20">متصل الآن</span>
-                        </div>
+        <div class="px-4 mb-8 transition-all duration-300">
+            <div class="user-box relative p-4 rounded-[2rem] bg-white/[0.03] border border-white/5 overflow-hidden group flex items-center gap-4 transition-all duration-300">
+                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mishkat-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div class="user-avatar w-12 h-12 rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20 flex-shrink-0 transition-all duration-300">
+                    <?php if(!empty($userImage)): ?>
+                        <img src="<?php echo htmlspecialchars($userImage); ?>" class="w-full h-full object-cover">
+                    <?php else: ?>
+                        <?php echo mb_substr($userName, 0, 1, 'UTF-8'); ?>
+                    <?php endif; ?>
+                </div>
+                <div class="user-info flex-1 min-w-0 transition-all duration-300">
+                    <p class="text-sm font-black text-white truncate leading-tight"><?php echo htmlspecialchars($userName); ?></p>
+                    <div class="flex items-center gap-1.5 mt-1 whitespace-nowrap">
+                        <span class="text-[8px] font-black uppercase tracking-widest text-mishkat-gold-500/60"><?php echo $userRoleName; ?></span>
+                        <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                        <span class="text-[8px] font-black uppercase tracking-widest text-white/20">متصل الآن</span>
                     </div>
                 </div>
             </div>
@@ -334,8 +397,8 @@ function sidebarItem($link, $isActive) {
 
         <!-- Navigation Menu -->
         <nav class="pb-10">
-            <div class="px-8 mb-4">
-                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">القائمة الأساسية</span>
+            <div class="px-6 mb-4 sidebar-app-label transition-all duration-300">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 whitespace-nowrap">القائمة الأساسية</span>
             </div>
             
             <div class="space-y-1">
@@ -347,8 +410,8 @@ function sidebarItem($link, $isActive) {
 
             <!-- Apps Section -->
             <div class="mt-8">
-                <div class="px-8 mb-4 flex items-center justify-between">
-                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">تطبيقات مشكاة</span>
+                <div class="px-6 mb-4 flex items-center justify-between sidebar-app-label transition-all duration-300">
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 whitespace-nowrap">تطبيقات مشكاة</span>
                     <span class="w-10 h-[1px] bg-white/5"></span>
                 </div>
                 
@@ -369,28 +432,28 @@ function sidebarItem($link, $isActive) {
             </div>
 
             <!-- Logout Bottom -->
-            <div class="mt-10 px-6">
-                <a href="logout.php" 
-                   class="flex items-center gap-4 px-6 py-4 rounded-[2rem] bg-red-500/5 border border-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 group shadow-lg shadow-red-500/5">
-                    <div class="w-10 h-10 rounded-xl bg-red-500/10 group-hover:bg-white/20 flex items-center justify-center transition-colors">
+            <div class="mt-10 px-4 pb-6">
+                <a href="logout.php" title="تسجيل الخروج"
+                   class="sidebar-item-link flex items-center gap-4 px-4 py-3 rounded-[1.5rem] bg-red-500/5 border border-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 group shadow-lg shadow-red-500/5">
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 group-hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0">
                         <span class="material-icons-outlined text-[20px]">logout</span>
                     </div>
-                    <span class="font-black text-sm">تسجيل الخروج</span>
+                    <span class="font-black text-sm logout-text transition-all duration-300 whitespace-nowrap">تسجيل الخروج</span>
                 </a>
             </div>
         </nav>
     </aside>
 
     <!-- ─── MAIN CONTENT ─── -->
-    <main class="lg:mr-72 min-h-screen page-content">
+    <main class="min-h-screen page-content">
 
         <!-- Topbar -->
         <header class="glass-nav sticky top-0 z-30 px-4 md:px-6 py-3 flex justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <!-- Hamburger -->
-                <button id="menuBtn" onclick="openSidebar()" 
-                        class="lg:hidden p-2 bg-white dark:bg-black rounded-xl shadow-sm text-mishkat-green-800 dark:text-mishkat-gold-500 border border-gray-100 dark:border-mishkat-gold-500/20 flex-shrink-0">
-                    <span class="material-icons-outlined">menu</span>
+                <!-- Hamburger / Toggle Sidebar -->
+                <button id="menuBtn" onclick="toggleSidebar()" 
+                        class="p-2 bg-white dark:bg-black rounded-xl shadow-sm text-mishkat-green-800 dark:text-mishkat-gold-500 border border-gray-100 dark:border-mishkat-gold-500/20 flex-shrink-0 hover:bg-gray-50 dark:hover:bg-white/5 transition-all">
+                    <span class="material-icons-outlined">menu_open</span>
                 </button>
                 <!-- Brand on mobile -->
                 <div class="flex items-center gap-2 lg:hidden">
@@ -460,6 +523,34 @@ function sidebarItem($link, $isActive) {
 
     <script>
         /* ── Sidebar ── */
+        function toggleSidebar() {
+            if (window.innerWidth >= 1024) {
+                // Desktop toggle collapse
+                const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+                document.getElementById('sidebar').classList.toggle('collapsed');
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+                
+                // Update icon
+                const btnIcon = document.querySelector('#menuBtn .material-icons-outlined');
+                if (btnIcon) {
+                    btnIcon.textContent = isCollapsed ? 'menu' : 'menu_open';
+                }
+            } else {
+                // Mobile open
+                openSidebar();
+            }
+        }
+
+        // Initialize sidebar state on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth >= 1024 && localStorage.getItem('sidebarCollapsed') === 'true') {
+                document.body.classList.add('sidebar-collapsed');
+                document.getElementById('sidebar').classList.add('collapsed');
+                const btnIcon = document.querySelector('#menuBtn .material-icons-outlined');
+                if (btnIcon) btnIcon.textContent = 'menu';
+            }
+        });
+
         function openSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');

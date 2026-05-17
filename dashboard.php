@@ -425,6 +425,13 @@ function sidebarItem($link, $isActive) {
                        style="color: var(--color-text-muted);">منصة تعليمية</p>
                 </div>
             </div>
+            <!-- Desktop: toggle collapse | Mobile: close sidebar -->
+            <button id="menuBtn" onclick="toggleSidebar()" aria-label="القائمة"
+                    class="sidebar-logo-text">
+                <div class="hamburger-icon">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
             <button onclick="closeSidebar()"
                     class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
                     style="background: var(--bg-app); color: var(--color-text-muted);">
@@ -510,43 +517,43 @@ function sidebarItem($link, $isActive) {
         <!-- Topbar -->
         <header class="glass-nav sticky top-0 z-30 px-4 md:px-6 py-3 flex justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <!-- Hamburger Circle Button -->
-                <button id="menuBtn" onclick="toggleSidebar()" aria-label="القائمة">
+                <!-- Mobile open sidebar button -->
+                <button onclick="openSidebar()" class="lg:hidden" aria-label="القائمة"
+                        style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg-surface);box-shadow:0 2px 10px rgba(0,0,0,0.08);border:none;cursor:pointer;">
                     <div class="hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span></span><span></span><span></span>
                     </div>
                 </button>
                 <!-- Brand on mobile -->
                 <div class="flex items-center gap-2 lg:hidden">
-                    <span class="text-mishkat-gold-500 material-icons-outlined text-2xl">mosque</span>
-                    <span class="font-black text-mishkat-green-900 dark:text-white font-tajawal text-lg">مِشكاة</span>
+                    <span class="material-icons-outlined text-2xl" style="color: var(--color-primary);">mosque</span>
+                    <span class="font-black font-tajawal text-lg" style="color: var(--color-text-main);">مِشكاة</span>
                 </div>
                 <!-- Page title on desktop -->
-                <h2 class="hidden lg:block text-xl font-black text-mishkat-green-900 dark:text-white font-tajawal"><?php echo $pageTitle; ?></h2>
+                <h2 class="hidden lg:block text-xl font-black font-tajawal" style="color: var(--color-text-main);"><?php echo $pageTitle; ?></h2>
             </div>
 
             <div class="flex items-center gap-2 md:gap-3">
                 <!-- Clock (desktop only) -->
                 <div class="hidden xl:flex flex-col items-end">
-                    <span class="text-[10px] font-black text-mishkat-gold-600 uppercase tracking-widest" id="clockDay"></span>
-                    <span class="text-xs font-bold text-mishkat-green-900 dark:text-white/70" id="clockTime">00:00</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest" id="clockDay" style="color: var(--color-primary);"></span>
+                    <span class="text-xs font-bold" id="clockTime" style="color: var(--color-text-muted);">00:00</span>
                 </div>
 
                 <!-- Dark Mode -->
-                <button onclick="toggleDarkMode()" 
-                        class="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-black text-mishkat-green-700 dark:text-mishkat-gold-400 hover:scale-110 transition-all border border-gray-100 dark:border-mishkat-gold-500/20 flex-shrink-0">
-                    <span class="material-icons-outlined text-[20px]" id="themeIcon">dark_mode</span>
+                <button onclick="toggleDarkMode()"
+                        style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg-surface);border:1px solid var(--border-color);cursor:pointer;transition:all .2s;">
+                    <span class="material-icons-outlined" id="themeIcon" style="font-size:1.2rem;color:var(--color-primary);">dark_mode</span>
                 </button>
 
                 <!-- User avatar -->
-                <div class="flex items-center gap-2 md:gap-3 pl-2">
+                <div class="flex items-center gap-2 md:gap-3">
                     <div class="hidden sm:flex flex-col items-end">
-                        <span class="text-xs font-black text-mishkat-green-900 dark:text-white leading-tight"><?php echo htmlspecialchars(explode(' ', $userName)[0]); ?></span>
-                        <span class="text-[9px] text-mishkat-gold-600 font-bold uppercase tracking-tighter"><?php echo $userRoleName; ?></span>
+                        <span class="text-xs font-bold leading-tight" style="color: var(--color-text-main);"><?php echo htmlspecialchars(explode(' ', $userName)[0]); ?></span>
+                        <span class="text-[10px] font-semibold" style="color: var(--color-primary);"><?php echo $userRoleName; ?></span>
                     </div>
-                    <div class="w-10 h-10 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center text-black font-black text-sm flex-shrink-0 shadow-lg shadow-mishkat-gold-500/10">
+                    <div class="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center font-black text-sm flex-shrink-0"
+                         style="background: var(--color-primary); color: white;">
                         <?php if(!empty($userImage)): ?>
                             <img src="<?php echo htmlspecialchars($userImage); ?>" class="w-full h-full object-cover">
                         <?php else: ?>
@@ -558,8 +565,8 @@ function sidebarItem($link, $isActive) {
         </header>
 
         <!-- Mobile page title bar -->
-        <div class="lg:hidden px-4 py-3 glass-nav border-t border-gray-100 dark:border-mishkat-gold-500/10">
-            <h2 class="text-base font-black text-mishkat-green-900 dark:text-white font-tajawal"><?php echo $pageTitle; ?></h2>
+        <div class="lg:hidden px-4 py-2" style="border-bottom: 1px solid var(--border-color);">
+            <h2 class="text-sm font-black font-tajawal" style="color: var(--color-text-main);"><?php echo $pageTitle; ?></h2>
         </div>
 
         <!-- Page content -->

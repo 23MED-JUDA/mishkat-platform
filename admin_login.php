@@ -92,5 +92,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const emailInput = document.querySelector('input[name="email"]');
+            const passwordInput = document.querySelector('input[name="password"]');
+
+            if (emailInput && passwordInput) {
+                emailInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        passwordInput.focus();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

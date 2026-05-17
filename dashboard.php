@@ -157,7 +157,7 @@ function sidebarItem($link, $isActive) {
             pointer-events: auto;
         }
 
-        /* Desktop: always visible */
+        /* Desktop: always visible, hover-to-expand */
         @media (min-width: 1024px) {
             #sidebar { 
                 transform: translateX(0) !important; 
@@ -165,47 +165,43 @@ function sidebarItem($link, $isActive) {
                 right: 1.5rem;
                 height: calc(100vh - 3rem);
                 border-radius: 2rem;
+                width: 96px;
+                transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
             }
             #sidebarOverlay { display: none !important; }
             
             .page-content {
-                margin-right: calc(280px + 3rem);
-            }
-
-            /* Collapsed State */
-            #sidebar.collapsed {
-                width: 96px;
-            }
-            
-            #sidebar.collapsed:hover {
-                width: 280px;
-                box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            }
-
-            body.sidebar-collapsed .page-content {
                 margin-right: calc(96px + 3rem);
             }
 
-            /* Hide text elements smoothly */
+            #sidebar:hover {
+                width: 280px;
+                box-shadow: 0 10px 45px rgba(0,0,0,0.12) !important;
+            }
+            html.dark #sidebar:hover {
+                box-shadow: 0 10px 45px rgba(0,0,0,0.6) !important;
+            }
+
+            /* Hide text elements smoothly when NOT hovering */
             #sidebar .sidebar-text,
             #sidebar .sidebar-logo-text,
             #sidebar .user-info,
             #sidebar .logout-text,
             #sidebar .sidebar-app-label {
-                transition: opacity 0.3s ease, width 0.3s ease;
+                transition: opacity 0.25s ease, width 0.25s ease;
                 white-space: nowrap;
                 overflow: hidden;
             }
 
-            #sidebar.collapsed:not(:hover) .sidebar-text,
-            #sidebar.collapsed:not(:hover) .sidebar-logo-text,
-            #sidebar.collapsed:not(:hover) .user-info,
-            #sidebar.collapsed:not(:hover) .logout-text {
+            #sidebar:not(:hover) .sidebar-text,
+            #sidebar:not(:hover) .sidebar-logo-text,
+            #sidebar:not(:hover) .user-info,
+            #sidebar:not(:hover) .logout-text {
                 opacity: 0;
                 width: 0;
             }
 
-            #sidebar.collapsed:not(:hover) .sidebar-app-label {
+            #sidebar:not(:hover) .sidebar-app-label {
                 opacity: 0;
                 height: 0;
                 margin-bottom: 0;
@@ -213,22 +209,22 @@ function sidebarItem($link, $isActive) {
                 padding-bottom: 0;
             }
             
-            #sidebar.collapsed:not(:hover) .user-box {
+            #sidebar:not(:hover) .user-box {
                 padding: 0.75rem;
                 background: transparent;
                 border-color: transparent;
                 justify-content: center;
             }
 
-            #sidebar.collapsed:not(:hover) .user-avatar {
+            #sidebar:not(:hover) .user-avatar {
                 margin: 0 auto;
             }
 
-            #sidebar.collapsed:not(:hover) .logo-box {
+            #sidebar:not(:hover) .logo-box {
                 justify-content: center;
             }
             
-            #sidebar.collapsed:not(:hover) .sidebar-item-link {
+            #sidebar:not(:hover) .sidebar-item-link {
                 justify-content: center;
                 padding-left: 0;
                 padding-right: 0;
@@ -357,12 +353,6 @@ function sidebarItem($link, $isActive) {
                        style="color: var(--color-text-muted);">منصة تعليمية</p>
                 </div>
             </div>
-            <!-- Desktop collapse toggle -->
-            <button id="menuBtn" onclick="toggleSidebar()" aria-label="طي القائمة"
-                    class="sidebar-logo-text hidden lg:flex w-9 h-9 items-center justify-center rounded-xl transition-all flex-shrink-0"
-                    style="background: var(--bg-app); border:none; cursor:pointer; color: var(--color-text-muted);">
-                <span class="material-icons-outlined" style="font-size:1.2rem;">menu</span>
-            </button>
             <!-- Mobile close button -->
             <button onclick="closeSidebar()"
                     class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
@@ -464,10 +454,16 @@ function sidebarItem($link, $isActive) {
             </div>
 
             <div class="flex items-center gap-2 md:gap-3">
-                <!-- Clock (desktop only) -->
-                <div class="hidden xl:flex flex-col items-end">
-                    <span class="text-[10px] font-bold uppercase tracking-widest" id="clockDay" style="color: var(--color-primary);"></span>
-                    <span class="text-xs font-bold" id="clockTime" style="color: var(--color-text-muted);">00:00</span>
+                <!-- Clock & Date Display -->
+                <div class="hidden md:flex items-center gap-3 px-3 py-1 bg-gray-50/50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl">
+                    <div class="flex flex-col items-end pl-3 border-l border-gray-200 dark:border-white/10">
+                        <span class="text-[10px] font-black" id="clockDay" style="color: var(--color-primary);"></span>
+                        <span class="text-[11px] font-bold" id="clockTime" style="color: var(--color-text-muted);">00:00</span>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="text-[9px] font-bold" id="gregorianDate" style="color: var(--color-text-main);"></span>
+                        <span class="text-[9px] font-medium" id="hijriDate" style="color: var(--color-primary);"></span>
+                    </div>
                 </div>
 
                 <!-- Dark Mode -->
@@ -523,34 +519,6 @@ function sidebarItem($link, $isActive) {
 
     <script>
         /* ── Sidebar ── */
-        function toggleSidebar() {
-            if (window.innerWidth >= 1024) {
-                // Desktop toggle collapse
-                const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
-                document.getElementById('sidebar').classList.toggle('collapsed');
-                localStorage.setItem('sidebarCollapsed', isCollapsed);
-                
-                // Update icon
-                const btnIcon = document.querySelector('#menuBtn .material-icons-outlined');
-                if (btnIcon) {
-                    btnIcon.textContent = isCollapsed ? 'menu' : 'menu_open';
-                }
-            } else {
-                // Mobile open
-                openSidebar();
-            }
-        }
-
-        // Initialize sidebar state on load
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.innerWidth >= 1024 && localStorage.getItem('sidebarCollapsed') === 'true') {
-                document.body.classList.add('sidebar-collapsed');
-                document.getElementById('sidebar').classList.add('collapsed');
-                const btnIcon = document.querySelector('#menuBtn .material-icons-outlined');
-                if (btnIcon) btnIcon.textContent = 'menu';
-            }
-        });
-
         function openSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -608,14 +576,29 @@ function sidebarItem($link, $isActive) {
         }
         updateThemeIcon();
 
-        /* ── Live Clock ── */
+        /* ── Live Clock & Dates ── */
         function updateClock() {
             const now = new Date();
             const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            
             const dayEl = document.getElementById('clockDay');
             const timeEl = document.getElementById('clockTime');
+            const gregEl = document.getElementById('gregorianDate');
+            const hijriEl = document.getElementById('hijriDate');
+            
             if (dayEl) dayEl.innerText = days[now.getDay()];
             if (timeEl) timeEl.innerText = now.toLocaleTimeString('ar-EG', { hour12: true, hour: '2-digit', minute: '2-digit' });
+            
+            if (gregEl) {
+                gregEl.innerText = now.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long', year: 'numeric' });
+            }
+            if (hijriEl) {
+                try {
+                    hijriEl.innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', { day: 'numeric', month: 'long', year: 'numeric' }).format(now);
+                } catch(e) {
+                    hijriEl.innerText = '';
+                }
+            }
         }
         /* ── Toast System ── */
         function showToast(message, type = 'info') {

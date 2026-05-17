@@ -74,24 +74,24 @@
     }
 
     html.dark {
-        /* DARK MODE: Pure Black + White + Gold only */
-        --bg-app: #000000;            /* Pure Black */
-        --bg-surface: #111111;        /* Near-black for cards */
-        --color-primary: #d4a843;     /* Rich Gold */
-        --color-primary-light: #e8c06a;
-        --color-accent: #d4a843;      /* Gold accent */
-        --color-text-main: #ffffff;   /* Pure White text */
-        --color-text-muted: #999999;  /* Gray for secondary text */
-        --border-color: rgba(212, 168, 67, 0.18); /* Subtle gold border */
+        /* DARK MODE: Black + White + Gray only (NO GOLD) */
+        --bg-app: #080808;            /* Pure dark black/gray */
+        --bg-surface: #121212;        /* Card background - dark charcoal */
+        --color-primary: #ffffff;     /* Pure White as accent/primary */
+        --color-primary-light: #e0e0e0;
+        --color-accent: #a0a0a0;      /* Calm Gray accent */
+        --color-text-main: #ffffff;   /* White text */
+        --color-text-muted: #888888;  /* Muted gray text */
+        --border-color: rgba(255, 255, 255, 0.08); /* White border with low opacity */
 
-        /* Sidebar — deep black with gold highlights */
-        --sidebar-bg: #080808;
+        /* Sidebar — deep black with white/gray highlights */
+        --sidebar-bg: #0c0c0c;
         --sidebar-text: #888888;
         --sidebar-text-hover: #ffffff;
-        --sidebar-active-bg: #d4a843; /* Solid gold for active item bg */
-        --sidebar-active-text: #000000; /* Black text on gold */
-        --sidebar-icon-bg: #1a1a1a;
-        --sidebar-icon-bg-active: #d4a843;
+        --sidebar-active-bg: #ffffff; /* White background for active item */
+        --sidebar-active-text: #000000; /* Black text on white active item */
+        --sidebar-icon-bg: #181818;
+        --sidebar-icon-bg-active: #ffffff;
     }
 
     /* ══════════════════════════════════════

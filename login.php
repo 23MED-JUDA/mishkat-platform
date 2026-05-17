@@ -64,6 +64,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول | مِشكاة</title>
     <?php include 'includes/header_meta.php'; ?>
+    <style>
+        /* Premium Segmented Control Easing & Spring Physics */
+        .role-pill {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Normal State */
+        .role-pill-text {
+            color: #9ca3af !important;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .role-pill-icon {
+            color: #9ca3af !important;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Hover State */
+        .role-pill:hover .role-pill-icon {
+            color: var(--color-primary, #4a8c6e) !important;
+            transform: translateY(-4px) scale(1.18);
+        }
+        html.dark .role-pill:hover .role-pill-icon {
+            color: #d4a359 !important;
+        }
+        .role-pill:hover .role-pill-text {
+            color: #1f2937 !important;
+        }
+        html.dark .role-pill:hover .role-pill-text {
+            color: #f2ece0 !important;
+        }
+
+        /* Checked Active State */
+        input:checked + .role-pill {
+            background-color: var(--color-primary, #4a8c6e) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 20px -5px rgba(74, 140, 110, 0.4);
+            transform: scale(1.04);
+        }
+        input:checked + .role-pill .role-pill-icon,
+        input:checked + .role-pill .role-pill-text {
+            color: #ffffff !important;
+        }
+
+        /* Dark Mode Checked Active State */
+        html.dark input:checked + .role-pill {
+            background-color: #d4a359 !important; /* Gold */
+            box-shadow: 0 10px 20px -5px rgba(212, 163, 89, 0.4);
+            color: #000000 !important;
+        }
+        html.dark input:checked + .role-pill .role-pill-icon,
+        html.dark input:checked + .role-pill .role-pill-text {
+            color: #000000 !important;
+        }
+
+        /* Active Click Micro-interaction */
+        .role-pill:active {
+            transform: scale(0.96);
+        }
+    </style>
 </head>
 <body class="bg-[#f0f4f3] flex items-center justify-center min-h-screen p-3 md:p-4 overflow-x-hidden relative">
 
@@ -132,31 +191,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="block text-xs font-black text-mishkat-green-800 uppercase tracking-widest mb-3 mr-1">نوع الحساب</label>
                     <div class="grid grid-cols-4 gap-2 bg-gray-50 dark:bg-white/5 p-1.5 rounded-2xl border border-gray-100 dark:border-white/5">
                         <label class="cursor-pointer text-center group flex-1">
-                            <input type="radio" name="role_choice" value="student" checked class="sr-only peer">
-                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
-                                <i class="fa-solid fa-graduation-cap text-lg transition-transform group-hover:scale-110"></i>
-                                <span>طالب</span>
+                            <input type="radio" name="role_choice" value="student" checked class="sr-only">
+                            <div class="role-pill py-3 px-1 rounded-xl font-bold text-xs flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-graduation-cap text-lg role-pill-icon"></i>
+                                <span class="role-pill-text">طالب</span>
                             </div>
                         </label>
                         <label class="cursor-pointer text-center group flex-1">
-                            <input type="radio" name="role_choice" value="teacher" class="sr-only peer">
-                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
-                                <i class="fa-solid fa-chalkboard-user text-lg transition-transform group-hover:scale-110"></i>
-                                <span>معلم</span>
+                            <input type="radio" name="role_choice" value="teacher" class="sr-only">
+                            <div class="role-pill py-3 px-1 rounded-xl font-bold text-xs flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-chalkboard-user text-lg role-pill-icon"></i>
+                                <span class="role-pill-text">معلم</span>
                             </div>
                         </label>
                         <label class="cursor-pointer text-center group flex-1">
-                            <input type="radio" name="role_choice" value="parent" class="sr-only peer">
-                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
-                                <i class="fa-solid fa-people-roof text-lg transition-transform group-hover:scale-110"></i>
-                                <span>ولي أمر</span>
+                            <input type="radio" name="role_choice" value="parent" class="sr-only">
+                            <div class="role-pill py-3 px-1 rounded-xl font-bold text-xs flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-people-roof text-lg role-pill-icon"></i>
+                                <span class="role-pill-text">ولي أمر</span>
                             </div>
                         </label>
                         <label class="cursor-pointer text-center group flex-1">
-                            <input type="radio" name="role_choice" value="admin" class="sr-only peer">
-                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
-                                <i class="fa-solid fa-user-shield text-lg transition-transform group-hover:scale-110"></i>
-                                <span>مسؤول</span>
+                            <input type="radio" name="role_choice" value="admin" class="sr-only">
+                            <div class="role-pill py-3 px-1 rounded-xl font-bold text-xs flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-user-shield text-lg role-pill-icon"></i>
+                                <span class="role-pill-text">مسؤول</span>
                             </div>
                         </label>
                     </div>

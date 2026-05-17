@@ -10,8 +10,8 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM tasks")->fetch_assoc()['c'
     <div class="bg-gradient-to-l from-mishkat-green-800 to-mishkat-green-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-mishkat-green-900/20">
         <div class="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-            <div class="relative group cursor-pointer" onclick="document.getElementById('profileImageInput').click()">
-                <div class="w-32 h-32 bg-white/10 border-4 border-white/20 rounded-[2.5rem] flex items-center justify-center text-5xl font-black shadow-inner overflow-hidden relative">
+             <div class="relative group cursor-pointer" onclick="document.getElementById('profileImageInput').click()">
+                <div id="avatarContainer" class="w-32 h-32 bg-white/10 border-4 border-white/20 rounded-[2.5rem] flex items-center justify-center text-5xl font-black shadow-inner overflow-hidden relative">
                     <?php if(!empty($profile['profile_image'])): ?>
                         <img src="<?php echo htmlspecialchars($profile['profile_image']); ?>" class="w-full h-full object-cover">
                     <?php else: ?>
@@ -19,8 +19,8 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM tasks")->fetch_assoc()['c'
                     <?php endif; ?>
                     
                     <!-- Overlay on Hover -->
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span class="material-icons-outlined text-white">camera_alt</span>
+                    <div id="avatarOverlay" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
+                        <span id="avatarIcon" class="material-icons-outlined text-white transition-all text-3xl">camera_alt</span>
                     </div>
                 </div>
                 <input type="file" id="profileImageInput" class="hidden" accept="image/*" onchange="uploadProfileImage(this)">
@@ -157,11 +157,33 @@ document.getElementById('passwordForm').addEventListener('submit', function(e) {
 });
 function uploadProfileImage(input) {
     if (input.files && input.files[0]) {
+        const file = input.files[0];
+        
+        // 25MB client-side validation
+        if (file.size > 25 * 1024 * 1024) {
+            showToast('حجم الصورة كبير جداً، الحد الأقصى المسموح به هو 25 ميجابايت.', 'error');
+            return;
+        }
+
         const fd = new FormData();
         fd.append('action', 'update_profile_image');
-        fd.append('profile_image', input.files[0]);
+        fd.append('profile_image', file);
 
-        showToast('جاري رفع الصورة...', 'info');
+        // UI Loading State Elements
+        const container = document.getElementById('avatarContainer');
+        const overlay = document.getElementById('avatarOverlay');
+        const icon = document.getElementById('avatarIcon');
+
+        // Apply Premium Loading State
+        if (container && overlay && icon) {
+            container.classList.add('animate-pulse');
+            overlay.classList.remove('opacity-0');
+            overlay.classList.add('opacity-100');
+            icon.innerText = 'sync';
+            icon.classList.add('animate-spin');
+        }
+
+        showToast('جاري رفع صورتك الشخصية...', 'info');
 
         fetch('api.php', { method: 'POST', body: fd })
         .then(r => r.json())
@@ -170,7 +192,26 @@ function uploadProfileImage(input) {
                 showToast('تم تحديث الصورة الشخصية بنجاح', 'success');
                 setTimeout(() => location.reload(), 1000);
             } else {
-                showToast(res.message || 'فشل رفع الصورة', 'error');
+                showToast(res.message || 'فشل رفع الصورة الشخصية', 'error');
+                // Remove Loading State on Failure
+                if (container && overlay && icon) {
+                    container.classList.remove('animate-pulse');
+                    overlay.classList.remove('opacity-100');
+                    overlay.classList.add('opacity-0');
+                    icon.innerText = 'camera_alt';
+                    icon.classList.remove('animate-spin');
+                }
+            }
+        })
+        .catch(err => {
+            showToast('حدث خطأ في الاتصال بالخادم، يرجى المحاولة لاحقاً.', 'error');
+            // Remove Loading State on Failure
+            if (container && overlay && icon) {
+                container.classList.remove('animate-pulse');
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                icon.innerText = 'camera_alt';
+                icon.classList.remove('animate-spin');
             }
         });
     }

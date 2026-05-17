@@ -26,16 +26,50 @@ $role = $_SESSION['user_role'] ?? '';
 $action = $_REQUEST['action'] ?? '';
 
 // Helper to handle file uploads
-function handleUpload($field) {
-    if (!isset($_FILES[$field]) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK) return null;
+function handleUpload($field, &$error_msg = null) {
+    if (!isset($_FILES[$field])) {
+        $error_msg = "لم يتم اختيار أي ملف";
+        return null;
+    }
+    
+    $file_error = $_FILES[$field]['error'];
+    if ($file_error !== UPLOAD_ERR_OK) {
+        switch ($file_error) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $error_msg = "حجم الصورة كبير جداً، الحد الأقصى المسموح به هو 25 ميجابايت.";
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $error_msg = "حدث انقطاع أثناء رفع الصورة، يرجى المحاولة مرة أخرى.";
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $error_msg = "لم يتم اختيار أي ملف للرفع.";
+                break;
+            default:
+                $error_msg = "حدث خطأ غير معروف أثناء الرفع (رمز الخطأ: $file_error).";
+                break;
+        }
+        return null;
+    }
+    
     $dir = __DIR__ . '/../uploads/';
     if (!is_dir($dir)) mkdir($dir, 0777, true);
+    
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
+    $file_type = $_FILES[$field]['type'];
+    if (!in_array($file_type, $allowed_types)) {
+        $error_msg = "نوع الملف غير مدعوم، يرجى رفع صورة بصيغة (JPG, PNG, WEBP, GIF).";
+        return null;
+    }
+    
     $ext = pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION);
     $name = uniqid('file_') . '.' . $ext;
     $target = $dir . $name;
     if (move_uploaded_file($_FILES[$field]['tmp_name'], $target)) {
         return 'uploads/' . $name;
     }
+    
+    $error_msg = "فشل نقل الصورة المرفوعة. يرجى مراجعة صلاحيات خادم الويب.";
     return null;
 }
 
@@ -220,14 +254,15 @@ switch ($action) {
         break;
 
     case 'update_profile_image':
-        $target = handleUpload('profile_image');
+        $error_msg = '';
+        $target = handleUpload('profile_image', $error_msg);
         if($target) {
             $stmt = $conn->prepare("UPDATE users SET profile_image=? WHERE id=?");
             $stmt->bind_param("si", $target, $uid);
             $stmt->execute();
             jsonOut(['success'=>true, 'image_url'=>$target]);
         }
-        jsonOut(['success'=>false, 'message'=>'فشل رفع الصورة']);
+        jsonOut(['success'=>false, 'message'=>$error_msg]);
         break;
 
     case 'update_student_profile':

@@ -105,22 +105,18 @@ $pagePath = $pageFile ? "pages/$pageFile" : null;
 
 // Sidebar HTML helper
 function sidebarItem($link, $isActive) {
-    $activeClass = $isActive ? 'active-item' : 'hover-item';
-    $iconColor = $isActive ? 'text-black' : 'text-white/60 group-hover:text-mishkat-gold-400';
-    $iconBg = $isActive ? 'bg-mishkat-gold-500 shadow-[0_0_15px_rgba(201,168,76,0.4)]' : 'bg-white/5 group-hover:bg-mishkat-gold-500/10';
-    $textColor = $isActive ? 'text-white font-black' : 'text-white/50 group-hover:text-white';
+    $activeClass = $isActive ? 'active' : '';
     $href = isset($link['url']) ? $link['url'] : "?page={$link['page']}";
     
     return <<<HTML
         <div class="px-3 mb-1 sidebar-item-wrap transition-all duration-300">
             <a href="{$href}" title="{$link['name']}"
-               class="sidebar-item-link group flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 ease-out {$activeClass}">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 {$iconBg}">
-                    <span class="material-icons-outlined text-[20px] {$iconColor}">{$link['icon']}</span>
+               class="luxury-sidebar-item group flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 ease-out {$activeClass}">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0 icon-box">
+                    <span class="material-icons-outlined text-[20px]">{$link['icon']}</span>
                 </div>
                 <div class="flex flex-col sidebar-text transition-all duration-300">
-                    <span class="text-sm transition-colors duration-300 {$textColor}">{$link['name']}</span>
-                    <span class="text-[10px] text-white/20 group-hover:text-mishkat-gold-500/40 transition-colors uppercase tracking-widest font-bold">Mishkat</span>
+                    <span class="text-sm transition-colors duration-300 font-medium tracking-wide">{$link['name']}</span>
                 </div>
             </a>
         </div>
@@ -145,7 +141,8 @@ function sidebarItem($link, $isActive) {
             width: 280px;
             transform: translateX(100%);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform, width;
+            will-change: transform, width, top, height;
+            z-index: 50;
         }
         #sidebar.open { transform: translateX(0) !important; }
         
@@ -164,11 +161,15 @@ function sidebarItem($link, $isActive) {
         @media (min-width: 1024px) {
             #sidebar { 
                 transform: translateX(0) !important; 
+                top: 1.5rem;
+                right: 1.5rem;
+                height: calc(100vh - 3rem);
+                border-radius: 2rem;
             }
             #sidebarOverlay { display: none !important; }
             
             .page-content {
-                margin-right: 280px;
+                margin-right: calc(280px + 3rem);
             }
 
             /* Collapsed State */
@@ -182,7 +183,7 @@ function sidebarItem($link, $isActive) {
             }
 
             body.sidebar-collapsed .page-content {
-                margin-right: 96px;
+                margin-right: calc(96px + 3rem);
             }
 
             /* Hide text elements smoothly */
@@ -316,16 +317,7 @@ function sidebarItem($link, $isActive) {
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
 
-        /* Luxury Sidebar Item Animation */
-        .active-item {
-            background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%);
-            border-right: 3px solid #c9a84c;
-            transform: scale(1.02);
-        }
-        .hover-item:hover {
-            background: rgba(255,255,255,0.03);
-            transform: translateX(-5px);
-        }
+
 
         /* Glass Nav blur effect */
         .glass-nav {
@@ -339,7 +331,7 @@ function sidebarItem($link, $isActive) {
         }
     </style>
 </head>
-<body class="bg-[#f0f4f2] dark:bg-[#080808] transition-colors duration-500 overflow-x-hidden">
+<body class="transition-colors duration-500 overflow-x-hidden">
 
     <!-- ─── MOBILE OVERLAY ─── -->
     <div id="sidebarOverlay" 
@@ -347,10 +339,10 @@ function sidebarItem($link, $isActive) {
          onclick="closeSidebar()"></div>
 
     <!-- ─── SIDEBAR ─── -->
-    <aside id="sidebar" class="fixed top-0 right-0 h-screen luxury-sidebar text-white z-50 overflow-x-hidden overflow-y-auto shadow-[0_0_40px_rgba(0,0,0,0.4)] border-l border-white/5 custom-scrollbar">
+    <aside id="sidebar" class="fixed top-0 right-0 h-screen luxury-sidebar z-50 overflow-x-hidden overflow-y-auto custom-scrollbar">
 
         <!-- Logo Header -->
-        <div class="sticky top-0 z-20 px-6 pt-10 pb-8 bg-gradient-to-b from-[#0c1210] to-transparent logo-box flex items-center justify-between transition-all duration-300">
+        <div class="sticky top-0 z-20 px-6 pt-10 pb-8 logo-box flex items-center justify-between transition-all duration-300">
             <div class="flex items-center gap-4">
                 <div class="relative group flex-shrink-0">
                         <div class="absolute -inset-1 bg-mishkat-gold-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
@@ -375,7 +367,7 @@ function sidebarItem($link, $isActive) {
 
         <!-- User Identity -->
         <div class="px-4 mb-8 transition-all duration-300">
-            <div class="user-box relative p-4 rounded-[2rem] bg-white/[0.03] border border-white/5 overflow-hidden group flex items-center gap-4 transition-all duration-300">
+            <div class="user-box relative p-4 rounded-[2rem] overflow-hidden group flex items-center gap-4 transition-all duration-300">
                 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mishkat-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 <div class="user-avatar w-12 h-12 rounded-2xl bg-mishkat-gold-500 overflow-hidden flex items-center justify-center font-black text-black text-lg shadow-lg shadow-mishkat-gold-500/20 flex-shrink-0 transition-all duration-300">
                     <?php if(!empty($userImage)): ?>

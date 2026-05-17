@@ -28,13 +28,13 @@ $action = $_REQUEST['action'] ?? '';
 // Helper to handle file uploads
 function handleUpload($field) {
     if (!isset($_FILES[$field]) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK) return null;
-    $dir = __DIR__ . '/uploads/';
+    $dir = __DIR__ . '/../uploads/';
     if (!is_dir($dir)) mkdir($dir, 0777, true);
     $ext = pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION);
     $name = uniqid('file_') . '.' . $ext;
     $target = $dir . $name;
     if (move_uploaded_file($_FILES[$field]['tmp_name'], $target)) {
-        return 'api/uploads/' . $name;
+        return 'uploads/' . $name;
     }
     return null;
 }

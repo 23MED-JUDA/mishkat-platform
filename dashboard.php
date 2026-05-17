@@ -15,6 +15,7 @@ $role = strtolower($userData['role'] ?? 'student');
 $userName = $userData['name'];
 $userImage = $userData['profile_image'] ?? '';
 $userRoleName = ($role === 'student' ? 'طالب' : ($role === 'teacher' ? 'معلم' : ($role === 'parent' ? 'ولي أمر' : 'مسؤول')));
+$dashboardTitle = ($role === 'student' ? 'صفحة الطالب' : ($role === 'teacher' ? 'صفحة المعلم' : ($role === 'parent' ? 'صفحة ولي أمر' : 'صفحة المسؤول')));
 
 $links = [];
 if ($role === 'student') {
@@ -508,7 +509,11 @@ function sidebarItem($link, $isActive) {
                     <span class="font-black font-tajawal text-lg" style="color: var(--color-text-main);">مِشكاة</span>
                 </div>
                 <!-- Page title on desktop -->
-                <h2 class="hidden lg:block text-xl font-black font-tajawal" style="color: var(--color-text-main);"><?php echo $pageTitle; ?></h2>
+                <h2 class="hidden lg:block text-xl font-black font-tajawal" style="color: var(--color-text-main);">
+                    <?php echo $dashboardTitle; ?> 
+                    <span class="text-xs font-bold text-gray-400 dark:text-white/20 mx-2">/</span> 
+                    <span class="text-sm font-medium text-gray-500 dark:text-white/50"><?php echo $pageTitle; ?></span>
+                </h2>
             </div>
 
             <div class="flex items-center gap-2 md:gap-3">
@@ -553,7 +558,11 @@ function sidebarItem($link, $isActive) {
 
             <!-- Mobile page title bar -->
             <div class="lg:hidden px-4 py-2" style="border-bottom: 1px solid var(--border-color);">
-                <h2 class="text-sm font-black font-tajawal" style="color: var(--color-text-main);"><?php echo $pageTitle; ?></h2>
+                <h2 class="text-sm font-black font-tajawal" style="color: var(--color-text-main);">
+                    <?php echo $dashboardTitle; ?> 
+                    <span class="text-xs font-bold text-gray-400 dark:text-white/20 mx-1">/</span> 
+                    <span class="text-[11px] font-medium text-gray-500 dark:text-white/40"><?php echo $pageTitle; ?></span>
+                </h2>
             </div>
 
         <!-- Page content -->

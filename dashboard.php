@@ -229,6 +229,19 @@ function sidebarItem($link, $isActive) {
                 padding-left: 0;
                 padding-right: 0;
             }
+
+            /* Symmetrical Floating Topbar */
+            .glass-nav {
+                margin: 1.5rem 1.5rem 0 1.5rem !important;
+                border-radius: 2rem !important;
+                border: 1px solid var(--border-color) !important;
+                top: 1.5rem !important;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03) !important;
+                transition: all 0.3s ease;
+            }
+            html.dark .glass-nav {
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45) !important;
+            }
         }
 
         /* Mobile */

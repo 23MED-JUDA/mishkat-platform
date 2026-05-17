@@ -164,14 +164,14 @@
 
     /* — Top Nav — */
     .glass-nav {
-        background: rgba(255, 255, 255, 0.9) !important;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border-color) !important;
     }
     html.dark .glass-nav {
-        background: rgba(0, 0, 0, 0.9) !important;
-        border-bottom: 1px solid rgba(212, 168, 67, 0.15) !important;
+        background: rgba(13, 11, 9, 0.92) !important;
+        border-bottom: 1px solid var(--border-color) !important;
     }
 
     /* — Sidebar — */

@@ -53,23 +53,41 @@ function handleUpload($field, &$error_msg = null) {
     }
     
     $dir = __DIR__ . '/../uploads/';
-    if (!is_dir($dir)) mkdir($dir, 0777, true);
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0777, true);
+    }
     
-    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
-    $file_type = $_FILES[$field]['type'];
-    if (!in_array($file_type, $allowed_types)) {
-        $error_msg = "نوع الملف غير مدعوم، يرجى رفع صورة بصيغة (JPG, PNG, WEBP, GIF).";
+    // Debug logging parameters
+    $log_file = $dir . 'upload_debug.log';
+    $client_name = $_FILES[$field]['name'] ?? 'unknown';
+    $client_size = $_FILES[$field]['size'] ?? 0;
+    $client_type = $_FILES[$field]['type'] ?? 'unknown';
+    $tmp_name = $_FILES[$field]['tmp_name'] ?? '';
+    
+    $ext = strtolower(pathinfo($client_name, PATHINFO_EXTENSION));
+    $allowed_exts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+    $log_data = date('[Y-m-d H:i:s] ') . "UPLOAD START: File=$client_name, Size=$client_size, Type=$client_type, TmpName=$tmp_name, TargetDir=$dir, Writable=" . (is_writable($dir) ? 'YES' : 'NO') . "\n";
+    
+    if (!in_array($ext, $allowed_exts)) {
+        $error_msg = "نوع الملف ($ext) غير مدعوم، يرجى رفع صورة بصيغة (JPG, PNG, WEBP, GIF).";
+        $log_data .= "UPLOAD ERROR: Extension '$ext' not allowed.\n";
+        @file_put_contents($log_file, $log_data, FILE_APPEND);
         return null;
     }
     
-    $ext = pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION);
     $name = uniqid('file_') . '.' . $ext;
     $target = $dir . $name;
-    if (move_uploaded_file($_FILES[$field]['tmp_name'], $target)) {
+    
+    if (move_uploaded_file($tmp_name, $target)) {
+        $log_data .= "UPLOAD SUCCESS: Target=$target\n";
+        @file_put_contents($log_file, $log_data, FILE_APPEND);
         return 'uploads/' . $name;
     }
     
     $error_msg = "فشل نقل الصورة المرفوعة. يرجى مراجعة صلاحيات خادم الويب.";
+    $log_data .= "UPLOAD ERROR: move_uploaded_file failed to move $tmp_name to $target\n";
+    @file_put_contents($log_file, $log_data, FILE_APPEND);
     return null;
 }
 

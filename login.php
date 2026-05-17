@@ -128,24 +128,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form method="POST" class="space-y-6">
                 <!-- Account Type Choice Selector -->
-                <div>
+                <div class="mb-6">
                     <label class="block text-xs font-black text-mishkat-green-800 uppercase tracking-widest mb-3 mr-1">نوع الحساب</label>
-                    <div class="grid grid-cols-4 gap-2 bg-gray-50 p-1.5 rounded-2xl border border-gray-100">
-                        <label class="cursor-pointer text-center flex-1">
+                    <div class="grid grid-cols-4 gap-2 bg-gray-50 dark:bg-white/5 p-1.5 rounded-2xl border border-gray-100 dark:border-white/5">
+                        <label class="cursor-pointer text-center group flex-1">
                             <input type="radio" name="role_choice" value="student" checked class="sr-only peer">
-                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">طالب</div>
+                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-graduation-cap text-lg transition-transform group-hover:scale-110"></i>
+                                <span>طالب</span>
+                            </div>
                         </label>
-                        <label class="cursor-pointer text-center flex-1">
+                        <label class="cursor-pointer text-center group flex-1">
                             <input type="radio" name="role_choice" value="teacher" class="sr-only peer">
-                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">معلم</div>
+                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-chalkboard-user text-lg transition-transform group-hover:scale-110"></i>
+                                <span>معلم</span>
+                            </div>
                         </label>
-                        <label class="cursor-pointer text-center flex-1">
+                        <label class="cursor-pointer text-center group flex-1">
                             <input type="radio" name="role_choice" value="parent" class="sr-only peer">
-                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">ولي أمر</div>
+                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-people-roof text-lg transition-transform group-hover:scale-110"></i>
+                                <span>ولي أمر</span>
+                            </div>
                         </label>
-                        <label class="cursor-pointer text-center flex-1">
+                        <label class="cursor-pointer text-center group flex-1">
                             <input type="radio" name="role_choice" value="admin" class="sr-only peer">
-                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">مسؤول</div>
+                            <div class="py-3 px-1 rounded-xl font-bold text-xs transition-all duration-300 peer-checked:bg-mishkat-green-700 peer-checked:text-white dark:peer-checked:bg-mishkat-green-600 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white flex flex-col items-center gap-1.5">
+                                <i class="fa-solid fa-user-shield text-lg transition-transform group-hover:scale-110"></i>
+                                <span>مسؤول</span>
+                            </div>
                         </label>
                     </div>
                 </div>

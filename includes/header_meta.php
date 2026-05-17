@@ -74,24 +74,24 @@
     }
 
     html.dark {
-        /* DARK MODE: Black + White + Gray (Inverted White/Gray) */
-        --bg-app: #080808;            /* Pure dark black/gray */
-        --bg-surface: #121212;        /* Card background - dark charcoal */
-        --color-primary: #888888;     /* Gray instead of White */
-        --color-primary-light: #a0a0a0;
-        --color-accent: #ffffff;      /* White instead of Gray */
-        --color-text-main: #888888;   /* Gray text instead of White text */
-        --color-text-muted: #ffffff;  /* White text instead of Gray text */
-        --border-color: rgba(255, 255, 255, 0.15); /* Slightly brighter white border */
+        /* DARK MODE: Black + White + Electric Neon Cyan/Blue */
+        --bg-app: #000000;            /* Pure Black background */
+        --bg-surface: #0a0a0a;        /* Near-black for cards */
+        --color-primary: #00d2ff;     /* Vibrant Electric Cyan/Blue */
+        --color-primary-light: #7be7ff;
+        --color-accent: #00d2ff;      /* Electric accent */
+        --color-text-main: #ffffff;   /* Pure White text */
+        --color-text-muted: #888888;  /* Muted silver text */
+        --border-color: rgba(0, 210, 255, 0.12); /* Subtle glowing electric border */
 
-        /* Sidebar — deep black with gray/white highlights */
-        --sidebar-bg: #0c0c0c;
-        --sidebar-text: #ffffff;      /* White text instead of Gray */
-        --sidebar-text-hover: #888888; /* Gray instead of White */
-        --sidebar-active-bg: #888888; /* Gray active bg instead of White */
-        --sidebar-active-text: #ffffff; /* White text on active item */
-        --sidebar-icon-bg: #181818;
-        --sidebar-icon-bg-active: #888888;
+        /* Sidebar — pure black with glowing electric highlights */
+        --sidebar-bg: #050505;
+        --sidebar-text: #888888;
+        --sidebar-text-hover: #ffffff;
+        --sidebar-active-bg: rgba(0, 210, 255, 0.12); /* Subtle glow for active item */
+        --sidebar-active-text: #00d2ff; /* Electric active text */
+        --sidebar-icon-bg: #111111;
+        --sidebar-icon-bg-active: rgba(0, 210, 255, 0.2);
     }
 
     /* ══════════════════════════════════════

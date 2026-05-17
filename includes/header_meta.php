@@ -74,24 +74,24 @@
     }
 
     html.dark {
-        /* DARK MODE: Black + White + Electric Neon Cyan/Blue */
-        --bg-app: #000000;            /* Pure Black background */
-        --bg-surface: #0a0a0a;        /* Near-black for cards */
-        --color-primary: #00d2ff;     /* Vibrant Electric Cyan/Blue */
-        --color-primary-light: #7be7ff;
-        --color-accent: #00d2ff;      /* Electric accent */
-        --color-text-main: #ffffff;   /* Pure White text */
-        --color-text-muted: #888888;  /* Muted silver text */
-        --border-color: rgba(0, 210, 255, 0.12); /* Subtle glowing electric border */
+        /* DARK MODE: Luxury Warm Obsidian, Champagne Gold, & Warm Cream (Ultimate Spiritual Warmth) */
+        --bg-app: #090807;            /* Deep Obsidian Warm Black */
+        --bg-surface: #12100e;        /* Dark Warm Espresso Charcoal for cards */
+        --color-primary: #d4a359;     /* Warm Antique Champagne Gold */
+        --color-primary-light: #e6c18d;
+        --color-accent: #d4a359;      /* Gold accent */
+        --color-text-main: #f2ece0;   /* Warm soft Cream/Ivory text (extremely soft on the eyes) */
+        --color-text-muted: #a69a85;  /* Warm Antique Muted Bronze text */
+        --border-color: rgba(212, 163, 89, 0.12); /* Subtle warm gold border glow */
 
-        /* Sidebar — pure black with glowing electric highlights */
-        --sidebar-bg: #050505;
-        --sidebar-text: #888888;
-        --sidebar-text-hover: #ffffff;
-        --sidebar-active-bg: rgba(0, 210, 255, 0.12); /* Subtle glow for active item */
-        --sidebar-active-text: #00d2ff; /* Electric active text */
-        --sidebar-icon-bg: #111111;
-        --sidebar-icon-bg-active: rgba(0, 210, 255, 0.2);
+        /* Sidebar — warm obsidian with golden highlights */
+        --sidebar-bg: #0d0b09;
+        --sidebar-text: #a69a85;
+        --sidebar-text-hover: #f2ece0;
+        --sidebar-active-bg: rgba(212, 163, 89, 0.12); /* Subtle warm golden glow */
+        --sidebar-active-text: #d4a359; /* Warm gold text for active item */
+        --sidebar-icon-bg: #181512;
+        --sidebar-icon-bg-active: rgba(212, 163, 89, 0.2);
     }
 
     /* ══════════════════════════════════════

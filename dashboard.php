@@ -230,6 +230,27 @@ function sidebarItem($link, $isActive) {
                 padding-right: 0;
             }
 
+            #sidebar:not(:hover) .sidebar-item-wrap {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+
+            #sidebar:not(:hover) .px-4 {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+
+            #sidebar:not(:hover) .luxury-sidebar-item {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                justify-content: center !important;
+                gap: 0 !important;
+            }
+
+            #sidebar:not(:hover) .icon-box {
+                margin: 0 auto !important;
+            }
+
             /* Full Width Topbar at the top */
             .glass-nav {
                 position: fixed !important;
@@ -355,6 +376,28 @@ function sidebarItem($link, $isActive) {
         .dark .glass-nav {
             background-color: rgba(9, 8, 7, 0.85);
             border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Elegant Thin Sidebar Scrollbar */
+        #sidebar::-webkit-scrollbar {
+            width: 4px !important;
+        }
+        #sidebar::-webkit-scrollbar-track {
+            background: transparent !important;
+        }
+        #sidebar::-webkit-scrollbar-thumb {
+            background: rgba(74, 140, 110, 0.15) !important;
+            border-radius: 10px !important;
+            transition: background 0.3s ease;
+        }
+        html.dark #sidebar::-webkit-scrollbar-thumb {
+            background: rgba(212, 163, 89, 0.15) !important;
+        }
+        #sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(74, 140, 110, 0.35) !important;
+        }
+        html.dark #sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 163, 89, 0.35) !important;
         }
     </style>
 </head>

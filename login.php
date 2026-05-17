@@ -10,9 +10,10 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
+    $selected_role = trim($_POST['role_choice'] ?? 'student');
 
-    $stmt = $conn->prepare("SELECT id, name, email, password, role, status FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
+    $stmt = $conn->prepare("SELECT id, name, email, password, role, status FROM users WHERE email = ? AND role = ?");
+    $stmt->bind_param("ss", $email, $selected_role);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -39,7 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'كلمة المرور غير صحيحة';
         }
     } else {
-        $error = 'البريد الإلكتروني غير مسجل';
+        // Smart feedback: check if the email exists in another role
+        $stmt_exists = $conn->prepare("SELECT role FROM users WHERE email = ?");
+        $stmt_exists->bind_param("s", $email);
+        $stmt_exists->execute();
+        $res_exists = $stmt_exists->get_result();
+        if ($row_exists = $res_exists->fetch_assoc()) {
+            $actual_role = $row_exists['role'];
+            $role_names = ['student' => 'طالب', 'teacher' => 'معلم', 'parent' => 'ولي أمر', 'admin' => 'مسؤول'];
+            $actual_role_name = $role_names[$actual_role] ?? $actual_role;
+            $selected_role_name = $role_names[$selected_role] ?? $selected_role;
+            $error = 'البريد الإلكتروني مسجل كـ (' . $actual_role_name . ') وليس كـ (' . $selected_role_name . '). يرجى اختيار نوع الحساب الصحيح.';
+        } else {
+            $error = 'البريد الإلكتروني غير مسجل لدينا بالمنصة';
+        }
     }
 }
 ?>
@@ -113,6 +127,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST" class="space-y-6">
+                <!-- Account Type Choice Selector -->
+                <div>
+                    <label class="block text-xs font-black text-mishkat-green-800 uppercase tracking-widest mb-3 mr-1">نوع الحساب</label>
+                    <div class="grid grid-cols-4 gap-2 bg-gray-50 p-1.5 rounded-2xl border border-gray-100">
+                        <label class="cursor-pointer text-center flex-1">
+                            <input type="radio" name="role_choice" value="student" checked class="sr-only peer">
+                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">طالب</div>
+                        </label>
+                        <label class="cursor-pointer text-center flex-1">
+                            <input type="radio" name="role_choice" value="teacher" class="sr-only peer">
+                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">معلم</div>
+                        </label>
+                        <label class="cursor-pointer text-center flex-1">
+                            <input type="radio" name="role_choice" value="parent" class="sr-only peer">
+                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">ولي أمر</div>
+                        </label>
+                        <label class="cursor-pointer text-center flex-1">
+                            <input type="radio" name="role_choice" value="admin" class="sr-only peer">
+                            <div class="py-2.5 rounded-xl font-bold text-xs transition-all peer-checked:bg-mishkat-green-700 peer-checked:text-white text-gray-400 hover:text-gray-900">مسؤول</div>
+                        </label>
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-xs font-black text-mishkat-green-800 uppercase tracking-widest mb-2 mr-1">البريد الإلكتروني</label>
                     <div class="relative">

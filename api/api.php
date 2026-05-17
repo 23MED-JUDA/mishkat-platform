@@ -264,6 +264,66 @@ switch ($action) {
         jsonOut(['success'=>true]);
         break;
 
+    case 'add_user':
+        if($role!=='admin') denied();
+        $name = $_POST['name'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $password = password_hash($_POST['password'] ?? '123456', PASSWORD_DEFAULT);
+        $user_role = $_POST['role'] ?? 'student';
+        
+        $stmt_check = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt_check->bind_param("s", $email);
+        $stmt_check->execute();
+        if ($stmt_check->get_result()->num_rows > 0) {
+            jsonOut(['success' => false, 'message' => 'البريد الإلكتروني مسجل بالفعل لمستخدم آخر']);
+        }
+        
+        $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password, role, status) VALUES (?, ?, ?, ?, ?, 'active')");
+        $stmt->bind_param("sssss", $name, $email, $phone, $password, $user_role);
+        if($stmt->execute()) {
+            jsonOut(['success'=>true]);
+        }
+        jsonOut(['success'=>false, 'message'=>'فشل إضافة المستخدم في قاعدة البيانات']);
+        break;
+
+    case 'add_circle':
+        if($role!=='admin') denied();
+        $name = $_POST['name'] ?? '';
+        $teacher_id = intval($_POST['teacher_id'] ?? 0);
+        $max_students = intval($_POST['max_students'] ?? 20);
+        $schedule = $_POST['schedule'] ?? '';
+        
+        $stmt = $conn->prepare("INSERT INTO circles (name, teacher_id, max_students, schedule, status) VALUES (?, ?, ?, ?, 'active')");
+        $stmt->bind_param("siis", $name, $teacher_id, $max_students, $schedule);
+        if($stmt->execute()) {
+            jsonOut(['success'=>true]);
+        }
+        jsonOut(['success'=>false, 'message'=>'فشل إضافة الحلقة في قاعدة البيانات']);
+        break;
+
+    case 'delete_circle':
+        if($role!=='admin') denied();
+        $circle_id = intval($_POST['circle_id'] ?? 0);
+        $conn->query("DELETE FROM circles WHERE id=$circle_id");
+        jsonOut(['success'=>true]);
+        break;
+
+    case 'send_notification':
+        if($role!=='admin') denied();
+        $to_user = intval($_POST['to_user'] ?? 0);
+        $title = $_POST['title'] ?? '';
+        $message = $_POST['message'] ?? '';
+        $notif_type = $_POST['type'] ?? 'system';
+        
+        $stmt = $conn->prepare("INSERT INTO notifications (user_id, title, message, type, is_read, created_at) VALUES (?, ?, ?, ?, 0, NOW())");
+        $stmt->bind_param("isss", $to_user, $title, $message, $notif_type);
+        if($stmt->execute()) {
+            jsonOut(['success'=>true]);
+        }
+        jsonOut(['success'=>false, 'message'=>'فشل إرسال الإشعار في قاعدة البيانات']);
+        break;
+
     case 'get_students':
         if($role!=='admin' && $role!=='teacher') denied();
         $r=$conn->query("SELECT u.id,u.name,u.email,u.phone,u.status,u.created_at FROM users u WHERE u.role='student' ORDER BY u.created_at DESC");

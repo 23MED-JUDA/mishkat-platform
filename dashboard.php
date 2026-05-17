@@ -161,9 +161,9 @@ function sidebarItem($link, $isActive) {
         @media (min-width: 1024px) {
             #sidebar { 
                 transform: translateX(0) !important; 
-                top: 1.5rem;
+                top: calc(76px + 1.5rem);
                 right: 1.5rem;
-                height: calc(100vh - 3rem);
+                height: calc(100vh - 76px - 3rem);
                 border-radius: 2rem;
                 width: 96px;
                 transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
@@ -230,17 +230,23 @@ function sidebarItem($link, $isActive) {
                 padding-right: 0;
             }
 
-            /* Symmetrical Floating Topbar */
+            /* Full Width Topbar at the top */
             .glass-nav {
-                margin: 1.5rem 1.5rem 0 1.5rem !important;
-                border-radius: 2rem !important;
-                border: 1px solid var(--border-color) !important;
-                top: 1.5rem !important;
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03) !important;
-                transition: all 0.3s ease;
+                position: fixed !important;
+                top: 0 !important;
+                right: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 76px !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                border: none !important;
+                border-bottom: 1px solid var(--border-color) !important;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important;
+                z-index: 100 !important;
             }
             html.dark .glass-nav {
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45) !important;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
             }
         }
 
@@ -249,8 +255,11 @@ function sidebarItem($link, $isActive) {
             .page-content { margin-right: 0 !important; }
         }
 
-        /* Smooth transitions on content */
-        .page-content { transition: margin-right 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Smooth transitions on content & offset for fixed topbar */
+        .page-content { 
+            transition: margin-right 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding-top: 76px;
+        }
 
         /* Responsive tables */
         .responsive-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -330,15 +339,22 @@ function sidebarItem($link, $isActive) {
 
 
 
-        /* Glass Nav blur effect */
+        /* Glass Nav blur effect & full width fixed layout */
         .glass-nav {
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            background-color: rgba(255, 255, 255, 0.7);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 40;
+            height: 76px;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.85);
+            border-bottom: 1px solid var(--border-color);
         }
         .dark .glass-nav {
-            background-color: rgba(8, 8, 8, 0.75);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background-color: rgba(9, 8, 7, 0.85);
+            border-bottom: 1px solid var(--border-color);
         }
     </style>
 </head>
@@ -446,11 +462,8 @@ function sidebarItem($link, $isActive) {
         </nav>
     </aside>
 
-    <!-- ─── MAIN CONTENT ─── -->
-    <main class="min-h-screen page-content">
-
-        <!-- Topbar -->
-        <header class="glass-nav sticky top-0 z-30 px-4 md:px-6 py-3 flex justify-between items-center gap-3">
+    <!-- Topbar (100% Width) -->
+    <header class="glass-nav px-4 md:px-6 flex justify-between items-center gap-3">
             <div class="flex items-center gap-3">
                 <!-- Mobile open sidebar button -->
                 <button onclick="openSidebar()" class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
@@ -503,10 +516,13 @@ function sidebarItem($link, $isActive) {
             </div>
         </header>
 
-        <!-- Mobile page title bar -->
-        <div class="lg:hidden px-4 py-2" style="border-bottom: 1px solid var(--border-color);">
-            <h2 class="text-sm font-black font-tajawal" style="color: var(--color-text-main);"><?php echo $pageTitle; ?></h2>
-        </div>
+        <!-- ─── MAIN CONTENT ─── -->
+        <main class="min-h-screen page-content">
+
+            <!-- Mobile page title bar -->
+            <div class="lg:hidden px-4 py-2" style="border-bottom: 1px solid var(--border-color);">
+                <h2 class="text-sm font-black font-tajawal" style="color: var(--color-text-main);"><?php echo $pageTitle; ?></h2>
+            </div>
 
         <!-- Page content -->
         <div class="p-4 md:p-6 lg:p-10 max-w-7xl mx-auto animate-slide-up">

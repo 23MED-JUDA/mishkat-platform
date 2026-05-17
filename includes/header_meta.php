@@ -40,8 +40,8 @@
 </script>
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="assets/images/logo-app.png">
-<link rel="apple-touch-icon" href="assets/images/logo-app.png">
+<link rel="icon" type="image/jpeg" href="assets/images/6046279299901361992.jpg">
+<link rel="apple-touch-icon" href="assets/images/6046279299901361992.jpg">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">

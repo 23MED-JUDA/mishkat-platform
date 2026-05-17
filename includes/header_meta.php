@@ -74,24 +74,24 @@
     }
 
     html.dark {
-        /* DARK MODE: Black + White + Gray only (NO GOLD) */
+        /* DARK MODE: Black + White + Gray (Inverted White/Gray) */
         --bg-app: #080808;            /* Pure dark black/gray */
         --bg-surface: #121212;        /* Card background - dark charcoal */
-        --color-primary: #ffffff;     /* Pure White as accent/primary */
-        --color-primary-light: #e0e0e0;
-        --color-accent: #a0a0a0;      /* Calm Gray accent */
-        --color-text-main: #ffffff;   /* White text */
-        --color-text-muted: #888888;  /* Muted gray text */
-        --border-color: rgba(255, 255, 255, 0.08); /* White border with low opacity */
+        --color-primary: #888888;     /* Gray instead of White */
+        --color-primary-light: #a0a0a0;
+        --color-accent: #ffffff;      /* White instead of Gray */
+        --color-text-main: #888888;   /* Gray text instead of White text */
+        --color-text-muted: #ffffff;  /* White text instead of Gray text */
+        --border-color: rgba(255, 255, 255, 0.15); /* Slightly brighter white border */
 
-        /* Sidebar — deep black with white/gray highlights */
+        /* Sidebar — deep black with gray/white highlights */
         --sidebar-bg: #0c0c0c;
-        --sidebar-text: #888888;
-        --sidebar-text-hover: #ffffff;
-        --sidebar-active-bg: #ffffff; /* White background for active item */
-        --sidebar-active-text: #000000; /* Black text on white active item */
+        --sidebar-text: #ffffff;      /* White text instead of Gray */
+        --sidebar-text-hover: #888888; /* Gray instead of White */
+        --sidebar-active-bg: #888888; /* Gray active bg instead of White */
+        --sidebar-active-text: #ffffff; /* White text on active item */
         --sidebar-icon-bg: #181818;
-        --sidebar-icon-bg-active: #ffffff;
+        --sidebar-icon-bg-active: #888888;
     }
 
     /* ══════════════════════════════════════

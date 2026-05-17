@@ -378,26 +378,15 @@ function sidebarItem($link, $isActive) {
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* Elegant Thin Sidebar Scrollbar */
+        /* Completely Hide Sidebar Scrollbar for Perfect Oval Aesthetics */
+        #sidebar {
+            -ms-overflow-style: none !important;  /* IE and Edge */
+            scrollbar-width: none !important;  /* Firefox */
+        }
         #sidebar::-webkit-scrollbar {
-            width: 4px !important;
-        }
-        #sidebar::-webkit-scrollbar-track {
-            background: transparent !important;
-        }
-        #sidebar::-webkit-scrollbar-thumb {
-            background: rgba(74, 140, 110, 0.15) !important;
-            border-radius: 10px !important;
-            transition: background 0.3s ease;
-        }
-        html.dark #sidebar::-webkit-scrollbar-thumb {
-            background: rgba(212, 163, 89, 0.15) !important;
-        }
-        #sidebar::-webkit-scrollbar-thumb:hover {
-            background: rgba(74, 140, 110, 0.35) !important;
-        }
-        html.dark #sidebar::-webkit-scrollbar-thumb:hover {
-            background: rgba(212, 163, 89, 0.35) !important;
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
         }
     </style>
 </head>

@@ -252,76 +252,8 @@ function sidebarItem($link, $isActive) {
             button, a { min-height: 40px; }
         }
 
-        /* ── Animated Hamburger Button ── */
-        #menuBtn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-            background: var(--bg-surface);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-        html.dark #menuBtn {
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,168,67,0.15);
-        }
-        #menuBtn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-        }
-        html.dark #menuBtn:hover {
-            box-shadow: 0 4px 16px rgba(212,168,67,0.2);
-        }
-        #menuBtn:active { transform: scale(0.96); }
-
-        /* Hamburger bars inside the button */
-        .hamburger-icon {
-            width: 18px;
-            height: 14px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .hamburger-icon span {
-            display: block;
-            height: 2px;
-            border-radius: 2px;
-            background: var(--color-primary);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
-        }
-        /* When sidebar is open: X animation */
-        body.sidebar-open #menuBtn .hamburger-icon span:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-        }
-        body.sidebar-open #menuBtn .hamburger-icon span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        body.sidebar-open #menuBtn .hamburger-icon span:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-        }
-        /* Desktop collapsed state: show different bars */
-        body.sidebar-collapsed #menuBtn .hamburger-icon span:nth-child(1) {
-            width: 100%;
-        }
-        body.sidebar-collapsed #menuBtn .hamburger-icon span:nth-child(2) {
-            width: 70%;
-        }
-        body.sidebar-collapsed #menuBtn .hamburger-icon span:nth-child(3) {
-            width: 85%;
-        }
-        #menuBtn .hamburger-icon span:nth-child(1) { width: 100%; }
-        #menuBtn .hamburger-icon span:nth-child(2) { width: 70%; }
-        #menuBtn .hamburger-icon span:nth-child(3) { width: 85%; }
         /* Toast Notifications */
+
         .toast-container {
             position: fixed;
             bottom: 2rem;
@@ -425,16 +357,16 @@ function sidebarItem($link, $isActive) {
                        style="color: var(--color-text-muted);">منصة تعليمية</p>
                 </div>
             </div>
-            <!-- Desktop: toggle collapse | Mobile: close sidebar -->
-            <button id="menuBtn" onclick="toggleSidebar()" aria-label="القائمة"
-                    class="sidebar-logo-text">
-                <div class="hamburger-icon">
-                    <span></span><span></span><span></span>
-                </div>
+            <!-- Desktop collapse toggle -->
+            <button id="menuBtn" onclick="toggleSidebar()" aria-label="طي القائمة"
+                    class="sidebar-logo-text hidden lg:flex w-9 h-9 items-center justify-center rounded-xl transition-all flex-shrink-0"
+                    style="background: var(--bg-app); border:none; cursor:pointer; color: var(--color-text-muted);">
+                <span class="material-icons-outlined" style="font-size:1.2rem;">menu</span>
             </button>
+            <!-- Mobile close button -->
             <button onclick="closeSidebar()"
                     class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
-                    style="background: var(--bg-app); color: var(--color-text-muted);">
+                    style="background: var(--bg-app); border:none; cursor:pointer; color: var(--color-text-muted);">
                 <span class="material-icons-outlined text-xl">close</span>
             </button>
         </div>
@@ -518,11 +450,9 @@ function sidebarItem($link, $isActive) {
         <header class="glass-nav sticky top-0 z-30 px-4 md:px-6 py-3 flex justify-between items-center gap-3">
             <div class="flex items-center gap-3">
                 <!-- Mobile open sidebar button -->
-                <button onclick="openSidebar()" class="lg:hidden" aria-label="القائمة"
-                        style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg-surface);box-shadow:0 2px 10px rgba(0,0,0,0.08);border:none;cursor:pointer;">
-                    <div class="hamburger-icon">
-                        <span></span><span></span><span></span>
-                    </div>
+                <button onclick="openSidebar()" class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
+                        style="background: var(--bg-surface); border: 1px solid var(--border-color); cursor:pointer; color: var(--color-primary);">
+                    <span class="material-icons-outlined" style="font-size:1.3rem;">menu</span>
                 </button>
                 <!-- Brand on mobile -->
                 <div class="flex items-center gap-2 lg:hidden">

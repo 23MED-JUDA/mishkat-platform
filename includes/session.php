@@ -1,5 +1,4 @@
 <?php
-// custom session handler using the database
 $db_path = __DIR__ . '/db.php';
 if (!file_exists($db_path)) {
     die("Database configuration not found.");
@@ -98,13 +97,10 @@ if (isset($db_connected) && $db_connected && $conn !== null) {
     session_set_save_handler($handler, true);
 }
 
-// Start the session securely if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
-// التأكد من وجود جدول التوكنات
 function ensureRememberMeTable($conn) {
     $conn->query("CREATE TABLE IF NOT EXISTS `remember_me_tokens` (
         `id`         INT AUTO_INCREMENT PRIMARY KEY,
@@ -117,14 +113,12 @@ function ensureRememberMeTable($conn) {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 }
 
-// تسجيل دخول تلقائي
 if (isset($db_connected) && $db_connected && $conn !== null) {
     if (!isset($_SESSION['user_id']) && isset($_COOKIE['mishkat_remember'])) {
         $rawToken  = $_COOKIE['mishkat_remember'];
         $tokenHash = hash('sha256', $rawToken);
 
         try {
-            // البحث عن التوكن
             $stmt = $conn->prepare(
                 "SELECT rmt.id, rmt.user_id, rmt.expires_at,
                         u.name, r.name AS role, u.status
@@ -144,7 +138,6 @@ if (isset($db_connected) && $db_connected && $conn !== null) {
                     $_SESSION['user_name'] = $row['name'];
                     $_SESSION['user_role'] = $row['role'];
 
-                    // تجديد التوكن
                     $newRaw   = bin2hex(random_bytes(32));
                     $newHash  = hash('sha256', $newRaw);
                     $newExpiry = date('Y-m-d H:i:s', time() + 30 * 24 * 3600);
@@ -164,7 +157,6 @@ if (isset($db_connected) && $db_connected && $conn !== null) {
                          'samesite' => 'Lax']
                     );
                 } else {
-                    // حساب معلق
                     $del = $conn->prepare("DELETE FROM remember_me_tokens WHERE token_hash = ?");
                     $del->bind_param("s", $tokenHash);
                     $del->execute();
@@ -174,18 +166,15 @@ if (isset($db_connected) && $db_connected && $conn !== null) {
                 setcookie('mishkat_remember', '', time() - 3600, '/');
             }
 
-            // تنظيف التوكنات المنتهية
             if (rand(1, 100) === 1) {
                 $conn->query("DELETE FROM remember_me_tokens WHERE expires_at < NOW()");
             }
 
         } catch (Exception $e) {
-            // تجاهل الخطأ
         }
     }
 }
 
-// حذف كوكيز قديم
 if (isset($_COOKIE['mishkat_user'])) {
     setcookie('mishkat_user', '', time() - 3600, '/');
 }

@@ -1,7 +1,6 @@
 
 
 const MishkatUI = {
-    // ── TOAST MESSAGES ──
     showToast(message, type = 'success') {
         const container = document.getElementById('toastContainer');
         if (!container) {
@@ -33,7 +32,6 @@ const MishkatUI = {
         }, 4000);
     },
 
-    // ── CUSTOM CONFIRM DIALOG ──
     confirm(message) {
         return new Promise((resolve) => {
             const modal = document.createElement('div');
@@ -52,7 +50,6 @@ const MishkatUI = {
             `;
             document.body.appendChild(modal);
 
-            // Animation
             setTimeout(() => modal.querySelector('.luxury-card').classList.replace('scale-95', 'scale-100'), 10);
 
             const cleanup = (val) => {
@@ -71,7 +68,6 @@ const MishkatUI = {
         });
     },
 
-    // ── API CALL WRAPPER ──
     async apiCall(action, data = {}) {
         const formData = new FormData();
         formData.append('action', action);
@@ -92,7 +88,6 @@ const MishkatUI = {
         }
     },
 
-    // ── API GET WRAPPER ──
     async apiGet(action, params = '') {
         try {
             const response = await fetch(`api/api.php?action=${action}${params}`);
@@ -105,7 +100,6 @@ const MishkatUI = {
     }
 };
 
-// Global shortcuts — استخدام window لتجنب تعارض const مع تعريفات الدوال في الصفحة
 window.MishkatUI    = MishkatUI;
 window.showToast    = MishkatUI.showToast.bind(MishkatUI);
 window.apiCall      = MishkatUI.apiCall.bind(MishkatUI);

@@ -1,5 +1,4 @@
 <?php
-// Teacher Packages (Circles Management) - Dynamic
 $circles = $conn->query("SELECT ci.*, (SELECT COUNT(*) FROM circle_students WHERE circle_id=ci.id) as current_students FROM circles ci WHERE ci.teacher_id=$uid ORDER BY ci.created_at DESC");
 ?>
 <div class="space-y-6 animate-fadeIn" dir="rtl">

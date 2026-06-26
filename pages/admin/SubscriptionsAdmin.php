@@ -1,5 +1,4 @@
 <?php
-// Admin Subscriptions - Dynamic
 $subs = $conn->query("SELECT s.*,u.name as user_name,u.email FROM subscriptions s JOIN users u ON s.user_id=u.id ORDER BY s.created_at DESC");
 $payments = $conn->query("SELECT p.*,u.name as user_name FROM payments p JOIN users u ON p.user_id=u.id ORDER BY p.created_at DESC LIMIT 20");
 $totalRevenue = $conn->query("SELECT IFNULL(SUM(amount),0) as s FROM payments WHERE status='completed'")->fetch_assoc()['s'];
@@ -22,7 +21,7 @@ $activeSubs = $conn->query("SELECT COUNT(*) as c FROM subscriptions WHERE status
         </div>
     </div>
 
-    <!-- Subscriptions Table -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-5 border-b border-gray-50"><h3 class="font-black text-gray-900">الاشتراكات</h3></div>
         <div class="overflow-x-auto">
@@ -52,7 +51,7 @@ $activeSubs = $conn->query("SELECT COUNT(*) as c FROM subscriptions WHERE status
         </div>
     </div>
 
-    <!-- Recent Payments -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-5 border-b border-gray-50"><h3 class="font-black text-gray-900">آخر عمليات الدفع</h3></div>
         <div class="divide-y divide-gray-50">

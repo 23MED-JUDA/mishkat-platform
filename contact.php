@@ -12,7 +12,7 @@ require_once 'includes/db.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تواصل معنا | منصة مشكاة التعليمية</title>
     
-    <!-- Compiled Tailwind CSS -->
+    
     <link rel="stylesheet" href="assets/css/tailwind.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
@@ -26,7 +26,7 @@ require_once 'includes/db.php';
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Navbar -->
+    
     <nav class="bg-emerald-900/50 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -42,15 +42,15 @@ require_once 'includes/db.php';
         </div>
     </nav>
 
-    <!-- Header -->
+    
     <section class="py-20 text-center">
         <h1 class="text-5xl font-black mb-6">يسعدنا تواصلك معنا</h1>
         <p class="text-emerald-200/60 text-xl max-w-2xl mx-auto">فريق مشكاة هنا للرد على كافة استفساراتك ومساعدتك في رحلتك التعليمية.</p>
     </section>
 
-    <!-- Content -->
+    
     <section class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32">
-        <!-- Form -->
+        
         <div class="emerald-card p-10 rounded-[3rem]">
             <h2 class="text-2xl font-black mb-8">أرسل لنا رسالة</h2>
             <form action="#" class="space-y-6">
@@ -64,7 +64,7 @@ require_once 'includes/db.php';
             </form>
         </div>
 
-        <!-- Info -->
+        
         <div class="space-y-8">
             <div class="emerald-card p-8 rounded-[2.5rem] flex items-center gap-6">
                 <div class="w-16 h-16 bg-emerald-600/20 rounded-2xl flex items-center justify-center text-emerald-400">

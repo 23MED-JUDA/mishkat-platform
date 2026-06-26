@@ -1,5 +1,4 @@
 <?php
-// Teacher Students Page - Dynamic from DB
 $students = $conn->query("SELECT u.id, u.name, u.email, '' AS phone, u.status, u.created_at,
     0 as progress, IFNULL(c.name,'غير مسجل') as course_title
     FROM students s

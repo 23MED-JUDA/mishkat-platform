@@ -1,5 +1,4 @@
 <?php
-// Converted from Teacher.jsx
 require_once __DIR__ . '/../../includes/db.php';
 
 $teachersData = [];
@@ -18,7 +17,7 @@ if (empty($teachersData)) {
 
 <div dir="rtl" class='w-[95%] mx-auto px-4 mt-8 py-12 bg-[#F8F9FA] rounded-3xl font-sans'>
   
-  <!-- عنوان القسم -->
+  
   <div class="text-center mb-12">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
       نخبة من <span class="text-[#00A859]">المعلمين</span>
@@ -26,15 +25,15 @@ if (empty($teachersData)) {
     <div class="w-20 h-1 bg-[#00A859] mx-auto mt-4 rounded-full"></div>
   </div>
 
-  <!-- شبكة المعلمين -->
+  
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
     <?php foreach ($teachersData as $item): ?>
       <div 
         class='group flex flex-col items-center luxury-card border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 px-8 py-10 rounded-[2rem]'
       >
-        <!-- إطار الصورة الشخصية -->
+        
         <div class="relative mb-6">
-          <!-- تأثير التوهج عند التمرير -->
+          
           <div class="absolute inset-0 bg-[#00A859] rounded-full blur-md opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
           
           <?php if ($item['img']): ?>
@@ -50,7 +49,7 @@ if (empty($teachersData)) {
           <?php endif; ?>
         </div>
 
-        <!-- بيانات المعلم -->
+        
         <h3 class='text-[#2D3436] text-2xl font-bold mb-3 group-hover:text-[#00A859] transition-colors'>
           <?php echo $item['name']; ?>
         </h3>
@@ -62,7 +61,7 @@ if (empty($teachersData)) {
           <span class="text-[#166534] text-sm">عاماً من الخبرة</span>
         </div>
 
-        <!-- حقل المكان -->
+        
         <?php if (isset($item['location'])): ?>
           <div class="mt-4 flex items-center gap-2 text-gray-500 text-sm">
             <span class="font-semibold text-mishkat-green-600">المكان:</span>

@@ -130,7 +130,6 @@ $pageMap = [
 $pageFile = $pageMap[$role][$currentPage] ?? null;
 $pagePath = $pageFile ? "pages/$pageFile" : null;
 
-// القائمة الجانبية HTML helper
 function sidebarItem($link, $isActive) {
     $activeClass = $isActive ? 'active' : '';
     $href = isset($link['url']) ? $link['url'] : "?page={$link['page']}";
@@ -385,8 +384,6 @@ function sidebarItem($link, $isActive) {
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
 
-
-
         /* Glass Nav blur effect & full width fixed layout */
         .glass-nav {
             position: fixed;
@@ -419,15 +416,15 @@ function sidebarItem($link, $isActive) {
 </head>
 <body class="transition-colors duration-500 overflow-x-hidden">
 
-    <!-- ─── MOBILE OVERLAY ─── -->
+    
     <div id="sidebarOverlay" 
          class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden lg:hidden transition-all duration-300"
          onclick="closeSidebar()"></div>
 
-    <!-- ─── SIDEBAR ─── -->
+    
     <aside id="sidebar" class="fixed top-0 right-0 h-screen luxury-sidebar z-50 overflow-x-hidden overflow-y-auto custom-scrollbar">
 
-        <!-- Brand & Logo -->
+        
         <div class="logo-box flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -441,7 +438,7 @@ function sidebarItem($link, $isActive) {
                        style="color: var(--color-text-muted);">منصة تعليمية</p>
                 </div>
             </div>
-            <!-- Mobile close button -->
+            
             <button onclick="closeSidebar()"
                     class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
                     style="background: var(--bg-app); border:none; cursor:pointer; color: var(--color-text-muted);">
@@ -449,7 +446,7 @@ function sidebarItem($link, $isActive) {
             </button>
         </div>
 
-        <!-- User Card -->
+        
         <div class="px-4 mb-6 mt-4">
             <div class="user-box flex items-center gap-3 p-3">
                 <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center font-black text-sm flex-shrink-0"
@@ -467,9 +464,9 @@ function sidebarItem($link, $isActive) {
             </div>
         </div>
 
-        <!-- Navigation Menu -->
+        
         <nav class="pb-6">
-            <!-- Section Label -->
+            
             <div class="px-5 mb-2 sidebar-app-label">
                 <span class="text-[10px] font-semibold uppercase tracking-[0.25em]"
                       style="color: var(--color-text-muted);">القائمة</span>
@@ -482,10 +479,10 @@ function sidebarItem($link, $isActive) {
                 endforeach; ?>
             </div>
 
-            <!-- Divider -->
+            
             <div class="mx-5 my-5" style="height:1px; background: var(--border-color);"></div>
 
-            <!-- Apps Section -->
+            
             <div class="px-5 mb-2 sidebar-app-label">
                 <span class="text-[10px] font-semibold uppercase tracking-[0.25em]"
                       style="color: var(--color-text-muted);">تطبيقات مشكاة</span>
@@ -506,7 +503,7 @@ function sidebarItem($link, $isActive) {
                 endforeach; ?>
             </div>
 
-            <!-- Logout -->
+            
             <div class="px-4 mt-5 pb-4">
                 <div class="mx-1" style="height:1px; background: var(--border-color);"></div>
                 <a href="logout.php" title="تسجيل الخروج"
@@ -521,20 +518,20 @@ function sidebarItem($link, $isActive) {
         </nav>
     </aside>
 
-    <!-- Topbar (100% Width) -->
+    
     <header class="glass-nav px-4 md:px-6 flex justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <!-- Mobile open sidebar button -->
+                
                 <button onclick="openSidebar()" class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-all flex-shrink-0"
                         style="background: var(--bg-surface); border: 1px solid var(--border-color); cursor:pointer; color: var(--color-primary);">
                     <span class="material-icons-outlined" style="font-size:1.3rem;">menu</span>
                 </button>
-                <!-- Brand on mobile -->
+                
                 <div class="flex items-center gap-2 lg:hidden">
                     <span class="material-icons-outlined text-2xl" style="color: var(--color-primary);">mosque</span>
                     <span class="font-black font-tajawal text-lg" style="color: var(--color-text-main);">مِشكاة</span>
                 </div>
-                <!-- Page title on desktop -->
+                
                 <h2 class="hidden lg:block text-xl font-black font-tajawal" style="color: var(--color-text-main);">
                     <?php echo $dashboardTitle; ?> 
                     <span class="text-xs font-bold text-gray-400 dark:text-white/20 mx-2">/</span> 
@@ -543,7 +540,7 @@ function sidebarItem($link, $isActive) {
             </div>
 
             <div class="flex items-center gap-2 md:gap-3">
-                <!-- Clock & Date Display -->
+                
                 <div class="hidden md:flex items-center gap-3 px-3 py-1 bg-gray-50/50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl">
                     <div class="flex flex-col items-end pl-3 border-l border-gray-200 dark:border-white/10">
                         <span class="text-[10px] font-black" id="clockDay" style="color: var(--color-primary);"></span>
@@ -555,13 +552,13 @@ function sidebarItem($link, $isActive) {
                     </div>
                 </div>
 
-                <!-- Dark Mode -->
+                
                 <button onclick="toggleDarkMode()"
                         style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg-surface);border:1px solid var(--border-color);cursor:pointer;transition:all .2s;">
                     <span class="material-icons-outlined" id="themeIcon" style="font-size:1.2rem;color:var(--color-primary);">dark_mode</span>
                 </button>
 
-                <!-- User avatar -->
+                
                 <div class="flex items-center gap-2 md:gap-3">
                     <div class="hidden sm:flex flex-col items-end">
                         <span class="text-xs font-bold leading-tight" style="color: var(--color-text-main);"><?php echo htmlspecialchars(explode(' ', $userName)[0]); ?></span>
@@ -579,10 +576,10 @@ function sidebarItem($link, $isActive) {
             </div>
         </header>
 
-        <!-- ─── MAIN CONTENT ─── -->
+        
         <main class="min-h-screen page-content">
 
-            <!-- Mobile page title bar -->
+            
             <div class="lg:hidden px-4 py-2" style="border-bottom: 1px solid var(--border-color);">
                 <h2 class="text-sm font-black font-tajawal" style="color: var(--color-text-main);">
                     <?php echo $dashboardTitle; ?> 
@@ -591,7 +588,7 @@ function sidebarItem($link, $isActive) {
                 </h2>
             </div>
 
-        <!-- Page content -->
+        
         <div class="p-4 md:p-6 lg:p-10 max-w-7xl mx-auto animate-slide-up">
             <?php 
                 if ($pagePath && file_exists($pagePath)) {
@@ -698,7 +695,6 @@ function sidebarItem($link, $isActive) {
         }
         /* ── نظام الإشعارات: تعريف showToast موجود في mishkat-ui.js ── */
 
-        // استبدال نافذة التنبيه العالمية
         window.alert = function(message) {
             if (window.showToast) showToast(message, 'info');
             else console.log(message);

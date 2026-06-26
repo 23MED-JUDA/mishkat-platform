@@ -1,5 +1,4 @@
 <?php
-// Student Tracking - Dynamic
 $tracking = $conn->query("SELECT st.*, u.name as recorder_name FROM student_tracking st LEFT JOIN users u ON st.recorded_by=u.id WHERE st.student_id=$uid ORDER BY st.created_at DESC");
 $studentQuery = $conn->query("SELECT id FROM students WHERE user_id=$uid")->fetch_assoc();
 $studentId = $studentQuery ? $studentQuery['id'] : 0;
@@ -8,7 +7,7 @@ $completedTasks = $conn->query("SELECT COUNT(*) as c FROM homework_submissions W
 $points = $completedTasks * 10;
 ?>
 <div class="space-y-6 animate-fadeIn" dir="rtl">
-    <!-- Stats Cards -->
+    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-gradient-to-l from-mishkat-green-700 to-mishkat-green-800 p-6 rounded-[2rem] text-white shadow-lg">
             <p class="text-mishkat-green-200 text-xs font-bold mb-1">نقاط الإنجاز</p>
@@ -25,7 +24,7 @@ $points = $completedTasks * 10;
         </div>
     </div>
 
-    <!-- Enrolled Courses Progress -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-6">
         <h3 class="text-lg font-black text-gray-900 mb-4">تقدم المسارات</h3>
         <div class="space-y-4">
@@ -43,7 +42,7 @@ $points = $completedTasks * 10;
         </div>
     </div>
 
-    <!-- Tracking Records -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-5 border-b border-gray-50">
             <h3 class="text-lg font-black text-gray-900">سجل المتابعة</h3>

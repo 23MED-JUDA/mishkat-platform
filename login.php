@@ -28,27 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_role'] = $user['role'];
 
-                // تذكرني
                 if (isset($_POST['remember'])) {
-                    // توليد توكن عشوائي
                     $rawToken  = bin2hex(random_bytes(32));
                     $tokenHash = hash('sha256', $rawToken);
                     $expiresAt = date('Y-m-d H:i:s', time() + 30 * 24 * 3600);
 
                     try {
-                        // حذف التوكنات القديمة
                         $delStmt = $conn->prepare("DELETE FROM remember_me_tokens WHERE user_id = ?");
                         $delStmt->bind_param("i", $user['id']);
                         $delStmt->execute();
 
-                        // إدخال التوكن الجديد
                         $insStmt = $conn->prepare(
                             "INSERT INTO remember_me_tokens (user_id, token_hash, expires_at) VALUES (?, ?, ?)"
                         );
                         $insStmt->bind_param("iss", $user['id'], $tokenHash, $expiresAt);
                         $insStmt->execute();
                     } catch (mysqli_sql_exception $e) {
-                        // إنشاء جدول التوكنات إذا لم يكن موجوداً
                         ensureRememberMeTable($conn);
 
                         $delStmt = $conn->prepare("DELETE FROM remember_me_tokens WHERE user_id = ?");
@@ -62,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $insStmt->execute();
                     }
 
-                    // حفظ التوكن في الكوكيز
                     setcookie(
                         'mishkat_remember',
                         $rawToken,
@@ -72,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          'samesite' => 'Lax']
                     );
 
-                    // حذف الكوكيز القديم
                     if (isset($_COOKIE['mishkat_user'])) {
                         setcookie('mishkat_user', '', time() - 3600, '/');
                     }
@@ -85,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'كلمة المرور غير صحيحة';
         }
     } else {
-        // Smart feedback: check if the email exists in another role
         $stmt_exists = $conn->prepare("SELECT r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = ?");
         $stmt_exists->bind_param("s", $email);
         $stmt_exists->execute();
@@ -171,13 +163,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-[#f0f4f3] flex items-center justify-center min-h-screen p-3 md:p-4 overflow-x-hidden relative">
 
-    <!-- Background Elements -->
+    
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-mishkat-green-100/50 rounded-full blur-[120px]"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-mishkat-beige-100/50 rounded-full blur-[120px]"></div>
 
     <div class="w-full max-w-6xl luxury-card overflow-hidden flex flex-col md:flex-row relative z-10 shadow-2xl md:min-h-[600px]">
         
-        <!-- Branding Side -->
+        
         <div class="w-full md:w-1/2 bg-mishkat-green-900 p-6 md:p-12 text-white flex flex-col justify-between relative overflow-hidden">
             <div class="absolute top-0 right-0 w-full h-full opacity-10">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -216,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-        <!-- Form Side -->
+        
         <div class="w-full md:w-1/2 bg-white p-6 md:p-12 flex flex-col justify-center">
             <div class="mb-10 text-center md:text-right">
                 <h2 class="text-3xl font-black text-mishkat-green-900 font-tajawal mb-2">تسجيل الدخول</h2>
@@ -231,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST" class="space-y-6">
-                <!-- Account Type Choice Selector -->
+                
                 <div class="mb-6">
                     <label class="block text-xs font-black text-mishkat-green-800 uppercase tracking-widest mb-3 mr-1">نوع الحساب</label>
                     <div class="grid grid-cols-4 gap-2 bg-gray-50 dark:bg-white/5 p-1.5 rounded-2xl border border-gray-100 dark:border-white/5">

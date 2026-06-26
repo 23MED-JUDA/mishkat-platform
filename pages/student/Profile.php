@@ -1,5 +1,4 @@
 <?php
-// Student Profile - Dynamic from DB Enhanced
 $profile = $conn->query("SELECT u.*, r.name AS role_name FROM users u JOIN roles r ON u.role_id=r.id WHERE u.id=$uid")->fetch_assoc();
 $enrollments = $conn->query("SELECT sp.id, lp.id AS course_id, lp.name AS title, 'emerald' AS color, 0 AS progress FROM student_paths sp JOIN students s ON sp.student_id=s.id JOIN learning_paths lp ON sp.path_id=lp.id WHERE s.user_id=$uid");
 $studentRow = $conn->query("SELECT s.id FROM students s WHERE s.user_id=$uid")->fetch_assoc();
@@ -8,7 +7,7 @@ $completedTasks = $conn->query("SELECT COUNT(*) as c FROM homework_submissions W
 $totalTasks = $conn->query("SELECT COUNT(*) as c FROM homeworks h JOIN halaqa_enrollments he ON he.halaqa_id=h.halaqa_id WHERE he.student_id=$studentId")->fetch_assoc()['c'];
 ?>
 <div class="space-y-6 animate-fadeIn" dir="rtl">
-    <!-- Header -->
+    
     <div class="bg-gradient-to-l from-mishkat-green-800 to-mishkat-green-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-mishkat-green-900/20">
         <div class="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
@@ -20,7 +19,7 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM homeworks h JOIN halaqa_en
                         <?php echo mb_substr($profile['name'],0,1,'UTF-8'); ?>
                     <?php endif; ?>
                     
-                    <!-- Overlay on Hover -->
+                    
                     <div id="avatarOverlay" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
                         <span id="avatarIcon" class="material-icons-outlined text-white transition-all text-3xl">camera_alt</span>
                     </div>
@@ -47,7 +46,7 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM homeworks h JOIN halaqa_en
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Profile Form -->
+        
         <div class="lg:col-span-2 space-y-6">
             <div class="luxury-card rounded-[2.5rem] shadow-sm border border-gray-100 p-10">
                 <h3 class="text-xl font-black text-gray-900 mb-8 flex items-center gap-3">
@@ -88,7 +87,7 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM homeworks h JOIN halaqa_en
             </div>
         </div>
 
-        <!-- Sidebar -->
+        
         <div class="space-y-6">
             <div class="luxury-card rounded-[2.5rem] shadow-sm border border-gray-100 p-8">
                 <h4 class="text-sm font-black text-gray-400 mb-6 uppercase tracking-widest">إنجازاتك الدراسية</h4>
@@ -113,7 +112,7 @@ $totalTasks = $conn->query("SELECT COUNT(*) as c FROM homeworks h JOIN halaqa_en
                 </div>
             </div>
 
-            <!-- Change Password -->
+            
             <div class="luxury-card rounded-[2.5rem] shadow-sm border border-gray-100 p-8">
                 <h4 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-2">
                     <span class="material-icons-outlined text-amber-500">lock</span>
@@ -161,7 +160,6 @@ function uploadProfileImage(input) {
     if (input.files && input.files[0]) {
         const file = input.files[0];
         
-        // 25MB client-side validation
         if (file.size > 25 * 1024 * 1024) {
             showToast('حجم الصورة كبير جداً، الحد الأقصى المسموح به هو 25 ميجابايت.', 'error');
             return;
@@ -171,12 +169,10 @@ function uploadProfileImage(input) {
         fd.append('action', 'update_profile_image');
         fd.append('profile_image', file);
 
-        // UI Loading State Elements
         const container = document.getElementById('avatarContainer');
         const overlay = document.getElementById('avatarOverlay');
         const icon = document.getElementById('avatarIcon');
 
-        // Apply Premium Loading State
         if (container && overlay && icon) {
             container.classList.add('animate-pulse');
             overlay.classList.remove('opacity-0');
@@ -195,7 +191,6 @@ function uploadProfileImage(input) {
                 setTimeout(() => location.reload(), 1000);
             } else {
                 showToast(res.message || 'فشل رفع الصورة الشخصية', 'error');
-                // Remove Loading State on Failure
                 if (container && overlay && icon) {
                     container.classList.remove('animate-pulse');
                     overlay.classList.remove('opacity-100');
@@ -207,7 +202,6 @@ function uploadProfileImage(input) {
         })
         .catch(err => {
             showToast('حدث خطأ في الاتصال بالخادم، يرجى المحاولة لاحقاً.', 'error');
-            // Remove Loading State on Failure
             if (container && overlay && icon) {
                 container.classList.remove('animate-pulse');
                 overlay.classList.remove('opacity-100');

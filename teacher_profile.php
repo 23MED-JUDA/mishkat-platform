@@ -9,42 +9,42 @@ require_once 'includes/session.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الملف الشخصي للمعلم - مشكاة</title>
 
-    <!-- Compiled Tailwind CSS -->
+    
     <link rel="stylesheet" href="assets/css/tailwind.min.css">
 
-    <!-- الخطوط -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- AOS -->
+    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- ملف التنسيقات المدمج -->
+    
     <link rel="stylesheet" href="assets/css/bundle.css">
 </head>
 <body class="font-cairo bg-cream">
 
-    <!-- زر الرجوع -->
+    
     <a href="index.php" class="back-btn">
         <i class="fas fa-arrow-right"></i>
         <span>رجوع</span>
     </a>
 
-    <!-- ====== الهيرو سيكشن مع صورة خلفية ====== -->
+    
     <section id="profileHero" class="profile-hero">
 
-        <!--  صورة الخلفية -->
+        
         <img src="assets/images/88fac63309bd27b514c4d38152b29f90.jpg" alt="خلفية" class="hero-bg-image" id="heroBgImage">
 
-        <!--  طبقة التعتيم -->
+        
         <div class="hero-overlay"></div>
 
         <div class="hero-content container mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-10 items-center">
 
-                <!-- صورة المعلم -->
+                
                 <div class="hero-image-wrapper" data-aos="fade-left">
                     <div class="hero-image-frame">
                         <img id="heroImage" src="" alt="صورة المعلم">
@@ -52,7 +52,7 @@ require_once 'includes/session.php';
                     <div class="frame-decoration"></div>
                 </div>
 
-                <!-- معلومات المعلم -->
+                
                 <div class="hero-text" data-aos="fade-right">
                     <span class="hero-badge" id="heroSpecialty"></span>
                     <h1 id="heroName" class="hero-name"></h1>
@@ -86,11 +86,11 @@ require_once 'includes/session.php';
         </div>
     </section>
 
-    <!-- ====== محتوى البروفايل ====== -->
+    
     <section class="profile-content py-20 px-6">
         <div class="container mx-auto max-w-6xl">
 
-            <!-- نبذة -->
+            
             <div class="profile-card" data-aos="fade-up">
                 <div class="card-header">
                     <i class="fas fa-user-graduate"></i>
@@ -99,7 +99,7 @@ require_once 'includes/session.php';
                 <p id="profileBio" class="profile-bio"></p>
             </div>
 
-            <!-- المؤهلات والإجازات -->
+            
             <div class="grid md:grid-cols-2 gap-8 mt-8">
                 <div class="profile-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-header">
@@ -118,7 +118,7 @@ require_once 'includes/session.php';
                 </div>
             </div>
 
-            <!-- التخصصات -->
+            
             <div class="profile-card mt-8" data-aos="fade-up">
                 <div class="card-header">
                     <i class="fas fa-star"></i>
@@ -127,7 +127,7 @@ require_once 'includes/session.php';
                 <div id="profileCourses" class="courses-grid"></div>
             </div>
 
-            <!-- مواعيد العمل -->
+            
             <div class="profile-card mt-8" data-aos="fade-up">
                 <div class="card-header">
                     <i class="far fa-clock"></i>
@@ -139,19 +139,17 @@ require_once 'includes/session.php';
         </div>
     </section>
 
-    <!-- AOS JS & Bundled JS -->
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="assets/js/bundle.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Check periodically if bundle.js has loaded loadTeacherProfile
             const checkInterval = setInterval(() => {
                 if (typeof loadTeacherProfile === 'function') {
                     loadTeacherProfile();
                     clearInterval(checkInterval);
                 }
             }, 50);
-            // Safety timeout
             setTimeout(() => clearInterval(checkInterval), 5000);
         });
     </script>

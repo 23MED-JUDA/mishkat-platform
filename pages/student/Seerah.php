@@ -5,18 +5,18 @@
 ?>
 
 <div class="max-w-4xl mx-auto space-y-12 animate-fadeIn">
-    <!-- Header -->
+    
     <div class="text-center">
         <h2 class="text-3xl font-black text-mishkat-green-900 dark:text-white font-tajawal">السيرة النبوية</h2>
         <p class="text-gray-500 dark:text-gray-400 font-medium">محطات من حياة خير الأنام ﷺ</p>
     </div>
 
-    <!-- Timeline -->
+    
     <div class="relative">
-        <!-- Vertical Line -->
+        
         <div class="absolute right-8 top-0 bottom-0 w-1 bg-gradient-to-b from-mishkat-gold-500/50 via-mishkat-green-500/20 to-transparent rounded-full hidden md:block"></div>
 
-        <!-- Timeline Items -->
+        
         <div class="space-y-12">
             
             <div class="relative flex flex-col md:flex-row gap-8 items-start group">

@@ -5,7 +5,7 @@
 ?>
 
 <div class="max-w-4xl mx-auto space-y-8 animate-fadeIn">
-    <!-- Header -->
+    
     <div class="flex justify-between items-center">
         <div>
             <h2 class="text-3xl font-black text-mishkat-green-900 dark:text-white font-tajawal">اختبارات مشكاة</h2>
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <!-- Quiz Intro -->
+    
     <div id="quizIntro" class="luxury-card p-10 text-center space-y-6">
         <div class="w-20 h-20 bg-mishkat-green-50 dark:bg-mishkat-green-900/30 text-mishkat-green-700 dark:text-mishkat-gold-500 rounded-3xl flex items-center justify-center mx-auto">
             <span class="material-icons-outlined text-4xl">quiz</span>
@@ -26,9 +26,9 @@
         <button onclick="QuizApp.start()" class="btn-luxury px-10 py-4 text-lg">ابدأ الاختبار الآن</button>
     </div>
 
-    <!-- Quiz Body (Hidden) -->
+    
     <div id="quizBody" class="hidden space-y-6">
-        <!-- Progress -->
+        
         <div class="flex justify-between items-center px-2">
             <span class="text-xs font-black text-gray-400 uppercase tracking-widest">السؤال <span id="qNumber">1</span> من 10</span>
             <div class="w-48 h-2 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
@@ -36,17 +36,17 @@
             </div>
         </div>
 
-        <!-- Question Card -->
+        
         <div class="luxury-card p-8 md:p-12 min-h-[300px] flex flex-col justify-center">
             <h3 id="questionText" class="text-xl md:text-2xl font-black text-mishkat-green-900 dark:text-white text-right leading-relaxed mb-10"></h3>
             
             <div id="optionsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Options injected here -->
+                
             </div>
         </div>
     </div>
 
-    <!-- Results (Hidden) -->
+    
     <div id="quizResult" class="hidden luxury-card p-12 text-center space-y-8">
         <div id="resultIcon" class="w-24 h-24 rounded-full flex items-center justify-center mx-auto text-5xl"></div>
         <div>

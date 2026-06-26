@@ -1,18 +1,15 @@
-<!-- Preconnect to external resources -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-<!-- Compiled Tailwind CSS -->
 <link rel="stylesheet" href="assets/css/tailwind.min.css">
 
-<!-- Favicon -->
 <link rel="icon" type="image/jpeg" href="assets/images/6046279299901361992.jpg">
 <link rel="apple-touch-icon" href="assets/images/6046279299901361992.jpg">
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

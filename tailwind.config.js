@@ -1,16 +1,16 @@
-/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: 'class',
   content: [
-    './**/*.php',
-    './assets/**/*.js',
-    './pages/**/*.php',
-    './includes/**/*.php',
+    '.*.php',
+    './assets*.js',
+    './pages*.php',
+    './includes*.php',
   ],
   theme: {
     extend: {
       colors: {
-        /* ═════════ النافبار والهيدر  ══════════ */
+        
         'mishkat-green': {
           50:  '#f0f7f4', 100: '#dceee5', 200: '#bbdece',
           300: '#8ec7ad', 400: '#5daa83', 500: '#3b8f66',
@@ -36,7 +36,7 @@ module.exports = {
           900: '#0D1728', 950: '#070E1A',
         },
 
-        /* ══════════ قسم البرامج (Programs) ════════════ */
+        
         'programs-primary': {
           50: '#f0fdf4', 100: '#dcfce7', 200: '#b6f2cd',
           300: '#7ae1a8', 400: '#3cc87c', 500: '#1a7a4a',
@@ -52,7 +52,7 @@ module.exports = {
           300: '#f7edda',
         },
 
-        /* ══════════ قسم المعلمين (Teachers) ═════════════ */
+        
         'teachers-primary':       '#1B4332',
         'teachers-primary-light': '#2D6A4F',
         'teachers-secondary':     '#F5EBE0',
@@ -60,7 +60,7 @@ module.exports = {
         'teachers-cream':         '#FAF7F2',
         'teachers-text':          '#2C3E2D',
 
-        /* ══════════ قسم الباقات (Packages) ═══════════ */
+        
         'packages-gold': {
           50: '#fffef7', 100: '#fef9e7', 200: '#fdf0c4',
           300: '#fce4a0', 400: '#d4a537', 500: '#c49225',
@@ -86,7 +86,7 @@ module.exports = {
           900: '#514a43',
         },
 
-        /* ════════════ قسم نظام الدراسة (Study) ═════════════ */
+        
         'study-primary': {
           50: '#f0f7f4', 100: '#d9ece2', 200: '#b5d9c7',
           300: '#85bfa5', 400: '#5a9f80', 500: '#3a8366',
@@ -104,7 +104,7 @@ module.exports = {
           300: '#f5e6b0',
         },
 
-        /* ═══════════ الفوتر (Footer) ═════════════ */
+        
         'footer-gold': {
           50: '#fdf8e8', 100: '#f5e6b8', 200: '#e8d08a',
           300: '#d4af37', 400: '#c9a020', 500: '#b8910a',

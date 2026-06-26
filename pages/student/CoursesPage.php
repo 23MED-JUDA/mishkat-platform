@@ -1,5 +1,4 @@
 <?php
-// pages/student/CoursesPage.php
 $courses = $conn->query("SELECT lp.id, lp.name AS title, lp.description, 'auto' AS type, IFNULL(pp.sessions_count, 0) AS sessions_count, IFNULL(pp.price, 0) AS price, 'emerald' AS color, 'active' AS status FROM learning_paths lp LEFT JOIN path_plans pp ON pp.path_id = lp.id ORDER BY lp.id ASC");
 ?>
 <div class="animate-fadeIn" dir="rtl">
@@ -10,7 +9,7 @@ $courses = $conn->query("SELECT lp.id, lp.name AS title, lp.description, 'auto' 
         </div>
     </div>
 
-    <!-- Dynamic Courses Grid -->
+    
     <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         
         <?php while($c = $courses->fetch_assoc()): 
@@ -19,7 +18,6 @@ $courses = $conn->query("SELECT lp.id, lp.name AS title, lp.description, 'auto' 
             if($clr == 'blue') $icon = 'menu_book';
             if($clr == 'amber') $icon = 'record_voice_over';
             
-            // Define tailwind classes based on color
             $bgClass = "bg-$clr-50";
             $textClass = "text-$clr-700";
             $btnClass = "bg-$clr-700 shadow-$clr-100 hover:bg-$clr-800";

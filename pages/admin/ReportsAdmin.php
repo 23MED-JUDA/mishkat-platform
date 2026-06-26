@@ -1,5 +1,4 @@
 <?php
-// Admin Reports - Dynamic Overview
 $stats = [
     'users' => $conn->query("SELECT COUNT(*) as c FROM users")->fetch_assoc()['c'],
     'students' => $conn->query("SELECT COUNT(*) as c FROM users WHERE role_id=3")->fetch_assoc()['c'],
@@ -23,7 +22,7 @@ $recentLogs = $conn->query("SELECT u.name, r.name AS role, p.amount, p.created_a
         </button>
     </div>
 
-    <!-- Quick Stats -->
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="luxury-card p-6 rounded-[2rem] shadow-sm border border-gray-100">
             <p class="text-xs text-gray-400 font-bold mb-1">إجمالي المستخدمين</p>
@@ -50,7 +49,7 @@ $recentLogs = $conn->query("SELECT u.name, r.name AS role, p.amount, p.created_a
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Revenue Chart Placeholder -->
+        
         <div class="lg:col-span-2 luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-black text-gray-900 mb-6">تحليل الإيرادات الشهرية (<?php echo date('Y'); ?>)</h3>
             <div class="h-64 flex items-end gap-2 px-4">
@@ -70,7 +69,7 @@ $recentLogs = $conn->query("SELECT u.name, r.name AS role, p.amount, p.created_a
             </div>
         </div>
 
-        <!-- Latest Transactions -->
+        
         <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-black text-gray-900 mb-6">آخر العمليات</h3>
             <div class="space-y-4">

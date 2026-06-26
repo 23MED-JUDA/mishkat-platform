@@ -1,4 +1,4 @@
-/* ════════ NAVBAR SECTION ════════════════ */
+
 
 (function () {
     'use strict';
@@ -7,7 +7,7 @@
     if (!section) return;
 
 
-    /* ═══════════ UTILITIES - أدوات النافبار ════════════════ */
+    
 
     function throttle(func, limit) {
         var lastFunc;
@@ -33,7 +33,7 @@
     }
 
 
-    /* ══════════════ NAVBAR OBJECT ════════════════ */
+    
 
     const Navbar = {
 
@@ -247,7 +247,7 @@
     };
 
 
-    /* ═══════════ تشغيل النافبار ═════════════ */
+    
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => Navbar.init());
@@ -259,8 +259,7 @@
 
 
 
-/* ══════════ HEADER SECTION ═════════════════════╗
- */
+
 
 (function () {
     'use strict';
@@ -269,7 +268,7 @@
     if (!section) return;
 
 
-    /* ═══════════ UTILITIES - أدوات الهيدر ════════════════ */
+    
 
     function debounce(fn, wait) {
         let timeout;
@@ -285,7 +284,7 @@
     }
 
 
-    /* ══════════════ HERO - Parallax Effect ════════════════ */
+    
 
     const Parallax = {
         bg: null,
@@ -329,7 +328,7 @@
     };
 
 
-    /* ══════════════ HERO - Particles System ════════════════ */
+    
 
     const Particles = {
         canvas: null,
@@ -478,7 +477,7 @@ if (heroStartBtn && subscribeBtn) {
 
 
 
-    /* ══════════════ HERO - Scroll Indicator Fade ════════════════ */
+    
 
     const ScrollFade = {
         indicator: null,
@@ -512,7 +511,7 @@ if (heroStartBtn && subscribeBtn) {
     };
 
 
-    /* ══════════════ HERO - Heading Shimmer Effect ════════════════ */
+    
 
     const HeadingGlow = {
         titleWord: null,
@@ -529,7 +528,7 @@ if (heroStartBtn && subscribeBtn) {
     };
 
 
-    /* ══════════════ HERO - Image Loader ════════════════ */
+    
 
     const ImageLoader = {
         init() {
@@ -553,7 +552,7 @@ if (heroStartBtn && subscribeBtn) {
     };
 
 
-    /* ══════════════ HERO - Button Ripple Effect ════════════════ */
+    
 
     const ButtonRipple = {
         init() {
@@ -597,19 +596,19 @@ if (heroStartBtn && subscribeBtn) {
     };
 
 
-    /* ══════════════ HERO - Dynamic Styles Injection ════════════════ */
+    
 
     const DynamicStyles = {
         init() {
             const style = document.createElement('style');
             style.textContent = `
-                /* Ripple Animation */
+                
                 @keyframes header-rippleExpand {
                     0%   { transform: scale(0); opacity: 1; }
                     100% { transform: scale(2.5); opacity: 0; }
                 }
 
-                /* Heading Shimmer */
+                
                 #header-section .shimmer-active {
                     position: relative;
                     background: linear-gradient(
@@ -630,7 +629,7 @@ if (heroStartBtn && subscribeBtn) {
                     50%      { background-position: -200% center; }
                 }
 
-                /* Hero Load Transition */
+                
                 #header-section:not(.hero-loaded) .hero-content { opacity: 0; }
                 #header-section.hero-loaded .hero-content {
                     opacity: 1;
@@ -643,14 +642,14 @@ if (heroStartBtn && subscribeBtn) {
                     transition: opacity 1s ease;
                 }
 
-                               /* Accessibility Focus */
+                               
                 #header-section .btn-primary:focus-visible,
                 #header-section .btn-secondary:focus-visible {
                     outline: 2px solid #C9A84C;
                     outline-offset: 4px;
                 }
 
-                /* Scroll Indicator */
+                
                 #header-section .scroll-indicator {
                     transition: opacity 0.3s ease, transform 0.3s ease;
                 }
@@ -660,7 +659,7 @@ if (heroStartBtn && subscribeBtn) {
     };
 
 
-    /* ═══════════ INITIALIZATION - تشغيل قسم الهيدر ═════════════ */
+    
 
     function init() {
         DynamicStyles.init();
@@ -695,7 +694,7 @@ if (heroStartBtn && subscribeBtn) {
     'use strict';
 
 
-    /* ══════════════ SHARED - Smooth Scroll ════════════════ */
+    
 
     const SmoothScroll = {
         init() {
@@ -717,7 +716,7 @@ if (heroStartBtn && subscribeBtn) {
     };
 
 
-    /* ═══════════ تشغيل المشترك ═════════════ */
+    
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => SmoothScroll.init());
@@ -729,7 +728,7 @@ if (heroStartBtn && subscribeBtn) {
 (function () {
     "use strict";
 
-    /* ────────── بيانات البرامج التعليمية ──────────── */
+    
     const programsData = [
         {
             id: 1,
@@ -1024,7 +1023,7 @@ if (heroStartBtn && subscribeBtn) {
 
     window.programsData = programsData;
 
-        /* ────────  SVG Icons المستخدمة────────── */
+        
     const icons = {
         clock: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         book: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
@@ -1037,7 +1036,7 @@ if (heroStartBtn && subscribeBtn) {
         star: '<svg fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>'
     };
 
-    /* ────── إنشاء كارت برنامج واحد (Reusable) ───────── */
+    
     function createProgramCard(program, index) {
         const card = document.createElement("a");
         card.className = "program-card";
@@ -1096,7 +1095,7 @@ if (heroStartBtn && subscribeBtn) {
         return card;
     }
 
-    /* ────── renderPrograms ───────── */
+    
     function renderPrograms(section) {
         const grid = section.querySelector("#programsGrid");
         if (!grid) return;
@@ -1114,7 +1113,7 @@ if (heroStartBtn && subscribeBtn) {
         initFilter(section);
     }
 
-    /* ────── (Fade + Stagger) ──────── */
+    
     function initScrollAnimation(section) {
         const animatedElements = section.querySelectorAll("[data-animate]");
         const cards = section.querySelectorAll(".program-card");
@@ -1162,7 +1161,7 @@ if (heroStartBtn && subscribeBtn) {
         });
     }
 
-        /* ──────── فلتر التصنيفات ────────── */
+        
     function initFilter(section) {
         const filterBtns = section.querySelectorAll(".filter-bar__btn");
         const cards = section.querySelectorAll(".program-card");
@@ -1211,7 +1210,7 @@ if (heroStartBtn && subscribeBtn) {
         });
     }
 
-    /* ─────── صفحة تفاصيل الدورة (course.html) ──────────── */
+    
     window.renderCourseDetail = function (courseId) {
         const container = document.getElementById("courseDetail");
         if (!container) return;
@@ -1393,7 +1392,7 @@ if (heroStartBtn && subscribeBtn) {
         `;
     };
 
-    /* ───────── مشاركة الدورة ───────── */
+    
     window.shareCourse = function (platform, title) {
         const url = window.location.href;
         const text = "أنصحكم ببرنامج: " + title + " من أكاديمية مشكاة 🌟";
@@ -1449,7 +1448,7 @@ if (heroStartBtn && subscribeBtn) {
     }
 
 })();
-/* ====== بيانات المعلمين  ====== */
+
 const teachersData = [
     {
         id: 1,
@@ -1662,7 +1661,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/* ======== عرض كروت المعلمين=========== */
+
 function renderTeachers() {
     const grid = document.getElementById('teachersGrid');
     if (!grid) return;
@@ -1714,13 +1713,13 @@ function createTeacherCard(teacher, index) {
     `;
 }
 
-/* =========  الانتقال لصفحة المعلم========== */
+
 function goToProfile(teacherId) {
     localStorage.setItem('selectedTeacherId', teacherId);
     window.location.href = `teacher_profile.php?id=${teacherId}`;
 }
 
-/* =========== تحميل بيانات المعلم في صفحة البروفايل =========== */
+
 function loadTeacherProfile() {
     const urlParams = new URLSearchParams(window.location.search);
     let teacherId = parseInt(urlParams.get('id')) || parseInt(localStorage.getItem('selectedTeacherId')) || 1;
@@ -1737,7 +1736,7 @@ function loadTeacherProfile() {
     document.title = `${teacher.name} - مشكاة`;
 }
 
-/* ====== ملء قسم الهيرو ====== */
+
 function fillHeroSection(teacher) {
     const setText = (id, value) => {
         const el = document.getElementById(id);
@@ -1762,7 +1761,7 @@ function fillHeroSection(teacher) {
     setText('heroIjazat', teacher.ijazat);
 }
 
-/* ====== ملء محتوى البروفايل ====== */
+
 function fillProfileContent(teacher) {
     const bioEl = document.getElementById('profileBio');
     if (bioEl) bioEl.textContent = teacher.bio;
@@ -1804,7 +1803,7 @@ function fillProfileContent(teacher) {
     }
 }
 
-/* ========= تأثير parallax بسيط على صورة الهيرو ============== */
+
 window.addEventListener('scroll', function() {
     const heroBg = document.getElementById('heroBgImage');
     if (!heroBg) return;
@@ -1820,7 +1819,7 @@ window.addEventListener('scroll', function() {
     const section = document.getElementById('packages-section');
     if (!section) return;
 
-    /* ===== Helpers ===== */
+    
     function prefersReducedMotion() {
         return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
@@ -1833,7 +1832,7 @@ window.addEventListener('scroll', function() {
         };
     }
 
-    /* ===== Init ===== */
+    
     document.addEventListener('DOMContentLoaded', () => {
         initParticles();
         initScrollAnimations();
@@ -1842,7 +1841,7 @@ window.addEventListener('scroll', function() {
         initAccessibility();
     });
 
-    /* ============= Particles System (Light & Elegant) =============== */
+    
     function initParticles() {
         const canvas = section.querySelector('#particlesCanvas');
         if (!canvas || prefersReducedMotion()) {
@@ -1962,7 +1961,7 @@ window.addEventListener('scroll', function() {
         }, 300));
     }
 
-    /* =========== Scroll Reveal Animations =========== */
+    
     function initScrollAnimations() {
         const cards = section.querySelectorAll('.pricing-card');
         if (!cards.length) return;
@@ -2000,7 +1999,7 @@ window.addEventListener('scroll', function() {
         cards.forEach(card => observer.observe(card));
     }
 
-    /* ========= Card Glow Mouse Tracking ============= */
+    
     function initCardGlowTracking() {
         const cards = section.querySelectorAll('.pricing-card');
         if (!cards.length || prefersReducedMotion()) return;
@@ -2045,7 +2044,7 @@ window.addEventListener('scroll', function() {
 })();
 
 
-    /* ============== Ambient Light Effect ================= */
+    
     function updateAmbientLight(x, y) {
         const section = document.getElementById('packages-section');
         if (!section) return;
@@ -2075,7 +2074,7 @@ window.addEventListener('scroll', function() {
         `;
     }
 
-    /* =========== Ripple Effect on Buttons =============== */
+    
     function initRippleEffect() {
         const section = document.getElementById('packages-section');
         if (!section) return;
@@ -2133,7 +2132,7 @@ window.addEventListener('scroll', function() {
         });
     }
 
-    /* ======== Accessibility Enhancements ============= */
+    
     function initAccessibility() {
         const section = document.getElementById('packages-section');
         if (!section) return;
@@ -2190,7 +2189,7 @@ window.addEventListener('scroll', function() {
         }
     });
 
-    /* ========== Counter Animation (Utility) ============== */
+    
     function animateCounter(element, start, end, duration) {
         if (!element) return;
         const section = document.getElementById('packages-section');
@@ -2221,11 +2220,11 @@ window.addEventListener('scroll', function() {
 (function () {
     'use strict';
 
-    /* ---------- Section Root ---------- */
+    
     const section = document.getElementById('study-section');
     if (!section) return;
 
-    /* ---------- DOM References ---------- */
+    
     const stepsContainer     = section.querySelector('#steps-container');
     const timelineProgress   = section.querySelector('#timeline-progress');
     const timelineOrb        = section.querySelector('#timeline-orb');
@@ -2233,7 +2232,7 @@ window.addEventListener('scroll', function() {
     const stepItems          = section.querySelectorAll('.step-item');
     const animatedEls        = section.querySelectorAll('[data-animate]');
 
-    /* ---------- Configuration ---------- */
+    
     const CONFIG = {
         particleCount: 25,
         observerThreshold: 0.25,
@@ -2241,7 +2240,7 @@ window.addEventListener('scroll', function() {
         orbSmoothness: 0.08,
     };
 
-    /* ========== PARTICLES SYSTEM ========== */
+    
     function initParticles() {
         if (!particlesContainer) return;
 
@@ -2296,7 +2295,7 @@ window.addEventListener('scroll', function() {
         return animation;
     }
 
-    /* ========== INTERSECTION OBSERVER - REVEAL ========== */
+    
     function initRevealObserver() {
         const headerObserver = new IntersectionObserver(
             (entries) => {
@@ -2341,7 +2340,7 @@ window.addEventListener('scroll', function() {
         stepItems.forEach((el) => stepObserver.observe(el));
     }
 
-    /* ========== TIMELINE PROGRESS + ORB ========== */
+    
     function initTimelineProgress() {
         if (!stepsContainer || !timelineProgress || !timelineOrb) return;
 
@@ -2418,7 +2417,7 @@ if (studyStartBtn && subscribeBtn) {
 }
 
 
-    /* ========== HOVER PARALLAX ON CARDS (Desktop) ========== */
+    
     function initCardParallax() {
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
         if (isMobile) return;
@@ -2450,7 +2449,7 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-        /* ========== LIGHT SWEEP EFFECT ON CARDS ========== */
+        
     function initLightSweep() {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReduced) return;
@@ -2502,7 +2501,7 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-    /* ========== COUNTER ANIMATION FOR STEP NUMBERS ========== */
+    
     function initStepCounters() {
         const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
 
@@ -2541,7 +2540,7 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-    /* ========== INITIALIZATION ========== */
+    
     function init() {
         initParticles();
         initRevealObserver();
@@ -2561,11 +2560,11 @@ if (studyStartBtn && subscribeBtn) {
 (function () {
     'use strict';
 
-    /* -------- القسم المستهدف --------- */
+    
     const section = document.getElementById('faq-section');
     if (!section) return;
 
-    /* -------- DOM Elements --------- */
+    
     const accordionContainer = section.querySelector('#accordionContainer');
     const accordionItems     = section.querySelectorAll('.accordion-item');
     const categoryTabs       = section.querySelector('#categoryTabs');
@@ -2573,14 +2572,14 @@ if (studyStartBtn && subscribeBtn) {
     const canvas             = section.querySelector('#particlesCanvas');
     const ctx                = canvas ? canvas.getContext('2d') : null;
 
-    /* -------- State ------- */
+    
     let activeItem      = null;
     let currentCategory = 'all';
     let particles       = [];
     let animationFrameId = null;
     let isReducedMotion  = false;
 
-    /* ======= Initialize ======== */
+    
     function init() {
         checkReducedMotion();
         setupAccordion();
@@ -2591,7 +2590,7 @@ if (studyStartBtn && subscribeBtn) {
         }
     }
 
-    /* ========== Check Reduced Motion Preference ========= */
+    
     function checkReducedMotion() {
         const query = window.matchMedia('(prefers-reduced-motion: reduce)');
         isReducedMotion = query.matches;
@@ -2610,7 +2609,7 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-    /* ======= Accordion Logic ======== */
+    
     function setupAccordion() {
         accordionItems.forEach(function (item) {
             const trigger = item.querySelector('.accordion-trigger');
@@ -2620,7 +2619,7 @@ if (studyStartBtn && subscribeBtn) {
                 handleAccordionClick(item);
             });
 
-            /* Keyboard accessibility */
+            
             trigger.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -2633,7 +2632,7 @@ if (studyStartBtn && subscribeBtn) {
     function handleAccordionClick(item) {
         const isCurrentlyActive = item.classList.contains('active');
 
-        /* Close currently active item */
+        
         if (activeItem && activeItem !== item) {
             closeAccordionItem(activeItem);
         }
@@ -2661,7 +2660,7 @@ if (studyStartBtn && subscribeBtn) {
             const fullHeight = content.scrollHeight;
             content.style.maxHeight = '0px';
 
-            /* Force reflow */
+            
             void content.offsetHeight;
 
             content.style.maxHeight = fullHeight + 'px';
@@ -2688,7 +2687,7 @@ if (studyStartBtn && subscribeBtn) {
         const currentHeight = content.scrollHeight;
         content.style.maxHeight = currentHeight + 'px';
 
-        /* Force reflow */
+        
         void content.offsetHeight;
 
         content.style.maxHeight = '0px';
@@ -2707,21 +2706,21 @@ if (studyStartBtn && subscribeBtn) {
         }
     }
 
-    /* ======== Category Tabs / Filter ========== */
+    
     function setupCategoryTabs() {
         tabButtons.forEach(function (btn) {
             btn.addEventListener('click', function () {
                 const category = btn.getAttribute('data-category');
                 if (category === currentCategory) return;
 
-                /* Update active tab */
+                
                 tabButtons.forEach(function (b) {
                     b.classList.remove('active');
                 });
                 btn.classList.add('active');
                 currentCategory = category;
 
-                /* Close active accordion item */
+                
                 if (activeItem) {
                     closeAccordionItem(activeItem);
                     activeItem = null;
@@ -2752,7 +2751,7 @@ if (studyStartBtn && subscribeBtn) {
                 item.style.opacity         = '0';
                 item.style.transform       = 'translateY(20px)';
 
-                /* Force reflow */
+                
                 void item.offsetHeight;
 
                 setTimeout(function (el) {
@@ -2767,7 +2766,7 @@ if (studyStartBtn && subscribeBtn) {
             }
         });
 
-        /* Clean up transition delays after animations */
+        
         setTimeout(function () {
             accordionItems.forEach(function (item) {
                 item.style.transitionDelay = '';
@@ -2775,10 +2774,10 @@ if (studyStartBtn && subscribeBtn) {
         }, visibleIndex * 80 + 500);
     }
 
-    /* ======= Scroll Reveal Animation ========= */
+    
     function setupScrollReveal() {
         if (!('IntersectionObserver' in window)) {
-            /* Fallback: show all immediately */
+            
             accordionItems.forEach(function (item) {
                 item.classList.add('visible');
             });
@@ -2813,7 +2812,7 @@ if (studyStartBtn && subscribeBtn) {
     }
 
 
-       /* ======== Particles System =========== */
+       
     function setupParticles() {
         resizeCanvas();
         createParticles();
@@ -2824,7 +2823,7 @@ if (studyStartBtn && subscribeBtn) {
             createParticles();
         }, 250));
 
-        /* Pause when tab is hidden */
+        
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
                 if (animationFrameId) {
@@ -2849,7 +2848,7 @@ if (studyStartBtn && subscribeBtn) {
         particles = [];
         if (!canvas) return;
 
-        /* Fewer particles for performance */
+        
         const count = Math.min(
             Math.floor((canvas.width * canvas.height) / 35000),
             40
@@ -2887,11 +2886,11 @@ if (studyStartBtn && subscribeBtn) {
 
     function getParticleColor() {
         const colors = [
-            { r: 26,  g: 107, b: 74  },  /* Green      */
-            { r: 45,  g: 143, b: 101 },  /* Light green */
-            { r: 212, g: 168, b: 83  },  /* Gold        */
-            { r: 184, g: 134, b: 11  },  /* Dark gold   */
-            { r: 100, g: 160, b: 120 }   /* Sage        */
+            { r: 26,  g: 107, b: 74  },  
+            { r: 45,  g: 143, b: 101 },  
+            { r: 212, g: 168, b: 83  },  
+            { r: 184, g: 134, b: 11  },  
+            { r: 100, g: 160, b: 120 }   
         ];
         return colors[Math.floor(Math.random() * colors.length)];
     }
@@ -2904,13 +2903,13 @@ if (studyStartBtn && subscribeBtn) {
         for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
 
-            /* Update position */
+            
             p.x        += p.speedX;
             p.y        += p.speedY;
             p.rotation += p.rotationSpeed;
             p.life++;
 
-            /* Update opacity (pulsing effect) */
+            
             p.opacity += p.opacitySpeed * p.opacityDirection;
             if (p.opacity >= 0.35) {
                 p.opacityDirection = -1;
@@ -2918,7 +2917,7 @@ if (studyStartBtn && subscribeBtn) {
                 p.opacityDirection = 1;
             }
 
-            /* Reset particle if off screen or life exceeded */
+            
             if (
                 p.y < -20 ||
                 p.x < -20 ||
@@ -2991,7 +2990,7 @@ if (studyStartBtn && subscribeBtn) {
         ctx.fill();
     }
 
-    /* ========= Utility Functions ========= */
+    
     function randomRange(min, max) {
         return Math.random() * (max - min) + min;
     }
@@ -3011,7 +3010,7 @@ if (studyStartBtn && subscribeBtn) {
    
 
 
-        /* ====== Keyboard Navigation for Accordion ========== */
+        
     function setupKeyboardNav() {
         if (!accordionContainer) return;
 
@@ -3054,7 +3053,7 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-    /* =========== Light Trail Effect on Hover (subtle) ========== */
+    
     function setupLightTrail() {
         if (isReducedMotion) return;
 
@@ -3076,7 +3075,7 @@ if (studyStartBtn && subscribeBtn) {
         });
     }
 
-    /* ========= Start Everything ============ */
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {
             init();
@@ -3105,7 +3104,7 @@ if (studyStartBtn && subscribeBtn) {
         initSocialTilt();
     });
 
-    /* ---- PARTICLES SYSTEM ---- */
+    
     function initParticles() {
         const canvas = section.querySelector('#footerParticles');
         if (!canvas) return;
@@ -3235,7 +3234,7 @@ if (studyStartBtn && subscribeBtn) {
     }
 
 
-    /* ---- SCROLL ANIMATIONS ---- */
+    
     function initScrollAnimations() {
         const elements = section.querySelectorAll('[data-animate]');
         elements.forEach(el => {
@@ -3255,7 +3254,7 @@ if (studyStartBtn && subscribeBtn) {
     }
 
 
-    /* ---- COUNT UP ANIMATION ---- */
+    
     function initCountUp() {
         const statNumbers = section.querySelectorAll('.stat-number');
         if (!statNumbers.length) return;
@@ -3300,7 +3299,7 @@ if (studyStartBtn && subscribeBtn) {
     }
 
 
-    /* ---- NEWSLETTER SUBSCRIBE ---- */
+    
     function handleSubscribe(event) {
         event.preventDefault();
 
@@ -3341,7 +3340,7 @@ if (studyStartBtn && subscribeBtn) {
     window.footerHandleSubscribe = handleSubscribe;
 
 
-    /* ---- SCROLL TO TOP ---- */
+    
     function initScrollTopButton() {
         const btn = section.querySelector('#scrollTopBtn');
         if (!btn) return;
@@ -3365,7 +3364,7 @@ if (studyStartBtn && subscribeBtn) {
     window.footerScrollToTop = scrollToTop;
 
 
-    /* ---- CURRENT YEAR ---- */
+    
     function setCurrentYear() {
         const yearEl = section.querySelector('#currentYear');
         if (yearEl) {
@@ -3374,7 +3373,7 @@ if (studyStartBtn && subscribeBtn) {
     }
 
 
-    /* ---- SOCIAL ICONS TILT ---- */
+    
     function initSocialTilt() {
         section.querySelectorAll('.social-icon-btn').forEach(btn => {
             btn.addEventListener('mousemove', function (e) {

@@ -1,5 +1,4 @@
 <?php
-// Student Exam Page
 ?>
 <div class="max-w-3xl mx-auto animate-fadeIn" dir="rtl">
     <div id="examIntro" class="luxury-card rounded-3xl shadow-sm border border-gray-100 p-8 text-center">

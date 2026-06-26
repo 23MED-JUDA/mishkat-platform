@@ -1,5 +1,4 @@
 <?php
-// Parent Reports - Dynamic
 $parentRow = $conn->query("SELECT id FROM parents WHERE user_id=$uid")->fetch_assoc();
 $parentId = $parentRow ? $parentRow['id'] : 0;
 $children = $conn->query("SELECT u.id,u.name FROM students s JOIN users u ON s.user_id=u.id WHERE s.parent_id=$parentId");
@@ -41,7 +40,7 @@ $childrenArr = []; while($c=$children->fetch_assoc()) $childrenArr[]=$c;
                 <p class="text-xs text-gray-400">المهام المكتملة: <?php echo $completedTasks; ?>/<?php echo $totalTasks; ?></p></div>
         </div>
 
-        <!-- Progress -->
+        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <?php while($e=$enrollments->fetch_assoc()): $clr=$e['color']??'emerald'; ?>
             <div class="p-3 rounded-[1.5rem] bg-gray-50">
@@ -54,7 +53,7 @@ $childrenArr = []; while($c=$children->fetch_assoc()) $childrenArr[]=$c;
             <?php endwhile; ?>
         </div>
 
-        <!-- Recent Evaluations -->
+        
         <?php if($evals->num_rows > 0): ?>
         <h4 class="text-sm font-bold text-gray-500 mb-3 mt-4">آخر التقييمات</h4>
         <div class="space-y-2">
@@ -74,7 +73,7 @@ $childrenArr = []; while($c=$children->fetch_assoc()) $childrenArr[]=$c;
         </div>
         <?php endif; ?>
 
-        <!-- Tracking -->
+        
         <?php if($tracking->num_rows > 0): ?>
         <h4 class="text-sm font-bold text-gray-500 mb-3 mt-4">سجل الحفظ</h4>
         <div class="space-y-2">
@@ -90,7 +89,6 @@ $childrenArr = []; while($c=$children->fetch_assoc()) $childrenArr[]=$c;
     <?php endforeach; endif; ?>
 </div>
 
-<!-- Link Student Modal -->
 <div id="linkModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 [&.active]:opacity-100 [&.active]:pointer-events-auto" dir="rtl">
     <div class="luxury-card rounded-[2.5rem] w-full max-w-md p-8 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 [&.active_>_&]:scale-100">
         <div class="flex justify-between items-center mb-8">

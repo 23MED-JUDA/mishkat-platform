@@ -1,15 +1,12 @@
 <?php
-// Student Dashboard Home
 $userId = $_SESSION['user_id'];
 $studentQuery = $conn->query("SELECT * FROM students WHERE user_id=$userId")->fetch_assoc();
 $studentId = $studentQuery ? $studentQuery['id'] : 0;
 
-// Stats
 $enrollCount  = $conn->query("SELECT COUNT(*) as c FROM student_paths WHERE student_id=$studentId")->fetch_assoc()['c'] ?? 0;
 $taskCount    = $conn->query("SELECT COUNT(*) as c FROM homework_submissions WHERE student_id=$studentId AND status IN ('completed','graded')")->fetch_assoc()['c'] ?? 0;
 $totalPoints  = $taskCount * 10;
 
-// Evaluations
 $ev = $conn->query("SELECT AVG(memorization) m, AVG(tajweed) t, AVG(behavior) b, AVG(attendance) a FROM evaluations WHERE student_id=$studentId")->fetch_assoc();
 $avgM = $ev && $ev['m'] !== null ? round($ev['m']) : 0;
 $avgT = $ev && $ev['t'] !== null ? round($ev['t']) : 0;
@@ -17,16 +14,12 @@ $avgB = $ev && $ev['b'] !== null ? round($ev['b']) : 0;
 $avgA = $ev && $ev['a'] !== null ? round($ev['a']) : 0;
 $overall = ($avgM+$avgT+$avgB+$avgA) > 0 ? round(($avgM+$avgT+$avgB+$avgA)/4) : 0;
 
-// Enrolled courses
 $courses = $conn->query("SELECT sp.*, lp.name AS title, lp.description FROM student_paths sp JOIN learning_paths lp ON sp.path_id=lp.id WHERE sp.student_id=$studentId LIMIT 3");
 
-// All available packages/paths with prices
 $allPaths = $conn->query("SELECT lp.id, lp.name, lp.description, IFNULL(pp.sessions_count,0) AS sessions, IFNULL(pp.price,0) AS price FROM learning_paths lp LEFT JOIN path_plans pp ON pp.path_id=lp.id LIMIT 6");
 
-// Latest evaluations (reviews)
 $latestEvals = $conn->query("SELECT e.*, u.name AS teacher_name FROM evaluations e JOIN users u ON e.teacher_id=u.id WHERE e.student_id=$studentId ORDER BY e.created_at DESC LIMIT 3");
 
-// Verses
 $verses = [
     ["text"=>"إِنَّ مَعَ الْعُسْرِ يُسْرًا","ref"=>"سورة الشرح - آية 6"],
     ["text"=>"وَقُل رَّبِّ زِدْنِي عِلْمًا","ref"=>"سورة طه - آية 114"],
@@ -40,7 +33,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
 
 <div class="space-y-10 animate-fadeIn" dir="rtl">
 
-  <!-- Hero -->
+  
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 relative bg-mishkat-green-900 rounded-[2.5rem] p-8 md:p-14 text-white overflow-hidden shadow-2xl">
       <div class="relative z-10">
@@ -60,7 +53,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
     </div>
   </div>
 
-  <!-- Quick Stats -->
+  
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
     <?php
     $stats = [
@@ -80,7 +73,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
     <?php endforeach; ?>
   </div>
 
-  <!-- Performance + Overall Score -->
+  
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 luxury-card p-6 md:p-8">
       <div class="flex items-center gap-3 mb-6">
@@ -110,7 +103,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
         <?php endforeach; ?>
       </div>
     </div>
-    <!-- Circular Score -->
+    
     <div class="luxury-card p-8 flex flex-col justify-center items-center text-center">
       <h3 class="text-base font-black text-gray-900 dark:text-white font-tajawal mb-6">التقييم التراكمي</h3>
       <div class="relative w-36 h-36 flex items-center justify-center">
@@ -127,7 +120,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
     </div>
   </div>
 
-  <!-- Latest Evaluations/Reviews -->
+  
   <div>
     <div class="flex items-center justify-between mb-5">
       <div class="flex items-center gap-3">
@@ -182,7 +175,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
     <?php endif; ?>
   </div>
 
-  <!-- Enrolled Courses -->
+  
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div>
       <div class="flex items-center justify-between mb-5">
@@ -223,14 +216,14 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
       </div>
     </div>
 
-    <!-- Weekly Chart -->
+    
     <div class="luxury-card p-6 md:p-8">
       <h3 class="text-lg font-black text-gray-900 dark:text-white font-tajawal mb-6">نشاطك الأسبوعي</h3>
       <canvas id="activityChart" height="220"></canvas>
     </div>
   </div>
 
-  <!-- Available Packages / Courses with Prices -->
+  
   <div>
     <div class="flex items-center gap-3 mb-6">
       <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 flex items-center justify-center">
@@ -285,7 +278,7 @@ $pathIcons  = ['menu_book','auto_stories','school','star','library_books','bookm
     </div>
   </div>
 
-  <!-- Importance Section -->
+  
   <div class="luxury-card p-6 md:p-10 bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/10 dark:to-transparent">
     <div class="flex items-center gap-3 mb-6">
       <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center">

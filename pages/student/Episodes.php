@@ -1,5 +1,4 @@
 <?php
-// pages/student/Episodes.php
 $courseId = intval($_GET['course_id'] ?? 0);
 if(!$courseId) {
     echo "<div class='text-center py-20 luxury-card rounded-[3rem] shadow-sm'><p class='text-gray-400 font-bold'>يرجى اختيار دورة تدريبية أولاً.</p></div>";
@@ -12,7 +11,7 @@ if(!$course) {
 }
 ?>
 <div class="animate-fadeIn" dir="rtl">
-    <!-- Header -->
+    
     <div class="bg-mishkat-green-900 rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden mb-10">
         <div class="relative z-10">
             <span class="px-4 py-1.5 bg-mishkat-green-700/50 rounded-full text-[10px] font-black mb-6 inline-block uppercase tracking-widest">مساري التعليمي</span>
@@ -33,12 +32,12 @@ if(!$course) {
         <div class="absolute top-0 right-0 w-96 h-96 bg-mishkat-green-800 rounded-full -translate-x-20 -translate-y-20 blur-[120px] opacity-40"></div>
     </div>
 
-    <!-- Episodes List -->
+    
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-1 space-y-4">
             <h3 class="text-xl font-black text-gray-800 mb-6 px-2">محتوى الدورة</h3>
             <div id="episodesSidebar" class="space-y-3">
-                <!-- Loading State -->
+                
                 <div class="p-6 luxury-card rounded-3xl shadow-sm animate-pulse">
                     <div class="h-4 bg-gray-100 rounded w-3/4 mb-2"></div>
                     <div class="h-3 bg-gray-50 rounded w-1/2"></div>
@@ -58,7 +57,6 @@ if(!$course) {
     </div>
 </div>
 
-<!-- Result Modal -->
 <div id="resultModal" class="modal-backdrop">
     <div class="modal-box text-center">
         <div id="resultIcon" class="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center"></div>
@@ -95,7 +93,6 @@ function loadCourseContent() {
             currentEpisodes = res.data;
             document.getElementById('episodeCount').innerText = `${currentEpisodes.length} حلقة`;
             
-            // Calculate progress
             const completed = currentEpisodes.filter(e => e.completed == 1).length;
             const prog = currentEpisodes.length > 0 ? Math.round((completed / currentEpisodes.length) * 100) : 0;
             document.getElementById('courseProgress').innerText = `التقدم: ${prog}%`;
@@ -150,12 +147,12 @@ function viewEpisode(id) {
                 </div>
             </div>
             <div class="flex-1 p-4 md:p-8 overflow-y-auto custom-scrollbar bg-gray-50/50 space-y-8">
-                <!-- Video Section -->
+                
                 <div class="bg-black rounded-3xl overflow-hidden shadow-2xl">
                     ${renderContent(ep)}
                 </div>
 
-                <!-- Quiz Section -->
+                
                 <div id="inlineQuizContainer" class="luxury-card rounded-[2.5rem] p-6 md:p-10 shadow-sm border border-gray-100">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="w-10 h-10 rounded-[1.5rem] bg-amber-50 text-amber-600 flex items-center justify-center">
@@ -206,7 +203,6 @@ function finishEpisode(id) {
         if(res.success) {
             showToast('تهانينا! لقد أتممت الحلقة بنجاح.');
             loadCourseContent();
-            // Reset viewer
             document.getElementById('episodeViewer').innerHTML = `
                 <div class="flex flex-col items-center justify-center p-12 text-center">
                     <div class="w-20 h-20 bg-mishkat-green-100 text-mishkat-green-700 rounded-full flex items-center justify-center mb-4">
@@ -336,19 +332,15 @@ function showResult(score, total, pct) {
 
 function closeResultModal() {
     document.getElementById('resultModal').classList.remove('active');
-    // Reset viewer
     viewEpisode(activeEpId);
 }
 
-// Init after DOM is fully loaded to ensure apiGet is defined
 document.addEventListener('DOMContentLoaded', () => {
     loadCourseContent();
 
-    // Deep linking
     const urlParams = new URLSearchParams(window.location.search);
     const epId = urlParams.get('ep_id');
     if(epId) {
-        // Wait for content to load then view
         const checker = setInterval(() => {
             if(currentEpisodes.length > 0) {
                 viewEpisode(epId);

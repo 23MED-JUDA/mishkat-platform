@@ -1,5 +1,4 @@
 <?php
-// Parent Payment - Dynamic
 $payments = $conn->query("SELECT * FROM payments WHERE user_id=$uid ORDER BY created_at DESC");
 $subs = $conn->query("SELECT * FROM subscriptions WHERE user_id=$uid ORDER BY created_at DESC");
 $totalPaid = $conn->query("SELECT IFNULL(SUM(amount),0) as s FROM payments WHERE user_id=$uid AND status='completed'")->fetch_assoc()['s'];
@@ -22,7 +21,7 @@ $totalPaid = $conn->query("SELECT IFNULL(SUM(amount),0) as s FROM payments WHERE
         </div>
     </div>
 
-    <!-- Subscriptions -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-6">
         <h3 class="font-black text-gray-900 mb-4">اشتراكاتي</h3>
         <div class="space-y-3">
@@ -42,7 +41,7 @@ $totalPaid = $conn->query("SELECT IFNULL(SUM(amount),0) as s FROM payments WHERE
         </div>
     </div>
 
-    <!-- Payment History -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-5 border-b border-gray-50"><h3 class="font-black text-gray-900">سجل المدفوعات</h3></div>
         <div class="divide-y divide-gray-50">

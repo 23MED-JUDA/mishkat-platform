@@ -9,7 +9,7 @@ require_once 'includes/session.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشكاة - تفاصيل البرنامج</title>
 
-    <!-- Compiled Tailwind CSS -->
+    
     <link rel="stylesheet" href="assets/css/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,10 +20,10 @@ require_once 'includes/session.php';
 
 <body class="font-kufi bg-cream-100 min-h-screen">
 
-    <!--========== صفحة تفاصيل البرنامج =============-->
+    
     <section id="course-detail-section">
 
-        <!-- زر الرجوع -->
+        
         <div class="max-w-6xl mx-auto px-4 pt-6">
             <a href="index.php" class="back-btn">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -43,21 +43,19 @@ require_once 'includes/session.php';
 
     </section>
 
-    <!-- Bundled JavaScript -->
+    
     <script src="assets/js/bundle.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const params = new URLSearchParams(window.location.search);
             const courseId = parseInt(params.get('id'), 10);
             
-            // Check periodically if bundle.js has loaded renderCourseDetail
             const checkInterval = setInterval(() => {
                 if (typeof renderCourseDetail === 'function') {
                     renderCourseDetail(courseId);
                     clearInterval(checkInterval);
                 }
             }, 50);
-            // Safety timeout
             setTimeout(() => clearInterval(checkInterval), 5000);
         });
     </script>

@@ -1,5 +1,4 @@
 <?php
-// Admin Students Management - Dynamic
 $students = $conn->query("SELECT u.id, u.name, u.email, '' AS phone, u.status, u.created_at,
     0 as progress, IFNULL(c.name,'غير مسجل') as course_title, 'emerald' as course_color
     FROM students s

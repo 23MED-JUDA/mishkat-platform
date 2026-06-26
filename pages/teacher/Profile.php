@@ -14,19 +14,15 @@ $avgA = $evAvg && $evAvg['a'] ? round($evAvg['a']) : 0;
 $avgB = $evAvg && $evAvg['b'] ? round($evAvg['b']) : 0;
 $overallTeacher = ($avgM+$avgT+$avgA+$avgB)>0 ? round(($avgM+$avgT+$avgA+$avgB)/4) : 0;
 
-// Courses/paths available to manage
 $paths = $conn->query("SELECT lp.id, lp.name, lp.description, IFNULL(pp.sessions_count,0) s, IFNULL(pp.price,0) price FROM learning_paths lp LEFT JOIN path_plans pp ON pp.path_id=lp.id LIMIT 6");
 
-// Students in teacher circles
 $myStudents = $conn->query("SELECT DISTINCT u.name, u.email FROM users u JOIN students st ON st.user_id=u.id JOIN halaqa_enrollments he ON he.student_id=st.id JOIN halaqat h ON h.id=he.halaqa_id WHERE h.teacher_id=$teacherId LIMIT 5");
 
-// Lessons
 $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM learning_materials lm JOIN learning_paths lp ON lm.path_id=lp.id ORDER BY lm.id DESC LIMIT 5");
 ?>
 
 <div class="space-y-8 animate-fadeIn" dir="rtl">
 
-<!-- Hero Banner -->
 <div class="relative bg-gradient-to-l from-mishkat-green-800 to-mishkat-green-900 rounded-3xl p-8 md:p-12 text-white overflow-hidden shadow-2xl">
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_#fff_0%,_transparent_70%)]"></div>
   <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
@@ -50,7 +46,6 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
   </div>
 </div>
 
-<!-- Quick Stats -->
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
   <?php
   $stats=[
@@ -72,7 +67,6 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
   <?php endforeach; ?>
 </div>
 
-<!-- Performance Bars + Circle -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <div class="lg:col-span-2 luxury-card p-6 md:p-8">
     <div class="flex items-center gap-3 mb-6">
@@ -110,10 +104,9 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
   </div>
 </div>
 
-<!-- My Circles Students + Latest Lessons -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-  <!-- Students Preview -->
+  
   <div class="luxury-card p-6">
     <div class="flex items-center justify-between mb-5">
       <div class="flex items-center gap-3">
@@ -147,7 +140,7 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
     <?php endif; ?>
   </div>
 
-  <!-- Latest Lessons -->
+  
   <div class="luxury-card p-6">
     <div class="flex items-center justify-between mb-5">
       <div class="flex items-center gap-3">
@@ -183,7 +176,6 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
   </div>
 </div>
 
-<!-- Available Courses/Packages -->
 <div>
   <div class="flex items-center gap-3 mb-6">
     <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/20 text-amber-500 flex items-center justify-center">
@@ -222,7 +214,6 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
   </div>
 </div>
 
-<!-- Importance Section -->
 <div class="luxury-card p-6 md:p-10 bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/10 dark:to-transparent">
   <div class="flex items-center gap-3 mb-6">
     <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center">
@@ -250,7 +241,6 @@ $myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM l
   </div>
 </div>
 
-<!-- Edit Profile Form -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
   <div class="lg:col-span-2 luxury-card rounded-3xl p-8">
     <h3 class="text-lg font-black text-gray-900 dark:text-white mb-6 flex items-center gap-3">

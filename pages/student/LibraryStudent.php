@@ -1,8 +1,7 @@
 <?php
-// pages/student/LibraryStudent.php
 ?>
 <div class="animate-fadeIn space-y-12" dir="rtl">
-    <!-- Header -->
+    
     <div class="bg-gradient-to-l from-mishkat-green-900 to-mishkat-green-800 rounded-[3rem] p-10 md:p-16 text-white shadow-2xl relative overflow-hidden">
         <div class="relative z-10">
             <span class="px-4 py-1.5 bg-mishkat-green-700/50 rounded-full text-[10px] font-black mb-6 inline-block uppercase tracking-widest">المكتبة الرقمية</span>
@@ -19,7 +18,7 @@
         <span class="material-icons-outlined absolute bottom-10 left-10 text-[200px] text-white/5 pointer-events-none">auto_stories</span>
     </div>
 
-    <!-- External Quick Access Section -->
+    
     <div class="space-y-6">
         <div class="flex items-center gap-4 px-4">
             <div class="w-2 h-8 bg-mishkat-gold-500 rounded-full"></div>
@@ -49,14 +48,14 @@
         </div>
     </div>
 
-    <!-- Main Library Grid -->
+    
     <div class="space-y-6">
         <div class="flex items-center gap-4 px-4">
             <div class="w-2 h-8 bg-mishkat-green-600 rounded-full"></div>
             <h3 class="text-2xl font-black text-gray-900 font-tajawal">مرفقات المعلمين</h3>
         </div>
         <div id="studentLibraryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- Loading State -->
+            
             <?php for($i=0;$i<4;$i++): ?>
             <div class="luxury-card p-6 rounded-[2.5rem] shadow-sm animate-pulse border border-gray-50">
                 <div class="w-12 h-12 bg-gray-100 rounded-[2rem] mb-6"></div>
@@ -69,7 +68,6 @@
     </div>
 </div>
 
-<!-- Preview Modal -->
 <div id="libPreviewModal" class="modal-backdrop">
     <div class="modal-box max-w-3xl overflow-hidden p-0">
         <div class="p-6 border-b border-gray-50 flex justify-between items-center luxury-card sticky top-0 z-10">
@@ -193,6 +191,5 @@ function extractYoutubeId(url) {
     return (match && match[2].length == 11) ? match[2] : false;
 }
 
-// Init
 loadStuLibrary();
 </script>

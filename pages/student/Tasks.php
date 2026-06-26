@@ -1,12 +1,9 @@
 <?php
-// Student Tasks - Dynamic  
 $uid = $_SESSION['user_id'];
 
-// Get student record from user_id
 $studentRow = $conn->query("SELECT s.id FROM students s WHERE s.user_id=$uid")->fetch_assoc();
 $studentId = $studentRow['id'] ?? 0;
 
-// Homeworks assigned to student's halaqa
 $tasksQuery = "SELECT hs.id, h.title, h.description, h.type, h.due_date AS deadline, 
                IF(hs.status IN ('completed','graded'), 1, 0) AS completed,
                'اعتيادي' AS priority, 0 AS is_episode, 0 AS has_quiz,

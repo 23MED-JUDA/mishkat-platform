@@ -267,7 +267,7 @@
 
 <div class="animate-fadeIn" style="max-width: 1100px; margin: 0 auto;">
 
-    <!-- Hero -->
+    
     <div class="quran-hero mb-8">
         <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
              style="background: var(--color-primary);">
@@ -277,16 +277,16 @@
         <p class="text-sm" style="color: var(--color-text-muted);">تلاوة وتدبر آيات الله البينات</p>
     </div>
 
-    <!-- Loading -->
+    
     <div id="quranLoading" class="flex flex-col items-center justify-center py-24">
         <div class="q-spinner"></div>
         <p class="mt-4 text-sm font-semibold" style="color: var(--color-text-muted);">جاري تحميل القرآن الكريم...</p>
     </div>
 
-    <!-- Grid View -->
+    
     <div id="surahGridView" class="hidden">
 
-        <!-- Stats -->
+        
         <div class="grid grid-cols-3 gap-3 mb-6">
             <div class="luxury-card p-4 text-center">
                 <p class="text-xl font-black" style="color: var(--color-primary);">١١٤</p>
@@ -302,35 +302,35 @@
             </div>
         </div>
 
-        <!-- Search -->
+        
         <div class="quran-search-wrap">
             <span class="material-icons-outlined s-icon">search</span>
             <input type="text" id="surahSearch" placeholder="ابحث عن سورة...">
         </div>
 
-        <!-- Grid -->
+        
         <div id="surahGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
     </div>
 
-    <!-- Surah Reader -->
+    
     <div id="surahReader" class="hidden">
 
-        <!-- Back -->
+        
         <button class="back-btn" onclick="showSurahGrid()">
             <span class="material-icons-outlined" style="font-size:1rem;">arrow_forward</span>
             العودة لقائمة السور
         </button>
 
-        <!-- Banner -->
+        
         <div class="surah-banner">
             <h3 id="readerSurahName"></h3>
             <p id="readerSurahMeta"></p>
         </div>
 
-        <!-- Reader box -->
+        
         <div class="reader-box">
 
-            <!-- Toolbar -->
+            
             <div class="reader-toolbar">
                 <div class="ayah-count-badge">
                     <span class="material-icons-outlined" style="font-size:0.95rem;">format_list_numbered</span>
@@ -341,10 +341,10 @@
                 </div>
             </div>
 
-            <!-- Ayahs -->
+            
             <div id="ayahsContainer" style="padding: 0.5rem 0;"></div>
 
-            <!-- Pagination -->
+            
             <div id="paginationBar" class="hidden flex items-center justify-between gap-3 px-5 py-4"
                  style="border-top: 1px solid var(--border-color);">
                 <button class="page-nav-btn" onclick="QuranApp.prevPage()">
@@ -436,14 +436,12 @@ const QuranApp = {
 
         let html = '';
 
-        // Bismillah before first ayah (only on page 1)
         if (this.currentPage === 1 && surah.number !== 1 && surah.number !== 9) {
             html += `<div class="bismillah-row">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>`;
         }
 
         slice.forEach(a => {
             let text = a.text;
-            // Remove embedded bismillah from ayah 1 (except Al-Fatiha)
             if (a.numberInSurah === 1 && surah.number !== 1 && surah.number !== 9) {
                 text = text.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '').trim();
             }
@@ -457,12 +455,10 @@ const QuranApp = {
 
         document.getElementById('ayahsContainer').innerHTML = html;
 
-        // Update page label
         document.getElementById('pageLabel').innerText = this.toArabic(this.currentPage);
         document.getElementById('pageInfo').innerText =
             `${this.toArabic(this.currentPage)} من ${this.toArabic(total)}`;
 
-        // Show pagination if needed
         const bar = document.getElementById('paginationBar');
         if (total > 1) {
             bar.classList.remove('hidden');

@@ -121,7 +121,7 @@
 
 <div class="animate-fadeIn" style="max-width: 1100px; margin: 0 auto;">
 
-    <!-- Hero -->
+    
     <div class="hadith-hero mb-6">
         <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
              style="background: var(--color-primary);">
@@ -131,7 +131,7 @@
         <p class="text-sm" style="color: var(--color-text-muted);">من جوامع كلم النبي ﷺ</p>
     </div>
 
-    <!-- Filters -->
+    
     <div class="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-none">
         <button class="filter-tab active" onclick="filterHadiths('all', this)">الكل</button>
         <button class="filter-tab" onclick="filterHadiths('عقيدة', this)">العقيدة</button>
@@ -141,7 +141,7 @@
         <button class="filter-tab" onclick="filterHadiths('علم', this)">العلم</button>
     </div>
 
-    <!-- Stats -->
+    
     <div class="grid grid-cols-3 gap-3 mb-6">
         <div class="luxury-card p-4 text-center">
             <p class="text-xl font-black" style="color: var(--color-primary);" id="totalCount">٤٢</p>
@@ -157,7 +157,7 @@
         </div>
     </div>
 
-    <!-- Grid -->
+    
     <div id="hadithGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
 </div>
 

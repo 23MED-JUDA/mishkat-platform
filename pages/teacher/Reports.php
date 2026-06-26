@@ -1,5 +1,4 @@
 <?php
-// Teacher Reports - Dynamic
 $totalStudents = $conn->query("SELECT COUNT(DISTINCT cs.student_id) as c FROM circle_students cs JOIN circles ci ON cs.circle_id=ci.id WHERE ci.teacher_id=$uid")->fetch_assoc()['c'];
 $totalEvals = $conn->query("SELECT COUNT(*) as c FROM evaluations WHERE teacher_id=$uid")->fetch_assoc()['c'];
 $avgMem = $conn->query("SELECT IFNULL(AVG(memorization),0) as a FROM evaluations WHERE teacher_id=$uid")->fetch_assoc()['a'];

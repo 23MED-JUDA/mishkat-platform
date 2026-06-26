@@ -6,29 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشكاة | Mishka - منصة تعليمية إسلامية</title>
 
-    <!-- Preconnect to external resources -->
+    
 
-    <!-- Compiled Tailwind CSS -->
+    
     <link rel="stylesheet" href="assets/css/tailwind.min.css">
 
-    <!-- Preconnect and dns-prefetch (removed duplicate) -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-
-    <!-- Bundled Styles -->
+    
     <link rel="stylesheet" href="assets/css/bundle.css">
     
     <script src="assets/js/mishkat-ui.js" defer></script>
 </head>
 <body class="font-arabic bg-mishkat-beige-50 text-mishkat-green-900 overflow-x-hidden">
 
-
-   <!-- ===== NAVBAR SECTION ===== -->
+   
 <section id="navbar-section">
 
-    <!--  NAVBAR  -->
+    
     <nav id="navbar"
          class="navbar fixed top-0 right-0 left-0 z-50 transition-all duration-500 ease-in-out"
          role="navigation"
@@ -37,7 +35,7 @@
         <div class="navbar__container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="navbar__wrapper flex items-center justify-between h-20">
 
-               <!-- ===== القسم الأيسر: اللوجو + الاسم ===== -->
+               
 <div class="navbar__brand flex items-center gap-3 flex-shrink-0">
     <a href="#" class="navbar__logo-link flex items-center gap-3 group" aria-label="الصفحة الرئيسية - مشكاة">
         <div class="navbar__logo-wrapper relative w-16 h-16 rounded-full overflow-hidden
@@ -49,7 +47,7 @@
                  class="w-full h-full object-cover"
                  loading="eager"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <!-- Fallback -->
+            
             <div class="w-full h-full bg-gradient-to-br from-mishkat-green-600 to-mishkat-green-800
                         items-center justify-center text-white font-bold text-xl hidden">
                 م
@@ -67,8 +65,7 @@
     </a>
 </div>
 
-
-                <!-- ===== القسم الأوسط: روابط التنقل ===== -->
+                
                 <div class="navbar__nav hidden lg:flex items-center gap-1">
                     <ul class="navbar__menu flex items-center gap-1" role="menubar">
                         <li role="none">
@@ -131,10 +128,10 @@
                     </ul>
                 </div>
 
-                                  <!-- ===== القسم الأيمن: أزرار الإجراءات ===== -->
+                                  
                 <div class="navbar__actions hidden lg:flex items-center gap-3">
 
-                    <!-- زر اشترك الآن مع Dropdown -->
+                    
                     <div class="navbar__dropdown relative" data-dropdown>
                         <button id="subscribeBtn"
                                 class="navbar__dropdown-trigger flex items-center gap-2 px-5 py-2.5
@@ -149,7 +146,7 @@
                                 aria-haspopup="true"
                                 aria-controls="subscribeDropdown">
                             <span>اشترك الآن</span>
-                            <!-- سهم -->
+                            
                             <svg class="navbar__dropdown-arrow w-4 h-4 transition-transform duration-300"
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                  aria-hidden="true">
@@ -158,7 +155,7 @@
                             </svg>
                         </button>
 
-                        <!-- قائمة الاشتراك المنسدلة -->
+                        
                         <div id="subscribeDropdown"
                              class="navbar__dropdown-menu absolute left-0 mt-3 w-64
                                     bg-white/95 backdrop-blur-xl
@@ -170,13 +167,13 @@
                              role="menu"
                              aria-labelledby="subscribeBtn">
 
-                            <!-- رأس الـ Dropdown -->
+                            
                             <div class="px-5 py-3 bg-gradient-to-l from-mishkat-green-50 to-mishkat-beige-100
                                         border-b border-mishkat-green-100/50">
                                 <p class="text-xs font-bold text-mishkat-green-700">اختر نوع التسجيل</p>
                             </div>
 
-                            <!-- خيارات التسجيل -->
+                            
                             <div class="p-2">
                                 <a href="register.php"
                                    class="navbar__dropdown-item flex items-center gap-3 px-4 py-3
@@ -187,7 +184,7 @@
                                     <span class="flex items-center justify-center w-10 h-10
                                                  bg-mishkat-green-100 group-hover:bg-mishkat-green-200
                                                  rounded-xl transition-colors duration-200">
-                                        <!-- أيقونة الطالب -->
+                                        
                                         <svg class="w-5 h-5 text-mishkat-green-600" fill="none"
                                              stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -214,7 +211,7 @@
                                     <span class="flex items-center justify-center w-10 h-10
                                                  bg-mishkat-beige-200 group-hover:bg-mishkat-beige-300
                                                  rounded-xl transition-colors duration-200">
-                                        <!-- أيقونة المعلم -->
+                                        
                                         <svg class="w-5 h-5 text-mishkat-green-600" fill="none"
                                              stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -239,7 +236,7 @@
                         </div>
                     </div>
 
-                    <!-- زر تسجيل الدخول -->
+                    
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="dashboard.php"
                            class="navbar__login-btn px-5 py-2.5 text-sm font-bold
@@ -262,8 +259,7 @@
                     <?php endif; ?>
                 </div>
 
-
-                               <!-- ===== زر القائمة للموبايل ===== -->
+                               
                 <div class="navbar__mobile-toggle lg:hidden">
                     <button id="mobileMenuBtn"
                             class="mobile-menu-btn relative w-10 h-10 flex items-center justify-center
@@ -286,16 +282,16 @@
             </div>
         </div>
 
-        <!-- ===== Backdrop Overlay for Mobile Menu ===== -->
+        
         <div id="mobileMenuOverlay" class="mobile-overlay lg:hidden" aria-hidden="true"></div>
 
-        <!-- ===== Mobile Menu (Side Drawer) ===== -->
+        
         <div id="mobileMenu"
              class="navbar__mobile-menu lg:hidden"
              role="menu"
              aria-hidden="true">
 
-            <!-- Drawer Header with Close Button -->
+            
             <div class="flex items-center justify-between px-5 py-4 border-b border-mishkat-green-100/60 bg-gradient-to-l from-mishkat-green-50 to-mishkat-beige-50">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl overflow-hidden ring-2 ring-mishkat-green-200 shadow-sm">
@@ -315,7 +311,7 @@
                 </button>
             </div>
 
-            <!-- Nav Links -->
+            
             <nav class="px-4 py-4 space-y-1 flex-1">
                 <a href="#hero" class="mobile-nav-link mobile-link-animate flex items-center gap-3 px-4 py-3 text-base font-medium text-mishkat-green-800
                                       hover:text-mishkat-green-600 hover:bg-mishkat-green-50/70
@@ -349,7 +345,7 @@
                 </a>
             </nav>
 
-            <!-- CTA Button at Bottom -->
+            
             <div class="px-4 py-4 border-t border-mishkat-green-100/60 mt-auto">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <a href="dashboard.php"
@@ -375,18 +371,17 @@
             </div>
         </div>
 
-
     </nav>
 
 </section>
 
-   <!-- ===== HEADER SECTION ===== -->
+   
 <section id="header-section">
 
-    <!--  HERO SECTION  -->
+    
     <section id="hero" class="hero-section" aria-label="القسم الرئيسي">
 
-        <!-- Background Image with Parallax -->
+        
         <div class="hero-bg" id="heroBg" aria-hidden="true">
             <img
                 src="assets/images/download (2).jfif"
@@ -397,29 +392,29 @@
             >
         </div>
 
-        <!-- Gradient Overlay -->
+        
         <div class="hero-overlay" aria-hidden="true"></div>
 
-        <!-- Animated Light Particles -->
+        
         <canvas id="heroParticlesCanvas" class="hero-particles" aria-hidden="true"></canvas>
 
-        <!-- Decorative Light Rays -->
+        
         <div class="light-ray" aria-hidden="true"></div>
         <div class="light-ray light-ray-2" aria-hidden="true"></div>
 
-        <!-- Decorative Islamic Pattern (Top) -->
+        
         <div class="islamic-pattern-top" aria-hidden="true"></div>
 
-        <!-- Main Content -->
+        
         <div class="hero-content">
             <div class="hero-inner">
 
-                <!-- Bismillah Badge -->
+                
                 <div class="hero-badge" id="heroBadge">
                     <span class="badge-icon">﷽</span>
                 </div>
 
-                <!-- Main Heading -->
+                
                 <h1 class="hero-title" id="heroTitle">
                     <span class="title-line title-line-1">
                         <span class="title-word">مِشْكَاةٌ</span>
@@ -429,21 +424,21 @@
                     </span>
                 </h1>
 
-                <!-- Decorative Divider -->
+                
                 <div class="hero-divider" id="heroDivider">
                     <span class="divider-line"></span>
                     <span class="divider-star">✦</span>
                     <span class="divider-line"></span>
                 </div>
 
-                <!-- Subtitle -->
+                
                 <p class="hero-subtitle" id="heroSubtitle">
                     رحلةٌ معرفيّة تأخذك في رحابِ العلوم الشرعية والقرآنية،
                     <br class="hidden sm:block">
                     لتُنير بصيرتك وتُزكّي نفسك بنورِ الوحي
                 </p>
 
-                <!-- CTA Buttons -->
+                
 <div class="hero-buttons" id="heroButtons">
     <a href="register.php"
        id="heroStartBtn"
@@ -471,7 +466,7 @@
 
 </div>
 
-                <!-- Scroll Indicator -->
+                
                 <div class="scroll-indicator" id="scrollIndicator" aria-hidden="true">
                     <div class="scroll-mouse">
                         <div class="scroll-wheel"></div>
@@ -486,11 +481,10 @@
 
 </section>
 
-
-     <!-- ===== PROGRAMS SECTION ===== -->
+     
 <section id="programs-section">
 
-    <!--=========== قسم البرامج التعليمية =============-->
+    
     <section id="programs" class="programs-section">
 
         <div class="programs-bg" aria-hidden="true">
@@ -502,7 +496,7 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-            <!-- ========== عنوان القسم ========== -->
+            
             <div class="section-header" data-animate="fade-up">
                 <span class="section-header__badge">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -527,7 +521,7 @@
                 </div>
             </div>
 
-            <!-- ========== فلتر التصنيفات ========== -->
+            
             <div class="filter-bar" data-animate="fade-up">
                 <button class="filter-bar__btn filter-bar__btn--active" data-filter="all">الكل</button>
                 <button class="filter-bar__btn" data-filter="quran">القرآن الكريم</button>
@@ -536,7 +530,7 @@
                 <button class="filter-bar__btn" data-filter="islamic">العلوم الشرعية</button>
             </div>
 
-            <!-- ========== شبكة الكروت ========== -->
+            
             <div id="programsGrid" class="programs-grid">
 
             </div>
@@ -546,15 +540,13 @@
 
 </section>
 
-
-<!-- ===== TEACHERS SECTION ===== -->
 <section id="teachers-section">
 
-    <!-- ====== قسم المعلمين ====== -->
+    
     <section id="teachers" class="teachers-section py-20 px-4">
         <div class="container mx-auto max-w-7xl">
 
-            <!-- العنوان الرئيسي للقسم -->
+            
             <div class="text-center mb-16" data-aos="fade-up">
                 <span class="inline-block text-teachers-accent font-amiri text-2xl mb-3">﴿ وَعَلَّمَكَ مَا لَمْ تَكُنْ تَعْلَمُ ﴾</span>
                 <h2 class="text-4xl md:text-5xl font-bold text-teachers-primary mb-4">
@@ -566,7 +558,7 @@
                 </p>
             </div>
 
-            <!-- شبكة كروت المعلمين -->
+            
             <div id="teachersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
             </div>
@@ -576,29 +568,28 @@
 
 </section>
 
-
-      <!-- ===== PACKAGES SECTION ===== -->
+      
 <section id="packages-section">
 
-    <!-- ===== Particles Canvas ===== -->
+    
     <canvas id="packagesParticlesCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- ===== Ambient Light ===== -->
+    
     <div id="lightBeam" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <!-- ===== Pricing Section ===== -->
+    
     <section id="pricing" class="relative z-10 min-h-screen py-20 px-4 sm:px-6 lg:px-8">
 
-        <!-- Decorative Top Background Shapes -->
+        
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
             <div class="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-packages-sage-200/30 blur-3xl"></div>
             <div class="absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full bg-packages-gold-200/20 blur-3xl"></div>
             <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-packages-sage-100/40 blur-3xl"></div>
         </div>
 
-        <!-- Section Header -->
+        
         <div class="text-center mb-20 relative z-10">
-            <!-- Decorative Top Element -->
+            
             <div class="flex items-center justify-center mb-6">
                 <div class="h-px w-16 bg-gradient-to-r from-transparent to-packages-gold-400/50"></div>
                 <div class="mx-4 relative">
@@ -623,7 +614,7 @@
                 <span class="text-packages-warm-400 text-base">وابدأ رحلة التعلّم والإتقان</span>
             </p>
 
-            <!-- Decorative Bottom Line -->
+            
             <div class="mt-8 flex items-center justify-center gap-2">
                 <div class="h-1 w-8 rounded-full bg-packages-gold-400/30"></div>
                 <div class="h-1 w-16 rounded-full bg-packages-gold-400/60"></div>
@@ -631,17 +622,17 @@
             </div>
         </div>
 
-        <!-- Pricing Cards Grid -->
+        
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-start relative z-10">
 
-            <!-- ========== Card 1: الباقة التأسيسية ========== -->
+            
             <div class="pricing-card group relative" data-aos="fade-up" data-delay="0">
                 <div class="card-inner relative bg-white/70 backdrop-blur-xl rounded-3xl border border-packages-sage-200/60 p-8 pt-10 transition-all duration-700 ease-out hover:border-packages-sage-300/80 hover:bg-white/90 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-packages-sage-200/30">
                     
-                    <!-- Card Glow -->
+                    
                     <div class="card-glow absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700"></div>
 
-                    <!-- Subtle Islamic Pattern -->
+                    
                     <div class="absolute top-0 right-0 w-32 h-32 opacity-[0.04]">
                         <svg viewBox="0 0 100 100" fill="currentColor" class="text-packages-sage-600">
                             <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5"/>
@@ -651,7 +642,7 @@
                         </svg>
                     </div>
 
-                                       <!-- Header -->
+                                       
                     <div class="relative z-10">
                         <div class="flex items-center gap-3 mb-2">
                             <div class="w-11 h-11 rounded-2xl bg-packages-sage-100 border border-packages-sage-200/50 flex items-center justify-center">
@@ -665,7 +656,7 @@
                         <p class="text-packages-warm-400 text-sm mb-6">للراغبين في بدء رحلة التعلّم</p>
                     </div>
 
-                    <!-- Price -->
+                    
                     <div class="relative z-10 mb-8">
                         <div class="flex items-baseline gap-2">
                             <span class="text-5xl font-black text-packages-warm-800">300</span>
@@ -676,10 +667,10 @@
                         </div>
                     </div>
 
-                    <!-- Divider -->
+                    
                     <div class="relative z-10 h-px bg-gradient-to-r from-transparent via-packages-sage-200/70 to-transparent mb-8"></div>
 
-                    <!-- Features -->
+                    
                     <ul class="relative z-10 space-y-4 mb-10">
                         <li class="flex items-start gap-3 feature-item">
                             <div class="w-5 h-5 rounded-full bg-packages-sage-100 border border-packages-sage-200/50 flex items-center justify-center mt-0.5 flex-shrink-0">
@@ -723,7 +714,7 @@
                         </li>
                     </ul>
 
-                    <!-- CTA Button -->
+                    
                    <div class="relative z-10">
     <button id="packageBtn1"
             class="btn-basic w-full py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-500 bg-packages-sage-50 border border-packages-sage-200 text-packages-sage-700 hover:bg-packages-sage-100 hover:border-packages-sage-300 hover:shadow-lg hover:shadow-packages-sage-100/50 active:scale-[0.98] relative overflow-hidden">
@@ -733,11 +724,10 @@
                 </div>
             </div>
 
-
-                        <!-- ========== Card 2: الباقة المميزة (Featured) ========== -->
+                        
             <div class="pricing-card featured group relative lg:-mt-6" data-aos="fade-up" data-delay="150">
                 
-                <!-- Popular Badge -->
+                
                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-30">
                     <div class="relative">
                         <div class="absolute inset-0 bg-packages-gold-400 rounded-full blur-lg opacity-25 animate-pulse-slow"></div>
@@ -752,10 +742,10 @@
 
                 <div class="card-inner featured-inner relative bg-white/80 backdrop-blur-xl rounded-3xl border border-packages-gold-300/50 p-8 pt-12 transition-all duration-700 ease-out hover:border-packages-gold-400/70 hover:bg-white/95 overflow-hidden shadow-lg shadow-packages-gold-200/20 hover:shadow-2xl hover:shadow-packages-gold-300/25">
                     
-                    <!-- Featured Card Glow -->
+                    
                     <div class="card-glow featured-glow absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700"></div>
 
-                    <!-- Gold Corner Accents -->
+                    
                     <div class="absolute top-0 right-0 w-32 h-32 opacity-[0.06]">
                         <svg viewBox="0 0 100 100" fill="none">
                             <path d="M100 0 L100 100 L0 0 Z" fill="url(#goldCorner1)"/>
@@ -779,7 +769,7 @@
                         </svg>
                     </div>
 
-                                        <!-- Islamic Pattern -->
+                                        
                     <div class="absolute top-0 right-0 w-40 h-40 opacity-[0.03]">
                         <svg viewBox="0 0 100 100" fill="currentColor" class="text-packages-gold-600">
                             <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5"/>
@@ -790,7 +780,7 @@
                         </svg>
                     </div>
 
-                    <!-- Header -->
+                    
                     <div class="relative z-10">
                         <div class="flex items-center gap-3 mb-2">
                             <div class="w-11 h-11 rounded-2xl bg-packages-gold-100/80 border border-packages-gold-200/60 flex items-center justify-center">
@@ -804,7 +794,7 @@
                         <p class="text-packages-warm-400 text-sm mb-6">للجادّين في حفظ وإتقان القرآن</p>
                     </div>
 
-                    <!-- Price -->
+                    
                     <div class="relative z-10 mb-8">
                         <div class="flex items-baseline gap-2">
                             <span class="text-5xl font-black bg-gradient-to-r from-packages-gold-600 via-packages-gold-500 to-packages-gold-600 bg-clip-text text-transparent">500</span>
@@ -821,10 +811,10 @@
                         </div>
                     </div>
 
-                    <!-- Divider -->
+                    
                     <div class="relative z-10 h-px bg-gradient-to-r from-transparent via-packages-gold-300/40 to-transparent mb-8"></div>
 
-                    <!-- Features -->
+                    
                     <ul class="relative z-10 space-y-4 mb-10">
                         <li class="flex items-start gap-3 feature-item">
                             <div class="w-5 h-5 rounded-full bg-packages-gold-100/80 border border-packages-gold-200/50 flex items-center justify-center mt-0.5 flex-shrink-0">
@@ -876,7 +866,7 @@
                         </li>
                     </ul>
 
-                                        <!-- CTA Button -->
+                                        
                     <div class="relative z-10">
     <button id="packageBtn2"
             class="btn-featured w-full py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-500 relative overflow-hidden group/btn">
@@ -894,14 +884,14 @@
                 </div>
             </div>
 
-            <!-- ========== Card 3: الباقة الشاملة ========== -->
+            
             <div class="pricing-card group relative" data-aos="fade-up" data-delay="300">
                 <div class="card-inner relative bg-white/70 backdrop-blur-xl rounded-3xl border border-packages-sage-200/60 p-8 pt-10 transition-all duration-700 ease-out hover:border-packages-sage-300/80 hover:bg-white/90 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-packages-sage-200/30">
                     
-                    <!-- Card Glow -->
+                    
                     <div class="card-glow absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700"></div>
 
-                    <!-- Subtle Islamic Pattern -->
+                    
                     <div class="absolute top-0 right-0 w-32 h-32 opacity-[0.04]">
                         <svg viewBox="0 0 100 100" fill="currentColor" class="text-packages-sage-600">
                             <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5"/>
@@ -911,7 +901,7 @@
                         </svg>
                     </div>
 
-                    <!-- Header -->
+                    
                     <div class="relative z-10">
                         <div class="flex items-center gap-3 mb-2">
                             <div class="w-11 h-11 rounded-2xl bg-packages-sage-100 border border-packages-sage-200/50 flex items-center justify-center">
@@ -925,7 +915,7 @@
                         <p class="text-packages-warm-400 text-sm mb-6">لمن يريد التميّز والإتقان الكامل</p>
                     </div>
 
-                    <!-- Price -->
+                    
                     <div class="relative z-10 mb-8">
                         <div class="flex items-baseline gap-2">
                             <span class="text-5xl font-black text-packages-warm-800">1000</span>
@@ -936,11 +926,10 @@
                         </div>
                     </div>
 
-
-                                        <!-- Divider -->
+                                        
                     <div class="relative z-10 h-px bg-gradient-to-r from-transparent via-packages-sage-200/70 to-transparent mb-8"></div>
 
-                    <!-- Features -->
+                    
                     <ul class="relative z-10 space-y-4 mb-10">
                         <li class="flex items-start gap-3 feature-item">
                             <div class="w-5 h-5 rounded-full bg-packages-sage-100 border border-packages-sage-200/50 flex items-center justify-center mt-0.5 flex-shrink-0">
@@ -1000,7 +989,7 @@
                         </li>
                     </ul>
 
-                    <!-- CTA Button -->
+                    
                     <div class="relative z-10">
     <button id="packageBtn3"
             class="btn-basic w-full py-4 px-6 rounded-2xl font-bold text-sm transition-all duration-500 bg-packages-sage-50 border border-packages-sage-200 text-packages-sage-700 hover:bg-packages-sage-100 hover:border-packages-sage-300 hover:shadow-lg hover:shadow-packages-sage-100/50 active:scale-[0.98] relative overflow-hidden">
@@ -1012,7 +1001,7 @@
 
         </div>
 
-        <!-- Bottom Guarantee Note -->
+        
         <div class="max-w-2xl mx-auto mt-16 text-center relative z-10">
             <div class="bg-white/60 backdrop-blur-sm border border-packages-sage-200/40 rounded-2xl p-6 shadow-sm">
                 <div class="flex items-center justify-center gap-2 mb-3">
@@ -1033,15 +1022,15 @@
 
 </section>
 
-   <!-- Study Section -->
+   
 <section id="study-section" class="relative z-10 py-20 md:py-32 px-4">
 
-    <!-- Particles Container (Section-specific) -->
+    
     <div id="study-particles-container" class="absolute inset-0 pointer-events-none z-0" aria-hidden="true"></div>
 
     <div class="max-w-6xl mx-auto relative z-10">
 
-        <!-- Section Header -->
+        
         <div class="text-center mb-20 md:mb-28">
             <div class="inline-flex items-center justify-center gap-3 mb-6 section-header" data-animate="fade-down">
                 <span class="block w-12 h-[2px] bg-study-gold-400 rounded-full"></span>
@@ -1060,25 +1049,25 @@
             </p>
         </div>
 
-        <!-- Timeline Container -->
+        
         <div class="relative" id="timeline-wrapper">
 
-            <!-- Animated Line (Center on desktop, Right on mobile) -->
+            
             <div class="timeline-line-track absolute top-0 bottom-0 right-8 md:right-auto md:left-1/2 md:-translate-x-1/2 w-[3px]">
                 <div class="timeline-line-glow absolute inset-0 w-full rounded-full bg-study-primary-100"></div>
                 <div id="timeline-progress" class="absolute top-0 w-full rounded-full bg-gradient-to-b from-study-primary-400 via-study-primary-500 to-study-gold-500 transition-all duration-100 ease-out" style="height: 0%;"></div>
-                <!-- Moving light orb -->
+                
                 <div id="timeline-orb" class="absolute w-5 h-5 -right-[9px] rounded-full bg-study-gold-400 shadow-lg shadow-study-gold-400/50 opacity-0 transition-all duration-100 ease-out" style="top: 0%;">
                     <div class="absolute inset-0 rounded-full bg-study-gold-300 animate-ping opacity-40"></div>
                 </div>
             </div>
 
-            <!-- Steps -->
+            
             <div class="relative space-y-16 md:space-y-24" id="steps-container">
 
-                <!-- Step 1 -->
+                
                 <div class="step-item relative flex items-start gap-6 md:gap-0" data-step="1">
-                    <!-- Dot -->
+                    
                     <div class="step-dot absolute right-[22px] md:right-auto md:left-1/2 md:-translate-x-1/2 top-2 z-20">
                         <div class="relative">
                             <div class="w-[42px] h-[42px] rounded-full bg-study-cream-50 border-[3px] border-study-primary-200 flex items-center justify-center transition-all duration-700 step-dot-inner">
@@ -1088,10 +1077,10 @@
                         </div>
                     </div>
 
-                    <!-- Content Card (Right side on desktop for odd steps) -->
+                    
                     <div class="step-content mr-20 md:mr-0 md:w-[calc(50%-40px)] md:ml-auto md:pl-0 md:pr-0">
                         <div class="step-card group relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-study-primary-100/50 hover:shadow-xl hover:shadow-study-primary-100/30 transition-all duration-700 cursor-default overflow-hidden">
-                            <!-- Card glow -->
+                            
                             <div class="absolute inset-0 bg-gradient-to-br from-study-primary-50/0 to-study-gold-50/0 group-hover:from-study-primary-50/50 group-hover:to-study-gold-50/30 transition-all duration-700 rounded-3xl"></div>
 
                             <div class="relative z-10">
@@ -1118,7 +1107,7 @@
                     </div>
                 </div>
 
-                                   <!-- Step 2 -->
+                                   
                 <div class="step-item relative flex items-start gap-6 md:gap-0" data-step="2">
                     <div class="step-dot absolute right-[22px] md:right-auto md:left-1/2 md:-translate-x-1/2 top-2 z-20">
                         <div class="relative">
@@ -1129,7 +1118,7 @@
                         </div>
                     </div>
 
-                    <!-- Content Card (Left side on desktop for even steps) -->
+                    
                     <div class="step-content mr-20 md:mr-0 md:w-[calc(50%-40px)]">
                         <div class="step-card group relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-study-primary-100/50 hover:shadow-xl hover:shadow-study-primary-100/30 transition-all duration-700 cursor-default overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-study-primary-50/0 to-study-gold-50/0 group-hover:from-study-primary-50/50 group-hover:to-study-gold-50/30 transition-all duration-700 rounded-3xl"></div>
@@ -1158,7 +1147,7 @@
                     </div>
                 </div>
 
-                <!-- Step 3 -->
+                
                 <div class="step-item relative flex items-start gap-6 md:gap-0" data-step="3">
                     <div class="step-dot absolute right-[22px] md:right-auto md:left-1/2 md:-translate-x-1/2 top-2 z-20">
                         <div class="relative">
@@ -1196,7 +1185,7 @@
                     </div>
                 </div>
 
-                                   <!-- Step 4 -->
+                                   
                 <div class="step-item relative flex items-start gap-6 md:gap-0" data-step="4">
                     <div class="step-dot absolute right-[22px] md:right-auto md:left-1/2 md:-translate-x-1/2 top-2 z-20">
                         <div class="relative">
@@ -1234,7 +1223,7 @@
                     </div>
                 </div>
 
-                <!-- Step 5 -->
+                
                 <div class="step-item relative flex items-start gap-6 md:gap-0" data-step="5">
                     <div class="step-dot absolute right-[22px] md:right-auto md:left-1/2 md:-translate-x-1/2 top-2 z-20">
                         <div class="relative">
@@ -1272,7 +1261,7 @@
                     </div>
                 </div>
 
-                                    <!-- Step 6 -->
+                                    
                 <div class="step-item relative flex items-start gap-6 md:gap-0" data-step="6">
                     <div class="step-dot absolute right-[22px] md:right-auto md:left-1/2 md:-translate-x-1/2 top-2 z-20">
                         <div class="relative">
@@ -1313,7 +1302,7 @@
             </div>
         </div>
 
-        <!-- Bottom CTA -->
+        
         <div class="text-center mt-20 md:mt-28" data-animate="fade-up">
             <div class="inline-flex flex-col items-center gap-6">
                <div id="studyStartBtn" class="flex items-center gap-2 text-study-primary-600/50 cursor-pointer">
@@ -1339,28 +1328,28 @@
 
     </div>
 
-    <!-- Decorative Elements -->
+    
     <div class="absolute top-20 right-10 w-72 h-72 bg-study-primary-200/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
     <div class="absolute bottom-20 left-10 w-96 h-96 bg-study-gold-200/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
     <div class="absolute top-1/2 left-1/4 w-48 h-48 bg-study-primary-100/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
 </section>
 
-   <!-- FAQ Section -->
+   
 <section class="faq-section" id="faq-section">
 
-    <!-- Particles Canvas (Section-specific) -->
+    
     <canvas id="faq-particles-canvas"></canvas>
 
-    <!-- Ambient Light Orbs -->
+    
     <div class="ambient-orb ambient-orb-1"></div>
     <div class="ambient-orb ambient-orb-2"></div>
     <div class="ambient-orb ambient-orb-3"></div>
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Section Header -->
+        
         <div class="section-header">
-            <!-- Decorative Lantern Icon -->
+            
             <div class="lantern-icon">
                 <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M38 8C38 8 40 2 42 8" stroke="url(#faq-goldGrad)" stroke-width="2" stroke-linecap="round"/>
@@ -1407,10 +1396,10 @@
         </div>
 
       
-        <!-- Accordion Container -->
+        
         <div class="accordion-container" id="accordionContainer">
 
-            <!-- FAQ Item 1 -->
+            
             <div class="accordion-item" data-category="general" data-index="0">
                 <button class="accordion-trigger" aria-expanded="false">
                     <div class="trigger-content">
@@ -1439,7 +1428,7 @@
                 </div>
             </div>
 
-                                <!-- FAQ Item 2 -->
+                                
                 <div class="accordion-item" data-category="general" data-index="1">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1469,7 +1458,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 3 -->
+                
                 <div class="accordion-item" data-category="courses" data-index="2">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1528,7 +1517,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 4 -->
+                
                 <div class="accordion-item" data-category="courses" data-index="3">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1558,7 +1547,7 @@
                     </div>
                 </div>
 
-                               <!-- FAQ Item 5 -->
+                               
                 <div class="accordion-item" data-category="technical" data-index="4">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1597,7 +1586,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 6 -->
+                
                 <div class="accordion-item" data-category="technical" data-index="5">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1627,7 +1616,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 7 -->
+                
                 <div class="accordion-item" data-category="payment" data-index="6">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1667,7 +1656,7 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 8 -->
+                
                 <div class="accordion-item" data-category="payment" data-index="7">
                     <button class="accordion-trigger" aria-expanded="false">
                         <div class="trigger-content">
@@ -1699,7 +1688,7 @@
                     </div>
                 </div>
 
-               <!-- FAQ Item 9 -->
+               
 <div class="accordion-item" data-category="courses" data-index="8">
     <button class="accordion-trigger" aria-expanded="false">
         <div class="trigger-content">
@@ -1730,7 +1719,6 @@
     </div>
 </div>
 
-<!-- FAQ Item 10 -->
 <div class="accordion-item" data-category="general" data-index="9">
     <button class="accordion-trigger" aria-expanded="false">
         <div class="trigger-content">
@@ -1763,7 +1751,7 @@
 
             </div>
 
-            <!-- Bottom CTA -->
+            
             <div class="bottom-cta">
                 <div class="cta-content">
                     <div class="cta-icon">❓</div>
@@ -1781,32 +1769,31 @@
         </div>
     </section>
 
-
- <!-- ===================== FOOTER ===================== -->
+ 
 <footer class="relative overflow-hidden bg-gradient-to-b from-footer-dark-400 via-footer-dark-500 to-footer-dark-600 border-t border-footer-gold-300/10 min-h-screen flex flex-col justify-center" id="footer-section">
 
-    <!-- Particles Canvas -->
+    
     <canvas id="footerParticles" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
-    <!-- Ambient Lights -->
+    
     <div class="absolute -top-48 -right-24 w-[500px] h-[500px] rounded-full bg-footer-gold-300/[0.05] blur-[120px] pointer-events-none z-0 animate-float-slow"></div>
     <div class="absolute -bottom-36 -left-24 w-[400px] h-[400px] rounded-full bg-footer-gold-300/[0.03] blur-[100px] pointer-events-none z-0 animate-float-medium"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-footer-gold-200/[0.03] blur-[80px] pointer-events-none z-0 animate-float-fast"></div>
 
-    <!-- Top Gold Line -->
+    
     <div class="absolute top-0 left-0 right-0 h-[2px] z-20 top-gold-line"></div>
     <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-48 h-5 bg-gradient-radial from-footer-gold-300/30 to-transparent blur-sm z-20"></div>
 
-    <!-- Geometric Pattern Overlay -->
+    
     <div class="absolute inset-0 opacity-[0.02] pointer-events-none z-0 geometric-pattern"></div>
 
-    <!-- ========= CONTENT ========= -->
+    
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-8 w-full">
 
-        <!-- === 4 Column Grid === -->
+        
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-14">
 
-            <!-- COL 1: Logo + Description -->
+            
             <div class="sm:col-span-2 lg:col-span-1 footer-col" data-animate="fade-up" data-delay="0">
                 <div class="flex items-center gap-3 mb-5 group cursor-default">
                     <div class="relative flex-shrink-0">
@@ -1846,7 +1833,7 @@
                 </div>
             </div>
 
-            <!-- COL 2: Quick Links -->
+            
             <div class="footer-col" data-animate="fade-up" data-delay="100">
                 <h3 class="flex items-center gap-2 text-white text-base font-bold font-tajawal mb-6 relative pb-3">
                     <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-footer-gold-300/10 text-footer-gold-300 text-xs">
@@ -1879,7 +1866,7 @@
                 </ul>
             </div>
 
-                            <!-- COL 3: Programs -->
+                            
             <div class="footer-col" data-animate="fade-up" data-delay="200">
                 <h3 class="flex items-center gap-2 text-white text-base font-bold font-tajawal mb-6 relative pb-3">
                     <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-footer-gold-300/10 text-footer-gold-300 text-xs">
@@ -1916,7 +1903,7 @@
                 </ul>
             </div>
 
-            <!-- COL 4: Contact -->
+            
             <div class="footer-col" data-animate="fade-up" data-delay="300">
                 <h3 class="flex items-center gap-2 text-white text-base font-bold font-tajawal mb-6 relative pb-3">
                     <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-footer-gold-300/10 text-footer-gold-300 text-xs">
@@ -1970,7 +1957,7 @@
             </div>
         </div>
 
-                       <!-- === Newsletter === -->
+                       
             <div class="relative rounded-2xl border border-footer-gold-300/10 bg-white/[0.01] backdrop-blur-sm p-6 sm:p-8 mb-14 overflow-hidden" data-animate="fade-up" data-delay="400">
                 <div class="absolute inset-0 bg-gradient-to-l from-footer-gold-300/[0.03] to-transparent pointer-events-none"></div>
                 <div class="relative flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1999,10 +1986,10 @@
                 </div>
             </div>
 
-            <!-- === Stats + Social === -->
+            
             <div class="flex flex-col lg:flex-row items-center justify-between gap-10 mb-12" data-animate="fade-up" data-delay="500">
 
-                <!-- Stats - Auto Counting -->
+                
                 <div class="flex flex-wrap justify-center gap-6 sm:gap-8">
                     <div class="text-center stat-box">
                         <span class="block text-2xl sm:text-3xl font-bold text-footer-gold-300 font-tajawal stat-number" data-count="15000">0</span>
@@ -2025,11 +2012,11 @@
                     </div>
                 </div>
 
-                <!-- Social Icons -->
+                
                 <div class="flex items-center gap-3 flex-wrap justify-center">
                     <span class="text-gray-500 text-sm ml-1">تابعنا:</span>
 
-                    <!-- فيسبوك -->
+                    
                     <a 
                         href="https://web.facebook.com/judax2/" 
                         target="_blank" 
@@ -2041,7 +2028,7 @@
                         <i class="fab fa-facebook-f"></i>
                     </a>
 
-                    <!-- تويتر / X -->
+                    
                     <a 
                         href="https://twitter.com/juda_x2" 
                         target="_blank" 
@@ -2053,7 +2040,7 @@
                         <i class="fab fa-x-twitter"></i>
                     </a>
 
-                    <!-- يوتيوب -->
+                    
                     <a 
                         href="https://youtube.com/@juda_x2" 
                         target="_blank" 
@@ -2065,7 +2052,7 @@
                         <i class="fab fa-youtube"></i>
                     </a>
 
-                    <!-- إنستغرام -->
+                    
                     <a 
                         href="https://www.instagram.com/juda_x2/" 
                         target="_blank" 
@@ -2077,7 +2064,7 @@
                         <i class="fab fa-instagram"></i>
                     </a>
 
-                    <!-- تيليغرام -->
+                    
                     <a 
                         href="http://t.me/juda_x2" 
                         target="_blank" 
@@ -2089,7 +2076,7 @@
                         <i class="fab fa-telegram-plane"></i>
                     </a>
 
-                    <!-- واتساب -->
+                    
                     <a 
                         href="https://wa.me/+201095125229" 
                         target="_blank" 
@@ -2101,7 +2088,7 @@
                         <i class="fab fa-whatsapp"></i>
                     </a>
 
-                    <!-- تيك توك -->
+                    
                     <a 
                         href="https://www.tiktok.com/@juda_x2" 
                         target="_blank" 
@@ -2115,8 +2102,7 @@
                 </div>
             </div>
 
-
-                        <!-- === Bottom Bar === -->
+                        
             <div class="border-t border-white/[0.05] pt-6 mt-4">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p class="text-gray-500 text-xs sm:text-sm font-tajawal text-center sm:text-right">
@@ -2134,7 +2120,7 @@
             </div>
         </div>
 
-       <!-- Scroll to Top -->
+       
 <button
     id="scrollTopBtn"
     onclick="footerScrollToTop()"
@@ -2145,11 +2131,8 @@
 
     </footer>
 
-
-
-    <!-- Bundled JavaScript -->
+    
     <script src="assets/js/bundle.js" defer></script>
-
 
 </body>
 </html>

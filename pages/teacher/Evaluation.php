@@ -1,5 +1,4 @@
 <?php
-// Teacher Evaluation - Dynamic
 $students = $conn->query("SELECT u.id, u.name FROM users u JOIN roles r ON u.role_id=r.id WHERE r.name='student' ORDER BY u.name");
 $evaluations = $conn->query("SELECT ev.*,u.name as student_name FROM evaluations ev JOIN users u ON ev.student_id=u.id WHERE ev.teacher_id=$uid ORDER BY ev.created_at DESC");
 ?>

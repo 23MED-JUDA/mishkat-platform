@@ -1,5 +1,4 @@
 <?php
-// Admin Content Management - Dynamic
 $courses = $conn->query("SELECT lp.id, lp.name AS title, lp.description, 'auto' AS type, 'emerald' AS color, IFNULL(pp.sessions_count, 0) AS sessions_count, IFNULL(pp.price, 0) AS price, (SELECT COUNT(*) FROM student_paths WHERE path_id=lp.id) AS students_count FROM learning_paths lp LEFT JOIN path_plans pp ON pp.path_id=lp.id ORDER BY lp.id DESC");
 ?>
 <div class="space-y-6 animate-fadeIn" dir="rtl">

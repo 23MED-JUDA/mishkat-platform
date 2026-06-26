@@ -1,5 +1,4 @@
 <?php
-// Parent Notifications - Dynamic
 $notifications = $conn->query("SELECT * FROM notifications WHERE user_id=$uid ORDER BY created_at DESC");
 $unreadCount = $conn->query("SELECT COUNT(*) as c FROM notifications WHERE user_id=$uid AND is_read=0")->fetch_assoc()['c'];
 ?>

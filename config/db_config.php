@@ -1,9 +1,7 @@
 <?php
-// إعدادات قاعدة البيانات لمختلف البيئات
 
 define('APP_ROOT', dirname(__DIR__));
 
-// تحميل ملف .env إن وجد
 $envFile = APP_ROOT . '/.env';
 if (file_exists($envFile)) {
     $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -22,7 +20,6 @@ if (file_exists($envFile)) {
     }
 }
 
-// تحديد البيئة الحالية (local, staging, production)
 function detectEnvironment(): string
 {
     $envVar = getenv('APP_ENV') ?: ($_ENV['APP_ENV'] ?? null);
@@ -49,7 +46,6 @@ function detectEnvironment(): string
     return 'production';
 }
 
-// مصفوفة الإعدادات لكل بيئة
 $environments = [
     'local' => [
         'db' => [
@@ -98,7 +94,6 @@ $environments = [
     ],
 ];
 
-// تحديد البيئة النشطة
 define('APP_ENV', detectEnvironment());
 
 if (!isset($environments[APP_ENV])) {
@@ -107,7 +102,6 @@ if (!isset($environments[APP_ENV])) {
 
 $config = $environments[APP_ENV];
 
-// دوال مساعدة لجلب الإعدادات
 function config(string $key, mixed $default = null): mixed
 {
     global $config;

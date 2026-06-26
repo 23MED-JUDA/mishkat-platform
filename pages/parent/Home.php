@@ -1,8 +1,6 @@
 <?php
-// Parent Dashboard Home - Children Overview
 $parentId = $_SESSION['user_id'];
 
-// Get children
 $parentRow = $conn->query("SELECT id FROM parents WHERE user_id=$parentId")->fetch_assoc();
 $parentIdVal = $parentRow ? $parentRow['id'] : 0;
 $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.email, u.status 
@@ -29,7 +27,6 @@ $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.
                 <?php while($s = $children->fetch_assoc()): 
                     $sid = $s['student_id'];
                     $uid = $s['user_id'];
-                    // Get progress stats for this child
                     $evalQuery = $conn->query("SELECT AVG(memorization) as mem, AVG(tajweed) as taj, AVG(behavior) as beh, AVG(attendance) as att FROM evaluations WHERE student_id = $sid")->fetch_assoc();
                     $avgMemorization = $evalQuery && $evalQuery['mem'] !== null ? round($evalQuery['mem']) : 0;
                     $avgTajweed = $evalQuery && $evalQuery['taj'] !== null ? round($evalQuery['taj']) : 0;
@@ -64,7 +61,7 @@ $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.
                         </div>
                     </div>
 
-                    <!-- تفاصيل التقييم للابن -->
+                    
                     <div class="space-y-2 mb-6 bg-gray-50 p-4 rounded-[1.5rem] border border-gray-100">
                         <p class="text-[10px] font-black text-gray-400 mb-2 tracking-widest uppercase">تفاصيل أداء الابن</p>
                         <div class="flex justify-between items-center text-xs">
@@ -101,7 +98,7 @@ $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.
                 <?php endwhile; ?>
             </div>
 
-            <!-- أهمية المتابعة والتربية الصالحة -->
+            
             <div class="luxury-card p-6 md:p-8 border-none bg-gradient-to-br from-mishkat-green-50 to-white dark:from-mishkat-green-900/10 dark:to-mishkat-green-950/20 mt-10">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-10 h-10 rounded-xl bg-mishkat-green-50 dark:bg-mishkat-green-900/30 text-mishkat-green-600 dark:text-mishkat-green-400 flex items-center justify-center">
@@ -110,7 +107,7 @@ $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.
                     <h3 class="text-xl font-black text-gray-900 dark:text-white font-tajawal">أهمية المتابعة ودور الأسرة في تنشئة الأبناء</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- الفائدة الأولى -->
+                    
                     <div class="p-5 bg-white dark:bg-mishkat-green-900/20 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-between hover:scale-[1.02] transition-all">
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-500 flex items-center justify-center mb-4">
@@ -122,7 +119,7 @@ $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.
                             </p>
                         </div>
                     </div>
-                    <!-- الفائدة الثانية -->
+                    
                     <div class="p-5 bg-white dark:bg-mishkat-green-900/20 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-between hover:scale-[1.02] transition-all">
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-blue-500 flex items-center justify-center mb-4">
@@ -134,7 +131,7 @@ $children = $conn->query("SELECT u.id AS user_id, s.id AS student_id, u.name, u.
                             </p>
                         </div>
                     </div>
-                    <!-- الفائدة الثالثة -->
+                    
                     <div class="p-5 bg-white dark:bg-mishkat-green-900/20 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-between hover:scale-[1.02] transition-all">
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/30 text-purple-500 flex items-center justify-center mb-4">

@@ -1,5 +1,4 @@
 <?php
-// Parent Episods (Circle Schedule) - Dynamic
 $parentRow = $conn->query("SELECT id FROM parents WHERE user_id=$uid")->fetch_assoc();
 $parentId = $parentRow ? $parentRow['id'] : 0;
 $children = $conn->query("SELECT s.id, u.name FROM students s JOIN users u ON s.user_id=u.id WHERE s.parent_id=$parentId");
@@ -22,7 +21,7 @@ $circles = $conn->query("SELECT ci.*, 'active' AS status, u.name as teacher_name
 <div class="space-y-6 animate-fadeIn" dir="rtl">
     <h2 class="text-2xl font-black text-gray-900">جدول الحلقات</h2>
 
-    <!-- Active Circles -->
+    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <?php while($ci = $circles->fetch_assoc()): ?>
         <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-5 hover:shadow-md transition-all">
@@ -36,7 +35,7 @@ $circles = $conn->query("SELECT ci.*, 'active' AS status, u.name as teacher_name
         <?php endwhile; ?>
     </div>
 
-    <!-- Children Events -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-5 border-b border-gray-50"><h3 class="font-black text-gray-900">أحداث الأبناء القادمة</h3></div>
         <div class="divide-y divide-gray-50">

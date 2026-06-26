@@ -8,12 +8,12 @@ require_once 'includes/db.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عن مشكاة | رحلتك نحو إتقان القرآن الكريم</title>
     
-    <!-- Compiled Tailwind CSS -->
+    
     <link rel="stylesheet" href="assets/css/tailwind.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     
-    <!-- ملف التنسيق الرئيسي -->
+    
     <link rel="stylesheet" href="assets/css/main.css">
     
     <style>
@@ -23,7 +23,7 @@ require_once 'includes/db.php';
 </head>
 <body class="bg-gray-50/50">
 
-    <!-- Navbar -->
+    
     <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -40,7 +40,7 @@ require_once 'includes/db.php';
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    
     <section class="py-20 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
             <h1 class="text-5xl md:text-7xl font-black text-gray-900 mb-8 leading-tight">قصة <span class="gradient-text">مشكاة</span></h1>
@@ -49,7 +49,7 @@ require_once 'includes/db.php';
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-100/50 rounded-full blur-[120px] -z-10"></div>
     </section>
 
-    <!-- Vision & Mission -->
+    
     <section class="pb-24">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
             <div class="p-12 bg-emerald-900 rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
@@ -64,7 +64,7 @@ require_once 'includes/db.php';
         </div>
     </section>
 
-    <!-- Values -->
+    
     <section class="py-24 bg-gray-50/50">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-black text-center text-gray-900 mb-16">قيمنا التي نحيا بها</h2>
@@ -101,7 +101,7 @@ require_once 'includes/db.php';
         </div>
     </section>
 
-    <!-- Footer -->
+    
     <footer class="py-12 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <p class="text-sm font-bold text-gray-400">© 2026 منصة مشكاة التعليمية. جميع الحقوق محفوظة.</p>

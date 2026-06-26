@@ -1,5 +1,4 @@
 <?php
-// pages/teacher/Episodes.php
 ?>
 <div class="animate-fadeIn" dir="rtl">
     <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -13,7 +12,7 @@
         </button>
     </div>
 
-    <!-- Filters -->
+    
     <div class="luxury-card p-6 rounded-[2rem] shadow-sm border border-gray-100 mb-8 flex flex-wrap gap-4 items-center">
         <span class="text-xs font-black text-gray-400 uppercase tracking-widest">تصفية حسب المسار:</span>
         <select id="courseFilter" onchange="loadEpisodes()" class="bg-gray-50 border-none rounded-[1.5rem] px-4 py-2 text-sm font-bold text-gray-700 focus:ring-2 focus:ring-mishkat-green-100 outline-none">
@@ -21,13 +20,12 @@
         </select>
     </div>
 
-    <!-- Episodes Grid -->
+    
     <div id="episodesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Loaded via AJAX -->
+        
     </div>
 </div>
 
-<!-- Modal -->
 <div id="episodeModal" class="modal-backdrop">
     <div class="modal-box max-w-lg">
         <div class="flex justify-between items-center mb-6">
@@ -77,7 +75,6 @@
     </div>
 </div>
 
-<!-- Quiz Management Modal -->
 <div id="quizModal" class="modal-backdrop">
     <div class="modal-box max-w-2xl">
         <div class="flex justify-between items-center mb-6">
@@ -93,7 +90,7 @@
         <form id="quizForm" class="space-y-6">
             <input type="hidden" name="episode_id" id="quiz_ep_id">
             <div id="questionsContainer" class="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                <!-- Questions added here -->
+                
             </div>
             
             <button type="button" onclick="addQuestionUI()" class="w-full py-3 border-2 border-dashed border-gray-200 text-gray-400 rounded-[2rem] font-bold hover:border-mishkat-green-200 hover:text-mishkat-green-600 transition-all flex items-center justify-center gap-2">
@@ -243,13 +240,11 @@ async function deleteEpisode(id) {
     }
 }
 
-// Quiz Management
 function openQuizModal(id, title) {
     document.getElementById('quiz_ep_id').value = id;
     document.getElementById('quiz_ep_title').innerText = title;
     document.getElementById('questionsContainer').innerHTML = '';
     
-    // Load existing quiz if any
     apiGet('get_episode_quiz', `&episode_id=${id}`).then(res => {
         if(res.success && res.questions) {
             res.questions.forEach(q => addQuestionUI(q));

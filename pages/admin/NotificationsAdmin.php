@@ -1,5 +1,4 @@
 <?php
-// Admin Notifications - Dynamic
 $notifications = $conn->query("SELECT n.*,u.name as user_name FROM notifications n JOIN users u ON n.user_id=u.id ORDER BY n.created_at DESC LIMIT 50");
 $allUsers = $conn->query("SELECT id,name,role FROM users ORDER BY name");
 ?>

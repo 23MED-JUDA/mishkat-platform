@@ -1,5 +1,4 @@
 <?php
-// Admin Accounts Management - Dynamic
 $totalUsers = $conn->query("SELECT COUNT(*) as c FROM users")->fetch_assoc()['c'];
 $studentsCount = $conn->query("SELECT COUNT(*) as c FROM users WHERE role_id=3")->fetch_assoc()['c'];
 $teachersCount = $conn->query("SELECT COUNT(*) as c FROM users WHERE role_id=2")->fetch_assoc()['c'];

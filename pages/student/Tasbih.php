@@ -5,7 +5,7 @@
 ?>
 
 <div class="max-w-4xl mx-auto px-4 py-8 md:py-12 animate-fadeIn">
-    <!-- Header Section -->
+    
     <div class="text-center mb-12">
         <div class="inline-block px-4 py-1.5 bg-mishkat-gold-500/10 border border-mishkat-gold-500/20 rounded-full mb-4">
             <span class="text-[10px] font-black text-mishkat-gold-600 uppercase tracking-widest">الذكر الحكيم</span>
@@ -16,7 +16,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Left: Settings & Presets -->
+        
         <div class="lg:col-span-4 space-y-6 order-2 lg:order-1">
             <div class="luxury-card p-6 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-[2.5rem]">
                 <h3 class="text-sm font-black text-mishkat-green-900 dark:text-mishkat-gold-400 mb-6 flex items-center gap-2">
@@ -52,10 +52,10 @@
             </div>
         </div>
 
-        <!-- Center: The Main Counter -->
+        
         <div class="lg:col-span-8 flex flex-col items-center order-1 lg:order-2">
             <div class="relative">
-                <!-- Outer Progress Ring -->
+                
                 <svg class="w-72 h-72 md:w-96 md:h-96 -rotate-90">
                     <circle cx="50%" cy="50%" r="48%" 
                             class="stroke-gray-200 dark:stroke-white/5 fill-none" 
@@ -66,14 +66,14 @@
                             stroke-linecap="round"></circle>
                 </svg>
 
-                <!-- Inner Counter Button -->
+                
                 <div class="absolute inset-0 flex items-center justify-center">
                     <button id="tasbihBtn" onclick="incrementTasbih()" 
                             class="w-56 h-56 md:w-80 md:h-80 rounded-full bg-white dark:bg-[#0c1210] shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-gray-100 dark:border-white/5 flex flex-col items-center justify-center active:scale-95 transition-all duration-150 relative overflow-hidden group">
                         
                         <div class="absolute inset-0 bg-mishkat-gold-500 opacity-0 group-active:opacity-20 transition-opacity"></div>
                         
-                        <!-- Pulse Ring -->
+                        
                         <div id="pulseRing" class="absolute inset-0 rounded-full border-2 border-mishkat-gold-500 opacity-0"></div>
 
                         <div class="text-center z-10">
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <!-- Current Dhikr Display -->
+            
             <div class="mt-12 w-full max-w-lg text-center px-6 py-8 bg-mishkat-green-900 dark:bg-mishkat-gold-500 rounded-[3rem] shadow-2xl relative overflow-hidden group">
                 <div class="absolute inset-0 opacity-10 pointer-events-none">
                     <span class="material-icons-outlined text-[200px] absolute -right-10 -top-10 rotate-12">auto_awesome</span>
@@ -99,7 +99,7 @@
                 <p id="currentDhikr" class="text-2xl md:text-3xl font-black text-white dark:text-mishkat-green-900 font-amiri leading-relaxed">سبحان الله</p>
             </div>
 
-            <!-- Action Buttons -->
+            
             <div class="mt-8 flex items-center gap-4">
                 <button onclick="resetTasbih()" class="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm">
                     <span class="material-icons-outlined">refresh</span>
@@ -140,11 +140,9 @@
     const progressCircle = document.getElementById('progressCircle');
     const pulseRing = document.getElementById('pulseRing');
     
-    // Circle math
     const radius = 48; // 48%
     const circumference = 2 * Math.PI * (window.innerWidth >= 768 ? 192 * 0.48 : 144 * 0.48); // Approximate based on width
     
-    // Initialize UI
     function init() {
         countEl.innerText = count;
         roundEl.innerText = `الدورة: ${rounds}`;
@@ -252,7 +250,6 @@
     }
 
     function showCelebration() {
-        // Simple scale effect on count
         countEl.classList.add('scale-110', 'text-mishkat-gold-500');
         setTimeout(() => countEl.classList.remove('scale-110', 'text-mishkat-gold-500'), 500);
         showToast(`ما شاء الله! أتممت الدورة رقم ${rounds}`, 'success');

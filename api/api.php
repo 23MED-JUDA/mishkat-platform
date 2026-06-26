@@ -1,5 +1,4 @@
 <?php
-// ── إخفاء الأخطاء وتشغيل output buffer قبل أي شيء ──
 error_reporting(0);
 ini_set('display_errors', 0);
 ob_start();
@@ -7,7 +6,6 @@ ob_start();
 header('Content-Type: application/json');
 require_once __DIR__ . '/../includes/session.php';
 
-// دالة إرجاع JSON — تمسح الـ buffer لتجنب أي HTML خاطئ
 function jsonOut($data) {
     if (ob_get_level()) ob_end_clean();
     header('Content-Type: application/json');
@@ -15,7 +13,6 @@ function jsonOut($data) {
     exit();
 }
 
-// اصطياد الأخطاء الحرجة وإرجاعها كـ JSON
 register_shutdown_function(function() {
     $err = error_get_last();
     if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
@@ -25,13 +22,11 @@ register_shutdown_function(function() {
     }
 });
 
-// التحقق من الصلاحيات
 if (!isset($_SESSION['user_id'])) {
     jsonOut(['success' => false, 'message' => 'غير مصرح لك بالوصول - يرجى تسجيل الدخول']);
 }
 
 $uid = $_SESSION['user_id'];
-// جلب الدور من قاعدة البيانات، مع fallback للـ session إذا فشل الاتصال
 $role = '';
 if ($conn) {
     $userQuery = $conn->query("SELECT r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = $uid");
@@ -41,13 +36,11 @@ if ($conn) {
         $_SESSION['user_role'] = $role;
     }
 }
-// fallback: استخدام الدور المحفوظ في الـ session
 if (!$role) {
     $role = strtolower($_SESSION['user_role'] ?? '');
 }
 $action = $_REQUEST['action'] ?? '';
 
-// رفع الملفات
 function handleUpload($field, &$error_msg = null) {
     if (!isset($_FILES[$field])) {
         $error_msg = "لم يتم اختيار أي ملف";
@@ -107,7 +100,6 @@ function denied() {
 
 switch ($action) {
 
-    // debug: يكشف معلومات الجلسة والدور الحالي (للتشخيص فقط)
     case 'debug_session':
         jsonOut([
             'success'      => true,
@@ -120,7 +112,6 @@ switch ($action) {
         ]);
         break;
 
-    // المهام
     case 'get_tasks':
         $r = $conn->query("SELECT hs.*, h.title, h.type, h.due_date AS deadline, IF(hs.status = 'completed' OR hs.status = 'graded', 1, 0) AS completed 
                            FROM homework_submissions hs 
@@ -137,7 +128,6 @@ switch ($action) {
         $status = intval($_POST['status']);
         $status_str = $status ? 'completed' : 'pending';
         
-        // جلب معرف الطالب
         $s_res = $conn->query("SELECT id FROM students WHERE user_id = $uid")->fetch_assoc();
         $student_id = $s_res ? $s_res['id'] : 0;
         
@@ -146,16 +136,13 @@ switch ($action) {
         jsonOut(['success' => true]);
         break;
 
-    // الإشعارات
     case 'get_notifications':
         $r = $conn->query("SELECT * FROM notifications WHERE user_id = $uid ORDER BY created_at DESC LIMIT 10");
         $d = []; while($row = $r->fetch_assoc()) $d[] = $row;
         jsonOut(['success' => true, 'data' => $d]);
         break;
 
-    // التقويم
     case 'get_events':
-        // جلب الحصص كأحداث في التقويم بناء على دور المستخدم
         $d = [];
         if ($role === 'student') {
             $r = $conn->query("SELECT s.id, h.name AS title, s.session_link AS description, DATE(s.session_date) AS event_date, TIME(s.session_date) AS event_time, s.session_type AS type, 'emerald' AS color
@@ -181,7 +168,6 @@ switch ($action) {
         jsonOut(['success' => true, 'data' => $d]);
         break;
 
-    // الدورات
     case 'get_courses':
         $r = $conn->query("SELECT lp.id, lp.name AS title, lp.description, IFNULL(pp.sessions_count, 0) AS sessions_count, IFNULL(pp.price, 0) AS price, 'emerald' AS color, 'active' AS status 
                            FROM learning_paths lp 
@@ -216,7 +202,6 @@ switch ($action) {
         jsonOut(['success'=>true]);
         break;
 
-    // المواد التعليمية
     case 'get_episodes':
         $cid = intval($_GET['course_id'] ?? 0);
         $r = $conn->query("SELECT lm.id, lm.title, lm.description, lm.type AS content_type, lm.file_path AS content_data, lm.path_id AS course_id,
@@ -264,11 +249,9 @@ switch ($action) {
         break;
 
     case 'complete_episode':
-        // لا يوجد جدول إكمال للمواد التعليمية في الهيكل الجديد، يتم إرجاع نجاح مباشرة
         jsonOut(['success'=>true]);
         break;
 
-    // الاختبارات
     case 'get_episode_quiz':
         jsonOut(['success'=>false, 'message' => 'لا يوجد اختبارات حالياً في الهيكل الجديد']);
         break;
@@ -281,7 +264,6 @@ switch ($action) {
         jsonOut(['success'=>true]);
         break;
 
-    // إدارة المستخدمين
     case 'toggle_user_status':
         if($role!=='admin') denied();
         $uid_t = intval($_POST['user_id']);
@@ -306,7 +288,6 @@ switch ($action) {
     case 'approve_teacher':
         if($role!=='admin') denied();
         $uid_t = intval($_POST['user_id']);
-        // نتحقق من أن المستخدم معلم فعلاً
         $chk = $conn->query("SELECT id, status FROM users WHERE id=$uid_t AND role_id=2");
         if (!$chk || $chk->num_rows === 0) {
             jsonOut(['success'=>false, 'message'=>'لم يتم العثور على معلم بهذا المعرّف']);
@@ -323,7 +304,6 @@ switch ($action) {
     case 'reject_teacher':
         if($role!=='admin') denied();
         $uid_t = intval($_POST['user_id']);
-        // نتحقق من أن المستخدم معلم فعلاً
         $chk2 = $conn->query("SELECT id FROM users WHERE id=$uid_t AND role_id=2");
         if (!$chk2 || $chk2->num_rows === 0) {
             jsonOut(['success'=>false, 'message'=>'لم يتم العثور على معلم بهذا المعرّف']);
@@ -351,10 +331,8 @@ switch ($action) {
     case 'delete_user':
         if($role!=='admin') denied();
         $uid_t = intval($_POST['user_id']);
-        // Determine user role to clean up related tables
         $roleRes = $conn->query("SELECT role_id FROM users WHERE id=$uid_t")->fetch_assoc();
         $roleId = $roleRes['role_id'] ?? null;
-        // Delete role‑specific record if exists
         if($roleId == 2) { // teacher
             $conn->query("DELETE FROM teachers WHERE user_id=$uid_t");
         } elseif($roleId == 3) { // student
@@ -362,7 +340,6 @@ switch ($action) {
         } elseif($roleId == 4) { // parent
             $conn->query("DELETE FROM parents WHERE user_id=$uid_t");
         }
-        // Finally delete the user row
         $conn->query("DELETE FROM users WHERE id=$uid_t");
         jsonOut(['success'=>true]);
         break;
@@ -389,7 +366,6 @@ switch ($action) {
         if($stmt->execute()) {
             $new_uid = $stmt->insert_id;
             
-            // إدراج سجل في جدول الملف الشخصي الخاص بالدور
             if ($user_role === 'student') {
                 $conn->query("INSERT INTO students (user_id) VALUES ($new_uid)");
             } elseif ($user_role === 'teacher') {
@@ -412,7 +388,6 @@ switch ($action) {
         }
         $max_students = intval($_POST['max_students'] ?? 20);
         
-        // جلب معرف المعلم من جدول teachers
         $t_res = $conn->query("SELECT id FROM teachers WHERE user_id = $teacher_user_id")->fetch_assoc();
         $teacher_id = $t_res ? $t_res['id'] : null;
         
@@ -465,7 +440,6 @@ switch ($action) {
         $error_msg = '';
         $target = handleUpload('profile_image', $error_msg);
         if($target) {
-            // لا يوجد حقل avatar أو profile_image في جدول users الجديد، نرجع النجاح ليعرض بالواجهة
             jsonOut(['success'=>true, 'image_url'=>$target]);
         }
         jsonOut(['success'=>false, 'message'=>$error_msg]);
@@ -481,7 +455,6 @@ switch ($action) {
         if($stmt->execute()) {
             $_SESSION['user_name'] = $name; // تحديث الاسم في الجلسة
             
-            // تحديث جدول الطلاب أيضاً
             $stmt_s = $conn->prepare("UPDATE students SET gender=? WHERE user_id=?");
             $stmt_s->bind_param("si", $db_gender, $uid);
             $stmt_s->execute();

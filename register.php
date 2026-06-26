@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $age = intval($_POST['age'] ?? 0);
     $location = trim($_POST['location'] ?? '');
     
-    // التحقق من البريد الإلكتروني
     $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $check->bind_param("s", $email);
     $check->execute();
@@ -24,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $passHash = password_hash($password, PASSWORD_DEFAULT);
         $status = ($role === 'teacher' || $role === 'parent') ? 'pending' : 'active';
         
-        // خريطة تحويل الدور لـ ID
         $role_ids = ['admin' => 1, 'teacher' => 2, 'student' => 3, 'parent' => 4];
         $role_id = $role_ids[$role] ?? 3;
         
@@ -36,14 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             $uid = $stmt->insert_id;
             
-            // إذا كان طالباً
             if ($role === 'student') {
                 $stmt_student = $conn->prepare("INSERT INTO students (user_id, gender, join_date) VALUES (?, ?, NOW())");
                 $stmt_student->bind_param("is", $uid, $db_gender);
                 $stmt_student->execute();
             }
             
-            // إذا كان معلماً
             if ($role === 'teacher') {
                 $stmt2 = $conn->prepare("INSERT INTO teachers (user_id, specialization) VALUES (?, ?)");
                 $spec = $_POST['specialty'] ?? '';
@@ -51,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt2->execute();
             }
             
-            // إذا كان ولي أمر ويريد ربط ابنه
             if ($role === 'parent') {
                 $stmt_parent = $conn->prepare("INSERT INTO parents (user_id, gender) VALUES (?, ?)");
                 $stmt_parent->bind_param("is", $uid, $db_gender);
@@ -129,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php else: ?>
 
                 <form method="POST" id="registerForm" class="space-y-8">
-                    <!-- اختيار الدور -->
+                    
                     <div>
                         <label class="block text-sm font-black text-mishkat-green-900 mb-4 text-center">بأي صفة تود الانضمام إلينا؟</label>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -162,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <!-- الحقول الأساسية -->
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-xs font-black text-mishkat-green-800 uppercase px-2">الاسم الثلاثي</label>
@@ -186,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <!-- حقول إضافية -->
+                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-50">
                         <div class="space-y-2">
                             <label class="text-xs font-black text-mishkat-green-800 uppercase px-2">الجنس</label>
@@ -207,14 +202,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <!-- حقل التخصص (للمعلم فقط) -->
+                    
                     <div id="specialtyField" class="hidden animate-fadeIn space-y-2">
                         <label class="text-xs font-black text-mishkat-green-800 uppercase px-2">التخصص التعليمي</label>
                         <input type="text" name="specialty" placeholder="مثال: تجويد، تفسير، لغة عربية" 
                                class="w-full px-6 py-4 bg-gray-50 border-2 border-transparent focus:border-mishkat-green-100 rounded-2xl outline-none font-bold">
                     </div>
 
-                    <!-- حقل ربط الابن (لولي الأمر فقط) -->
+                    
                     <div id="sonField" class="hidden animate-fadeIn space-y-2">
                         <label class="text-xs font-black text-mishkat-green-800 uppercase px-2">البريد الإلكتروني للابن (المسجل مسبقاً)</label>
                         <input type="email" name="son_email" placeholder="student@mishkat.com" 

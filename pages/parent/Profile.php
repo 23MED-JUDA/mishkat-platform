@@ -1,5 +1,4 @@
 <?php
-// Parent Profile - Dynamic
 $profile = $conn->query("SELECT * FROM users WHERE id=$uid")->fetch_assoc();
 $parentRow = $conn->query("SELECT id FROM parents WHERE user_id=$uid")->fetch_assoc();
 $parentId = $parentRow ? $parentRow['id'] : 0;

@@ -1,5 +1,4 @@
 <?php
-// pages/teacher/Library.php
 ?>
 <div class="animate-fadeIn" dir="rtl">
     <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -13,7 +12,7 @@
         </button>
     </div>
 
-    <!-- Stats -->
+    
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
         <div class="luxury-card p-6 rounded-[2rem] shadow-sm border border-gray-50 flex items-center gap-4">
             <div class="w-12 h-12 rounded-[2rem] bg-mishkat-green-50 text-mishkat-green-700 flex items-center justify-center">
@@ -26,7 +25,7 @@
         </div>
     </div>
 
-    <!-- Filter & Content -->
+    
     <div class="luxury-card rounded-[3rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-8 border-b border-gray-50 flex flex-wrap justify-between items-center gap-4">
             <div class="flex gap-2">
@@ -39,13 +38,12 @@
         
         <div class="p-8">
             <div id="libraryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Items here -->
+                
             </div>
         </div>
     </div>
 </div>
 
-<!-- Add/Edit Item Modal -->
 <div id="libraryModal" class="modal-backdrop">
     <div class="modal-box max-w-lg">
         <div class="flex justify-between items-center mb-6">
@@ -230,6 +228,5 @@ function deleteLibItem(id) {
     });
 }
 
-// Init
 loadLibrary();
 </script>

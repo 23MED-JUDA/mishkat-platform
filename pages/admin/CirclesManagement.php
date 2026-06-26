@@ -1,5 +1,4 @@
 <?php
-// Admin & Teacher Circles Management - Dynamic
 if ($role === 'teacher') {
     $t_res = $conn->query("SELECT id FROM teachers WHERE user_id = $uid")->fetch_assoc();
     $teacher_id = $t_res ? $t_res['id'] : 0;

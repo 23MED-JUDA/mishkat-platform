@@ -1,10 +1,8 @@
 <?php
-// Exam Result Page - Dynamic
 $score = intval($_GET['score'] ?? 0);
 $total = intval($_GET['total'] ?? 0);
 $pct = $total > 0 ? round(($score/$total)*100) : 0;
 
-// Save to DB
 if ($total > 0) {
     $stmt = $conn->prepare("INSERT INTO exam_results(user_id,exam_title,score,total,percentage) VALUES(?,?,?,?,?)");
     $title = 'اختبار القرآن الكريم';
@@ -16,7 +14,7 @@ $gradeColor = $pct >= 75 ? 'emerald' : ($pct >= 50 ? 'amber' : 'red');
 ?>
 <div class="max-w-lg mx-auto animate-fadeIn" dir="rtl">
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-8 text-center">
-        <!-- Score Circle -->
+        
         <div class="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-<?php echo $gradeColor; ?>-200 bg-<?php echo $gradeColor; ?>-50 flex items-center justify-center">
             <div>
                 <span class="text-4xl font-black text-<?php echo $gradeColor; ?>-700"><?php echo $pct; ?>%</span>

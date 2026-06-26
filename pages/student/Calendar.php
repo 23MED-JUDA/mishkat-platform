@@ -1,5 +1,4 @@
 <?php
-// Student Calendar - Dynamic
 $events = $conn->query("SELECT * FROM calendar_events WHERE user_id=$uid ORDER BY event_date, event_time");
 $eventsList = [];
 while($e = $events->fetch_assoc()) $eventsList[] = $e;
@@ -12,7 +11,7 @@ while($e = $events->fetch_assoc()) $eventsList[] = $e;
         </button>
     </div>
 
-    <!-- Calendar Grid -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-5 border-b border-gray-50 flex justify-between items-center">
             <h3 class="font-bold text-gray-800" id="calendarTitle"><?php echo date('F Y'); ?></h3>
@@ -29,7 +28,7 @@ while($e = $events->fetch_assoc()) $eventsList[] = $e;
         <div class="grid grid-cols-7 gap-px bg-gray-100" id="calendarDays"></div>
     </div>
 
-    <!-- Events List -->
+    
     <div class="luxury-card rounded-[2rem] shadow-sm border border-gray-100 p-5">
         <h3 class="text-lg font-black text-gray-900 mb-4">الأحداث القادمة</h3>
         <div class="space-y-3" id="eventsList">
@@ -61,7 +60,6 @@ while($e = $events->fetch_assoc()) $eventsList[] = $e;
     </div>
 </div>
 
-<!-- Add Event Modal -->
 <div class="modal-backdrop" id="addEventModal">
     <div class="modal-box">
         <h3 class="text-lg font-black text-gray-900 mb-4">إضافة حدث جديد</h3>

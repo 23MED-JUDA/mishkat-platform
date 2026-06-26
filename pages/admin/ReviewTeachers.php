@@ -1,5 +1,4 @@
 <?php
-// Admin Review Teachers - Enhanced for Approval Flow
 $teachersQuery = "SELECT u.id, u.name, u.email, '' AS phone, u.status, u.created_at, u.gender, '' AS location,
     t.specialization AS specialty, t.experience_years, t.cv_file AS cv_url, t.bio, 
     IFNULL((SELECT AVG(rating) FROM teacher_ratings WHERE teacher_id = t.id), 5.0) AS rating
@@ -56,7 +55,7 @@ if (!$teachers) {
             else echo 'border-red-100 bg-red-50/10';
         ?> p-8 hover:shadow-xl transition-all group relative overflow-hidden">
             
-            <!-- Status Badge -->
+            
             <?php if($isPending): ?>
             <div class="absolute top-0 left-0 px-4 py-1 bg-amber-500 text-white text-[10px] font-black rounded-br-2xl flex items-center gap-1">
                 <span class="material-icons-outlined text-xs">schedule</span> قيد المراجعة
@@ -71,7 +70,7 @@ if (!$teachers) {
             </div>
             <?php endif; ?>
 
-            <!-- Teacher Info -->
+            
             <div class="flex items-start justify-between mb-6 mt-4">
                 <div class="flex items-center gap-4">
                     <div class="w-16 h-16 rounded-[2rem] <?php
@@ -89,7 +88,7 @@ if (!$teachers) {
                 </div>
             </div>
 
-            <!-- Stats -->
+            
             <div class="grid grid-cols-2 gap-3 mb-6">
                 <div class="p-3 bg-gray-50 rounded-2xl border border-gray-100">
                     <p class="text-[10px] text-gray-400 font-bold mb-1">الخبرة</p>
@@ -111,10 +110,10 @@ if (!$teachers) {
             </a>
             <?php endif; ?>
 
-            <!-- Action Buttons -->
+            
             <div class="flex gap-2 mt-2">
                 <?php if($isPending): ?>
-                    <!-- Pending: Approve + Reject -->
+                    
                     <button onclick="approveTeacher(<?php echo $t['id']; ?>)"
                         class="flex-1 py-3 bg-emerald-600 text-white rounded-2xl text-xs font-black hover:bg-emerald-700 transition-all flex items-center justify-center gap-1 shadow-md">
                         <span class="material-icons-outlined text-sm">check_circle</span> قبول
@@ -125,7 +124,7 @@ if (!$teachers) {
                     </button>
 
                 <?php elseif($isActive): ?>
-                    <!-- Active: Suspend + Delete -->
+                    
                     <button onclick="toggleTeacherStatus(<?php echo $t['id']; ?>, 'inactive')"
                         class="flex-1 py-3 bg-amber-50 text-amber-700 border border-amber-200 rounded-2xl text-xs font-black hover:bg-amber-100 transition-all flex items-center justify-center gap-1">
                         <span class="material-icons-outlined text-sm">pause_circle</span> تعليق
@@ -136,7 +135,7 @@ if (!$teachers) {
                     </button>
 
                 <?php else: ?>
-                    <!-- Inactive: Activate + Delete -->
+                    
                     <button onclick="toggleTeacherStatus(<?php echo $t['id']; ?>, 'active')"
                         class="flex-1 py-3 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-2xl text-xs font-black hover:bg-emerald-100 transition-all flex items-center justify-center gap-1">
                         <span class="material-icons-outlined text-sm">play_circle</span> تنشيط

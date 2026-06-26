@@ -1,5 +1,4 @@
 <?php
-// Admin Settings - Dynamic
 $settings = [];
 $r = $conn->query("SELECT * FROM settings ORDER BY id");
 while($s = $r->fetch_assoc()) $settings[$s['setting_key']] = $s['setting_value'];

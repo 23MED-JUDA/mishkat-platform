@@ -1,225 +1,310 @@
 <?php
-// Teacher Profile - Dynamic Enhanced
-$profile = $conn->query("SELECT * FROM users WHERE id=$uid")->fetch_assoc();
-$teacherQuery = $conn->query("SELECT id FROM teachers WHERE user_id=$uid")->fetch_assoc();
-$teacherId = $teacherQuery ? $teacherQuery['id'] : 0;
-$teacherInfo = $conn->query("SELECT *, specialization AS specialty, cv_file AS cv_url FROM teachers WHERE user_id=$uid")->fetch_assoc();
-$circlesCount = $conn->query("SELECT COUNT(*) as c FROM halaqat WHERE teacher_id=$teacherId")->fetch_assoc()['c'];
-$studentsCount = $conn->query("SELECT COUNT(DISTINCT he.student_id) as c FROM halaqa_enrollments he JOIN halaqat ci ON he.halaqa_id=ci.id WHERE ci.teacher_id=$teacherId")->fetch_assoc()['c'];
+$profile     = $conn->query("SELECT * FROM users WHERE id=$uid")->fetch_assoc();
+$tq          = $conn->query("SELECT id FROM teachers WHERE user_id=$uid")->fetch_assoc();
+$teacherId   = $tq ? $tq['id'] : 0;
+$tInfo       = $conn->query("SELECT *, specialization AS specialty, cv_file AS cv_url FROM teachers WHERE user_id=$uid")->fetch_assoc();
+$circlesCount= $conn->query("SELECT COUNT(*) c FROM halaqat WHERE teacher_id=$teacherId")->fetch_assoc()['c'] ?? 0;
+$studCount   = $conn->query("SELECT COUNT(DISTINCT he.student_id) c FROM halaqa_enrollments he JOIN halaqat h ON he.halaqa_id=h.id WHERE h.teacher_id=$teacherId")->fetch_assoc()['c'] ?? 0;
+$evalsCount  = $conn->query("SELECT COUNT(*) c FROM evaluations WHERE teacher_id=$uid")->fetch_assoc()['c'] ?? 0;
+$lessonsCount= $conn->query("SELECT COUNT(*) c FROM learning_materials lm JOIN learning_paths lp ON lm.path_id=lp.id")->fetch_assoc()['c'] ?? 0;
+$evAvg       = $conn->query("SELECT AVG(memorization) m, AVG(tajweed) t, AVG(attendance) a, AVG(behavior) b FROM evaluations WHERE teacher_id=$uid")->fetch_assoc();
+$avgM = $evAvg && $evAvg['m'] ? round($evAvg['m']) : 0;
+$avgT = $evAvg && $evAvg['t'] ? round($evAvg['t']) : 0;
+$avgA = $evAvg && $evAvg['a'] ? round($evAvg['a']) : 0;
+$avgB = $evAvg && $evAvg['b'] ? round($evAvg['b']) : 0;
+$overallTeacher = ($avgM+$avgT+$avgA+$avgB)>0 ? round(($avgM+$avgT+$avgA+$avgB)/4) : 0;
 
-// Extra Teacher Statistics
-$evalsCount = $conn->query("SELECT COUNT(*) as c FROM evaluations WHERE teacher_id = $uid")->fetch_assoc()['c'] ?? 0;
-$avgStudentQuery = $conn->query("SELECT AVG(memorization) as mem, AVG(tajweed) as taj, AVG(attendance) as att FROM evaluations WHERE teacher_id = $uid")->fetch_assoc();
-$avgStudentMem = $avgStudentQuery && $avgStudentQuery['mem'] !== null ? round($avgStudentQuery['mem']) : 0;
-$avgStudentTaj = $avgStudentQuery && $avgStudentQuery['taj'] !== null ? round($avgStudentQuery['taj']) : 0;
-$avgStudentAtt = $avgStudentQuery && $avgStudentQuery['att'] !== null ? round($avgStudentQuery['att']) : 0;
+// Courses/paths available to manage
+$paths = $conn->query("SELECT lp.id, lp.name, lp.description, IFNULL(pp.sessions_count,0) s, IFNULL(pp.price,0) price FROM learning_paths lp LEFT JOIN path_plans pp ON pp.path_id=lp.id LIMIT 6");
+
+// Students in teacher circles
+$myStudents = $conn->query("SELECT DISTINCT u.name, u.email FROM users u JOIN students st ON st.user_id=u.id JOIN halaqa_enrollments he ON he.student_id=st.id JOIN halaqat h ON h.id=he.halaqa_id WHERE h.teacher_id=$teacherId LIMIT 5");
+
+// Lessons
+$myLessons = $conn->query("SELECT lm.title, lm.type, lp.name AS path_name FROM learning_materials lm JOIN learning_paths lp ON lm.path_id=lp.id ORDER BY lm.id DESC LIMIT 5");
 ?>
-<div class="space-y-6 animate-fadeIn" dir="rtl">
-    <!-- Header Card -->
-    <div class="bg-gradient-to-l from-mishkat-green-800 to-mishkat-green-900 rounded-3xl p-8 text-white relative overflow-hidden shadow-2xl shadow-mishkat-green-900/20">
-        <div class="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
-        <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-            <div class="w-32 h-32 bg-white/10 border-4 border-white/20 rounded-[2.5rem] flex items-center justify-center text-5xl font-black shadow-inner">
-                <?php echo mb_substr($profile['name'],0,1,'UTF-8'); ?>
-            </div>
-            <div class="text-center md:text-right">
-                <h1 class="text-3xl font-black mb-2"><?php echo htmlspecialchars($profile['name']); ?></h1>
-                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                    <span class="px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold border border-white/10 backdrop-blur-md">
-                        <i class="fas fa-certificate text-mishkat-green-300 ml-1"></i> <?php echo htmlspecialchars($teacherInfo['specialty'] ?? 'معلم معتمد'); ?>
-                    </span>
-                    <span class="px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold border border-white/10 backdrop-blur-md">
-                        <i class="fas fa-clock text-mishkat-green-300 ml-1"></i> <?php echo ($teacherInfo['experience_years']??0); ?> سنوات خبرة
-                    </span>
-                    <span class="px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold border border-white/10 backdrop-blur-md text-yellow-400">
-                        <i class="fas fa-star ml-1"></i> <?php echo $teacherInfo['rating'] ?? '5.00'; ?>
-                    </span>
-                </div>
-            </div>
-        </div>
+
+<div class="space-y-8 animate-fadeIn" dir="rtl">
+
+<!-- Hero Banner -->
+<div class="relative bg-gradient-to-l from-mishkat-green-800 to-mishkat-green-900 rounded-3xl p-8 md:p-12 text-white overflow-hidden shadow-2xl">
+  <div class="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_#fff_0%,_transparent_70%)]"></div>
+  <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+    <div class="w-28 h-28 bg-white/10 border-4 border-white/20 rounded-[2rem] flex items-center justify-center text-5xl font-black">
+      <?php echo mb_substr($profile['name'],0,1,'UTF-8'); ?>
     </div>
-
-    <!-- Quick Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="luxury-card p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 rounded-[2rem] bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm"><span class="material-icons-outlined text-3xl">groups</span></div>
-            <div><p class="text-xs text-gray-400 font-bold mb-1 uppercase tracking-widest">الحلقات</p><h3 class="text-2xl font-black text-gray-900"><?php echo $circlesCount; ?></h3></div>
-        </div>
-        <div class="luxury-card p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 rounded-[2rem] bg-mishkat-green-50 text-mishkat-green-600 flex items-center justify-center shadow-sm"><span class="material-icons-outlined text-3xl">school</span></div>
-            <div><p class="text-xs text-gray-400 font-bold mb-1 uppercase tracking-widest">الطلاب</p><h3 class="text-2xl font-black text-gray-900"><?php echo $studentsCount; ?></h3></div>
-        </div>
-        <div class="luxury-card p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 rounded-[2rem] bg-amber-50 text-amber-600 flex items-center justify-center shadow-sm"><span class="material-icons-outlined text-3xl">location_on</span></div>
-            <div><p class="text-xs text-gray-400 font-bold mb-1 uppercase tracking-widest">الموقع</p><h3 class="text-sm font-black text-gray-900"><?php echo htmlspecialchars($teacherInfo['location'] ?? '-'); ?></h3></div>
-        </div>
-        <div class="luxury-card p-6 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-5">
-            <div class="w-14 h-14 rounded-[2rem] bg-purple-50 text-purple-600 flex items-center justify-center shadow-sm"><span class="material-icons-outlined text-3xl">verified_user</span></div>
-            <div><p class="text-xs text-gray-400 font-bold mb-1 uppercase tracking-widest">الحالة</p><h3 class="text-sm font-black text-mishkat-green-600">نشط ومقبول</h3></div>
-        </div>
+    <div class="text-center md:text-right">
+      <h1 class="text-2xl md:text-4xl font-black mb-3 font-tajawal"><?php echo htmlspecialchars($profile['name']); ?></h1>
+      <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+        <span class="px-4 py-1.5 bg-white/10 border border-white/20 rounded-full text-xs font-bold">
+          <i class="fas fa-certificate text-green-300 ml-1"></i><?php echo htmlspecialchars($tInfo['specialty'] ?? 'معلم معتمد'); ?>
+        </span>
+        <span class="px-4 py-1.5 bg-white/10 border border-white/20 rounded-full text-xs font-bold">
+          <i class="fas fa-clock text-green-300 ml-1"></i><?php echo ($tInfo['experience_years']??0); ?> سنوات خبرة
+        </span>
+        <span class="px-4 py-1.5 bg-yellow-400/20 border border-yellow-400/30 rounded-full text-xs font-bold text-yellow-300">
+          <i class="fas fa-star ml-1"></i><?php echo $tInfo['rating'] ?? '5.0'; ?> تقييم
+        </span>
+      </div>
     </div>
-
-    <!-- إحصائيات المعلم وأهمية الرسالة -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- إحصائيات الأداء المهني للمعلم -->
-        <div class="lg:col-span-2 luxury-card p-6 md:p-8 border-none flex flex-col justify-between">
-            <div>
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-xl bg-mishkat-green-50 dark:bg-mishkat-green-900/30 text-mishkat-green-600 dark:text-mishkat-green-400 flex items-center justify-center">
-                        <span class="material-icons-outlined text-2xl">analytics</span>
-                    </div>
-                    <h3 class="text-xl font-black text-gray-900 dark:text-white font-tajawal">مؤشرات إنجاز الحلقات</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-5 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-gray-100 dark:border-white/5 text-center">
-                        <span class="material-icons-outlined text-mishkat-green-600 text-3xl mb-2">assignment_turned_in</span>
-                        <p class="text-xs text-gray-400 font-bold mb-1">التقييمات المنجزة</p>
-                        <h4 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $evalsCount; ?></h4>
-                    </div>
-                    <div class="p-5 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-gray-100 dark:border-white/5 text-center">
-                        <span class="material-icons-outlined text-blue-500 text-3xl mb-2">star_rate</span>
-                        <p class="text-xs text-gray-400 font-bold mb-1">متوسط حفظ الطلاب</p>
-                        <h4 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $avgStudentMem; ?>%</h4>
-                    </div>
-                    <div class="p-5 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-gray-100 dark:border-white/5 text-center">
-                        <span class="material-icons-outlined text-purple-500 text-3xl mb-2">co_present</span>
-                        <p class="text-xs text-gray-400 font-bold mb-1">متوسط حضور الحلقات</p>
-                        <h4 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $avgStudentAtt; ?>%</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-6 text-xs text-gray-400 dark:text-white/40 leading-relaxed font-tajawal border-t border-gray-100 dark:border-white/5 pt-4">
-                تساعدك هذه المؤشرات على متابعة نشاطك التعليمي وأداء طلابك في الحلقات الموكلة إليك.
-            </div>
-        </div>
-
-        <!-- فضل وأهمية رسالة التعليم -->
-        <div class="luxury-card p-6 md:p-8 border-none bg-gradient-to-br from-mishkat-green-50 to-white dark:from-mishkat-green-900/10 dark:to-mishkat-green-950/20 flex flex-col justify-between">
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="material-icons-outlined text-mishkat-gold-500">menu_book</span>
-                    <h4 class="font-black text-gray-900 dark:text-white">شرف تعليم القرآن الكريم</h4>
-                </div>
-                <p class="text-xs text-gray-500 dark:text-white/60 leading-relaxed font-tajawal mb-4">
-                    قال النبي ﷺ: <span class="font-bold text-mishkat-green-700 dark:text-mishkat-gold-400">"إن الله وملائكته وأهل السموات والأرضين... ليصلون على معلم الناس الخير"</span>. 
-                </p>
-                <p class="text-xs text-gray-500 dark:text-white/60 leading-relaxed font-tajawal">
-                    أنت تحمل رسالة الأنبياء، وتعليمك للقرآن الكريم يبني جيلاً صالحاً ويثمر لك أجوراً جارية لا تنقطع.
-                </p>
-            </div>
-            <div class="text-[10px] text-mishkat-gold-600 font-black tracking-wider border-t border-gray-100 dark:border-white/5 pt-4 uppercase">
-                مِشـكاة • فضل رسالة التعليم
-            </div>
-        </div>
-    </div>
-
-    <!-- Details Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-6">
-            <!-- Edit Profile -->
-            <div class="luxury-card rounded-3xl shadow-sm border border-gray-100 p-8">
-                <h3 class="text-xl font-black text-gray-900 mb-8 flex items-center gap-3">
-                    <span class="w-10 h-10 bg-mishkat-green-50 text-mishkat-green-600 rounded-[1.5rem] flex items-center justify-center"><i class="fas fa-user-edit text-sm"></i></span>
-                    تعديل البيانات المهنية والشخصية
-                </h3>
-                <form id="profileForm" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">الاسم بالكامل</label>
-                            <input type="text" name="name" value="<?php echo htmlspecialchars($profile['name']); ?>" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">رقم الهاتف</label>
-                            <input type="text" name="phone" value="<?php echo htmlspecialchars($profile['phone']??''); ?>" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">التخصص</label>
-                            <input type="text" name="specialty" value="<?php echo htmlspecialchars($teacherInfo['specialty']??''); ?>" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">سنوات الخبرة</label>
-                            <input type="number" name="experience" value="<?php echo intval($teacherInfo['experience_years']??0); ?>" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">الموقع الحالي</label>
-                            <input type="text" name="location" value="<?php echo htmlspecialchars($teacherInfo['location']??''); ?>" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">رابط الـ CV</label>
-                            <input type="url" name="cv_url" value="<?php echo htmlspecialchars($teacherInfo['cv_url']??''); ?>" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                        </div>
-                        <div class="space-y-1 md:col-span-2">
-                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">النبذة التعريفية (Bio)</label>
-                            <textarea name="bio" rows="4" class="w-full px-5 py-3.5 bg-gray-50 border-none rounded-[2rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700"><?php echo htmlspecialchars($teacherInfo['bio'] ?? ''); ?></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" class="px-10 py-4 bg-mishkat-green-700 text-white rounded-[2rem] font-black hover:bg-mishkat-green-800 transition-all shadow-xl shadow-mishkat-green-100 flex items-center gap-2">
-                        <span class="material-icons-outlined">save</span>
-                        حفظ التغييرات المهنية
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <div class="space-y-6">
-            <!-- CV Preview Card -->
-            <?php if(!empty($teacherInfo['cv_url'])): ?>
-            <div class="luxury-card rounded-3xl shadow-sm border border-gray-100 p-8 text-center">
-                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-[2rem] flex items-center justify-center mx-auto mb-4">
-                    <span class="material-icons-outlined text-3xl">description</span>
-                </div>
-                <h4 class="font-black text-gray-900 mb-2">السيرة الذاتية (CV)</h4>
-                <p class="text-xs text-gray-400 font-bold mb-6 italic">هذا الملف متاح للمراجعة من قبل الإدارة</p>
-                <a href="<?php echo htmlspecialchars($teacherInfo['cv_url']); ?>" target="_blank" class="block w-full py-3 bg-blue-600 text-white rounded-[1.5rem] text-sm font-black hover:bg-blue-700 transition-all">فتح الملف المرفق</a>
-            </div>
-            <?php endif; ?>
-
-            <!-- Change Password -->
-            <div class="luxury-card rounded-3xl shadow-sm border border-gray-100 p-8">
-                <h4 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-2">
-                    <span class="material-icons-outlined text-amber-500">lock</span>
-                    الأمان والخصوصية
-                </h4>
-                <form id="passwordForm" class="space-y-4">
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">كلمة المرور الحالية</label>
-                        <input type="password" name="old_password" placeholder="••••••••" class="w-full px-5 py-3 bg-gray-50 border-none rounded-[1.5rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">الكلمة الجديدة</label>
-                        <input type="password" name="new_password" placeholder="••••••••" class="w-full px-5 py-3 bg-gray-50 border-none rounded-[1.5rem] outline-none focus:ring-2 focus:ring-mishkat-green-500/20 font-bold text-gray-700">
-                    </div>
-                    <button type="submit" class="w-full py-4 bg-gray-100 text-gray-700 rounded-[1.5rem] font-black hover:bg-gray-200 transition-all text-sm">تغيير كلمة المرور</button>
-                </form>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
-<script>
-document.getElementById('profileForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const fd = new FormData(this); fd.append('action','update_teacher_profile');
-    fetch('api.php',{method:'POST',body:fd}).then(r=>r.json()).then(res => {
-        if(res.success) {
-            showToast('تم تحديث ملفك المهني بنجاح');
-            setTimeout(() => location.reload(), 1000);
-        } else {
-            showToast(res.message||'خطأ','error');
-        }
-    });
-});
+<!-- Quick Stats -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <?php
+  $stats=[
+    ['icon'=>'groups','label'=>'الحلقات','val'=>$circlesCount,'cls'=>'bg-blue-50 text-blue-600'],
+    ['icon'=>'school','label'=>'الطلاب','val'=>$studCount,'cls'=>'bg-emerald-50 text-emerald-600'],
+    ['icon'=>'video_library','label'=>'الدروس','val'=>$lessonsCount,'cls'=>'bg-purple-50 text-purple-600'],
+    ['icon'=>'assignment_turned_in','label'=>'التقييمات','val'=>$evalsCount,'cls'=>'bg-amber-50 text-amber-500'],
+  ];
+  foreach($stats as $s): ?>
+  <div class="luxury-card p-5 flex items-center gap-4">
+    <div class="w-12 h-12 rounded-2xl <?php echo $s['cls']; ?> flex items-center justify-center">
+      <span class="material-icons-outlined text-2xl"><?php echo $s['icon']; ?></span>
+    </div>
+    <div>
+      <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest"><?php echo $s['label']; ?></p>
+      <h3 class="text-2xl font-black text-gray-900 dark:text-white"><?php echo $s['val']; ?></h3>
+    </div>
+  </div>
+  <?php endforeach; ?>
+</div>
 
-document.getElementById('passwordForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const fd = new FormData(this); fd.append('action','change_password');
-    fetch('api.php',{method:'POST',body:fd}).then(r=>r.json()).then(res => {
-        if(res.success) { 
-            showToast('تم تغيير كلمة المرور بنجاح'); 
-            this.reset(); 
-        } else {
-            showToast(res.message||'خطأ','error');
-        }
-    });
+<!-- Performance Bars + Circle -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 luxury-card p-6 md:p-8">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center">
+        <span class="material-icons-outlined">analytics</span>
+      </div>
+      <h3 class="text-lg font-black text-gray-900 dark:text-white font-tajawal">متوسط أداء طلابك</h3>
+    </div>
+    <div class="space-y-4">
+      <?php foreach([['الحفظ',$avgM,'bg-emerald-500'],['التجويد',$avgT,'bg-blue-500'],['الحضور',$avgA,'bg-amber-500'],['السلوك',$avgB,'bg-purple-500']] as [$lbl,$val,$col]): ?>
+      <div>
+        <div class="flex justify-between mb-1">
+          <span class="text-sm font-bold text-gray-700 dark:text-gray-300"><?php echo $lbl; ?></span>
+          <span class="text-sm font-black" style="color:var(--color-primary)"><?php echo $val; ?>%</span>
+        </div>
+        <div class="w-full h-2.5 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
+          <div class="h-full <?php echo $col; ?> rounded-full transition-all duration-1000" style="width:<?php echo max($val,3); ?>%"></div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <div class="luxury-card p-8 flex flex-col items-center justify-center text-center">
+    <h3 class="text-base font-black text-gray-900 dark:text-white font-tajawal mb-5">المعدل العام للطلاب</h3>
+    <div class="relative w-36 h-36 flex items-center justify-center">
+      <svg class="w-full h-full -rotate-90">
+        <circle cx="72" cy="72" r="58" stroke-width="10" stroke="currentColor" class="text-gray-100 dark:text-white/5" fill="transparent"/>
+        <circle cx="72" cy="72" r="58" stroke-width="10" stroke="var(--color-primary)" stroke-dasharray="364" stroke-dashoffset="<?php echo 364-(364*$overallTeacher/100); ?>" stroke-linecap="round" fill="transparent"/>
+      </svg>
+      <div class="absolute text-center">
+        <span class="text-3xl font-black text-gray-900 dark:text-white"><?php echo $overallTeacher; ?>%</span>
+        <p class="text-[9px] text-gray-400 font-bold mt-0.5">متوسط طلابك</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- My Circles Students + Latest Lessons -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+  <!-- Students Preview -->
+  <div class="luxury-card p-6">
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center">
+          <span class="material-icons-outlined">people</span>
+        </div>
+        <h3 class="font-black text-gray-900 dark:text-white">طلابي في الحلقات</h3>
+      </div>
+      <a href="?page=students" class="text-xs font-bold" style="color:var(--color-primary)">عرض الكل</a>
+    </div>
+    <?php if($myStudents && $myStudents->num_rows > 0): ?>
+    <div class="space-y-3">
+      <?php $idx=0; while($st=$myStudents->fetch_assoc()): $idx++; ?>
+      <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/[0.02] rounded-2xl">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm" style="background:var(--sidebar-active-bg);color:var(--color-primary)">
+          <?php echo mb_substr($st['name'],0,1,'UTF-8'); ?>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-sm text-gray-900 dark:text-white truncate"><?php echo htmlspecialchars($st['name']); ?></p>
+          <p class="text-[10px] text-gray-400 truncate"><?php echo $st['email']; ?></p>
+        </div>
+        <span class="text-[10px] font-black px-2 py-1 rounded-full bg-emerald-50 text-emerald-600">نشط</span>
+      </div>
+      <?php endwhile; ?>
+    </div>
+    <?php else: ?>
+    <div class="text-center py-10 text-gray-400">
+      <span class="material-icons-outlined text-4xl mb-2 block">group_add</span>
+      <p class="font-bold text-sm">لا يوجد طلاب في حلقاتك بعد</p>
+    </div>
+    <?php endif; ?>
+  </div>
+
+  <!-- Latest Lessons -->
+  <div class="luxury-card p-6">
+    <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 flex items-center justify-center">
+          <span class="material-icons-outlined">video_library</span>
+        </div>
+        <h3 class="font-black text-gray-900 dark:text-white">آخر الدروس المضافة</h3>
+      </div>
+      <a href="?page=episodes" class="text-xs font-bold" style="color:var(--color-primary)">إدارة الدروس</a>
+    </div>
+    <?php if($myLessons && $myLessons->num_rows > 0): ?>
+    <div class="space-y-3">
+      <?php while($ls=$myLessons->fetch_assoc()):
+        $typeIcon = $ls['type']==='video' ? 'play_circle' : ($ls['type']==='pdf' ? 'picture_as_pdf' : 'article');
+        $typeClr  = $ls['type']==='video' ? 'text-red-500' : ($ls['type']==='pdf' ? 'text-blue-500' : 'text-gray-500');
+      ?>
+      <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/[0.02] rounded-2xl">
+        <span class="material-icons-outlined text-2xl <?php echo $typeClr; ?>"><?php echo $typeIcon; ?></span>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-sm text-gray-900 dark:text-white truncate"><?php echo htmlspecialchars($ls['title']); ?></p>
+          <p class="text-[10px] text-gray-400 truncate"><?php echo htmlspecialchars($ls['path_name']); ?></p>
+        </div>
+      </div>
+      <?php endwhile; ?>
+    </div>
+    <?php else: ?>
+    <div class="text-center py-10 text-gray-400">
+      <span class="material-icons-outlined text-4xl mb-2 block">add_circle_outline</span>
+      <p class="font-bold text-sm mb-3">لم تضف دروساً بعد</p>
+      <a href="?page=episodes" class="px-5 py-2 rounded-2xl text-white text-xs font-black" style="background:var(--color-primary)">أضف درساً الآن</a>
+    </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+<!-- Available Courses/Packages -->
+<div>
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/20 text-amber-500 flex items-center justify-center">
+      <span class="material-icons-outlined">local_offer</span>
+    </div>
+    <div>
+      <h3 class="text-lg font-black text-gray-900 dark:text-white font-tajawal">الدورات والمسارات بالأسعار</h3>
+      <p class="text-xs text-gray-400">المسارات المتاحة في منصة مشكاة</p>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <?php
+    $colors = ['bg-emerald-50 text-emerald-600','bg-blue-50 text-blue-600','bg-purple-50 text-purple-600','bg-amber-50 text-amber-500','bg-rose-50 text-rose-500','bg-cyan-50 text-cyan-600'];
+    $icons  = ['menu_book','auto_stories','school','library_books','bookmark','star'];
+    $ci2=0;
+    while($pt=$paths->fetch_assoc()):
+      $pc=$colors[$ci2%count($colors)]; $pi=$icons[$ci2%count($icons)]; $ci2++;
+    ?>
+    <div class="luxury-card p-5 hover:-translate-y-1 hover:shadow-xl transition-all">
+      <div class="w-12 h-12 rounded-2xl <?php echo $pc; ?> flex items-center justify-center mb-4">
+        <span class="material-icons-outlined text-xl"><?php echo $pi; ?></span>
+      </div>
+      <h4 class="font-black text-gray-900 dark:text-white mb-1"><?php echo htmlspecialchars($pt['name']); ?></h4>
+      <p class="text-xs text-gray-500 dark:text-white/50 mb-3 leading-relaxed"><?php echo htmlspecialchars($pt['description'] ?? 'مسار تعليمي متكامل'); ?></p>
+      <div class="flex items-center justify-between border-t border-gray-100 dark:border-white/5 pt-3">
+        <div>
+          <p class="text-[10px] text-gray-400"><?php echo $pt['s']; ?> حصة</p>
+          <p class="text-lg font-black" style="color:var(--color-primary)">
+            <?php echo $pt['price']>0 ? number_format($pt['price'],0).' ج.م' : 'مجاني'; ?>
+          </p>
+        </div>
+        <a href="?page=episodes" class="px-4 py-2 rounded-xl text-white text-xs font-black" style="background:var(--color-primary)">إدارة الدروس</a>
+      </div>
+    </div>
+    <?php endwhile; ?>
+  </div>
+</div>
+
+<!-- Importance Section -->
+<div class="luxury-card p-6 md:p-10 bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/10 dark:to-transparent">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center">
+      <span class="material-icons-outlined">workspace_premium</span>
+    </div>
+    <h3 class="text-lg font-black text-gray-900 dark:text-white font-tajawal">فضل ومكانة معلم القرآن الكريم</h3>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <?php
+    $virtues=[
+      ['icon'=>'emoji_events','color'=>'bg-amber-50 text-amber-500','title'=>'شرف الرسالة','hadith'=>'"إن الله وملائكته وأهل السموات والأرضين... ليصلّون على معلم الناس الخير"','desc'=>'أنت تحمل رسالة الأنبياء وتنشر نور القرآن في قلوب الطلاب.'],
+      ['icon'=>'trending_up','color'=>'bg-blue-50 text-blue-500','title'=>'الأجر الجاري','hadith'=>'"خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ"','desc'=>'كل طالب تعلّمه حرفاً من كتاب الله يُجري لك أجراً متصلاً لا ينقطع.'],
+      ['icon'=>'favorite','color'=>'bg-purple-50 text-purple-500','title'=>'الأثر في الأجيال','hadith'=>'"من دلَّ على خير فله مثل أجر فاعله"','desc'=>'تعليمك اليوم يبني جيلاً صالحاً يحمل القرآن ويُعلّمه من بعدك.'],
+    ];
+    foreach($virtues as $v): ?>
+    <div class="p-5 bg-white dark:bg-white/[0.02] rounded-2xl border border-gray-100 dark:border-white/5 hover:scale-[1.02] transition-all">
+      <div class="w-10 h-10 rounded-xl <?php echo $v['color']; ?> flex items-center justify-center mb-3">
+        <span class="material-icons-outlined"><?php echo $v['icon']; ?></span>
+      </div>
+      <h4 class="font-bold text-gray-900 dark:text-white mb-2"><?php echo $v['title']; ?></h4>
+      <p class="text-xs font-bold text-emerald-700 dark:text-yellow-400 mb-2 leading-relaxed"><?php echo $v['hadith']; ?></p>
+      <p class="text-xs text-gray-500 dark:text-white/50 leading-relaxed"><?php echo $v['desc']; ?></p>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+<!-- Edit Profile Form -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="lg:col-span-2 luxury-card rounded-3xl p-8">
+    <h3 class="text-lg font-black text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+      <span class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center"><i class="fas fa-user-edit text-sm"></i></span>
+      تعديل البيانات المهنية
+    </h3>
+    <form id="profileForm" class="space-y-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">الاسم</label>
+          <input type="text" name="name" value="<?php echo htmlspecialchars($profile['name']); ?>" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"></div>
+        <div><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">الهاتف</label>
+          <input type="text" name="phone" value="<?php echo htmlspecialchars($profile['phone']??''); ?>" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"></div>
+        <div><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">التخصص</label>
+          <input type="text" name="specialty" value="<?php echo htmlspecialchars($tInfo['specialty']??''); ?>" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"></div>
+        <div><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">سنوات الخبرة</label>
+          <input type="number" name="experience" value="<?php echo intval($tInfo['experience_years']??0); ?>" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"></div>
+        <div class="md:col-span-2"><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">نبذة تعريفية</label>
+          <textarea name="bio" rows="3" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"><?php echo htmlspecialchars($tInfo['bio']??''); ?></textarea></div>
+      </div>
+      <button type="submit" class="px-8 py-3 text-white rounded-2xl font-black flex items-center gap-2" style="background:var(--color-primary)">
+        <span class="material-icons-outlined text-lg">save</span> حفظ التغييرات
+      </button>
+    </form>
+  </div>
+  <div class="luxury-card p-8">
+    <h4 class="text-base font-black text-gray-900 dark:text-white mb-5 flex items-center gap-2">
+      <span class="material-icons-outlined text-amber-500">lock</span> الأمان
+    </h4>
+    <form id="passwordForm" class="space-y-4">
+      <div><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">كلمة المرور الحالية</label>
+        <input type="password" name="old_password" placeholder="••••••••" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"></div>
+      <div><label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">الكلمة الجديدة</label>
+        <input type="password" name="new_password" placeholder="••••••••" class="w-full px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 outline-none"></div>
+      <button type="submit" class="w-full py-3 bg-gray-100 text-gray-700 rounded-2xl font-black text-sm hover:bg-gray-200 transition-all">تغيير كلمة المرور</button>
+    </form>
+  </div>
+</div>
+
+</div>
+<script>
+document.getElementById('profileForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const fd=new FormData(this); fd.append('action','update_teacher_profile');
+  fetch('api.php',{method:'POST',body:fd}).then(r=>r.json()).then(res=>{
+    if(res.success){showToast('تم تحديث ملفك المهني بنجاح');setTimeout(()=>location.reload(),1000);}
+    else showToast(res.message||'خطأ','error');
+  });
+});
+document.getElementById('passwordForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const fd=new FormData(this); fd.append('action','change_password');
+  fetch('api.php',{method:'POST',body:fd}).then(r=>r.json()).then(res=>{
+    if(res.success){showToast('تم تغيير كلمة المرور بنجاح');this.reset();}
+    else showToast(res.message||'خطأ','error');
+  });
 });
 </script>
